@@ -1,0 +1,42 @@
+extends ../layout
+block head
+	link(href="/css/page/article.css",rel="stylesheet")
+block header
+	include header.jade
+	a.moveToT(href="#" style="display:none")
+		span.moveToTIcon
+		
+block content
+	canvas#bg-canvas(width=1366,height=1075)
+	script(src="/js/canvas.js")
+	- var font = state.font;
+	.container.article(style="margin-top:70px")
+		.title
+			h1
+				| #{article.name}
+		.info
+			.head
+				img(src="/pic/head/headMonky.jpg")
+			.infoBody
+				.author
+					span 作者
+					| yangsl
+				- var date = new Date(article.meta.updateAt);
+				- var year = date.getFullYear();
+				- var month = date.getMonth() + 1;
+				- var day = date.getDate();
+				- var hour = date.getHours();
+				- var minute = date.getMinutes();
+				- var time = year + '年' + month + '月' + day + '日 ' + hour + ':' + minute;
+				.time
+					span #{time}
+		.content
+			!{article.content}
+			.copyright
+				span.fr © 著作#{font == 'jian'?'权归':'權歸'}作者所有
+block foot
+	.foot
+		| 友情链接
+		a(href="http://yangsl.cn:3100") <电影小网站>
+
+	script(src="/js/header.js")

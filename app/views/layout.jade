@@ -1,0 +1,25 @@
+doctype
+html
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="initial-scale=1,width=device-width,user-scalable=no")
+		meta(http-equiv="X-UA-compatitle", content="IE-Edge")
+		link(rel="icon", href="http://localhost:3000/favicon.ico", type="image/x-icon")
+		link(rel="shortcut icon",href="http://localhost:3000/favicon.ico", type="image/x-icon")
+		title #{title}
+		include ./head
+		block head
+	if state
+		- var family = state.family;
+		- var night = state.night;
+		- var className = (family=='hei'?'fhei':'fsong') + (night=='on'?' nightModel':'');
+	body(class="#{className?className:''}")
+		block header
+		block content
+		if night == 'on'
+			script.
+				setCanvas();
+				console.log()
+
+		block foot
+		

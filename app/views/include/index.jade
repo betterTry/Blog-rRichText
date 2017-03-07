@@ -1,0 +1,155 @@
+extends ../layout
+block head
+	link(href="/css/page/index.css",rel="stylesheet")
+block header
+	include header.jade
+	a.moveToT(href="#" style="display:none")
+		span.moveToTIcon
+		
+block content
+	canvas#bg-canvas(width=1366,height=1075)
+	script(src="/js/canvas.js")
+	.container.banner
+		ul.bannerUl.clearfix
+			li.bannerLi.currentBanner
+				a.bannerA(href="")
+					img(src="/pic/banner/pic.jpg")
+			li.bannerLi
+				a.bannerA(href="")
+					img(src="/pic/banner/six.jpg")
+			li.bannerLi
+				a.bannerA(href="#")
+					img(src="/pic/banner/code.jpg")
+			li.bannerLi
+				a.bannerA(href="")
+					img(src="/pic/banner/up.jpg")
+		.changebanner.changeRight
+		.changebanner.changeLeft
+
+	.container.articles
+		if articles.length
+			each item in articles
+				.articleBar
+					.articleInfo
+						.headBox
+							img(src="pic/head/headMonky.jpg")
+						.nameBox
+							span yangsl
+							- var date = new Date(item.meta.updateAt);
+							- var year = date.getFullYear();
+							- var month = date.getMonth() + 1 > 9 ? date.getMonth() : '0'+date.getMonth();
+							- var day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+							- var time = year+'.'+month+'.'+day;
+							span.time #{time}
+					- var haveImg = item.thumbnail ? ' haveImg' : '';
+					div(class="articleBody#{haveImg}")
+						h1.articleTitle
+							a(href="/article/#{item._id}")
+								| #{item.name}
+						.articleContent
+							p #{item.text}
+						if item.thumbnail
+							.articleImg
+								a(href="/article/#{item._id}")
+									img(src="#{item.thumbnail}")
+		if length > articles.length
+			.addMoreBox
+				a(href="javascript:;")#addMore 加载更多
+
+block foot
+	.foot
+		| 友情链接
+		a(href="http://yangsl.cn:3100") <电影小网站>
+	//- script(src="js/index.js")
+	script(src="js/reqwest.min.js")
+	script(src="/js/header.js")
+	script(src="/js/banner.js")
+	script.
+		(function() {
+			var addMore = document.getElementById('addMore');
+			var addMoreArticle = function() {
+				var i = 1;
+				var isClick = false;
+				return function() {
+					if(!isClick) { //未点击执行;
+					addMore.textContent = '正在加载 请稍等';
+						reqwest({
+							url: '/more?page='+ i,
+							success: function(result) {
+								if(result.success) {
+									isClick = false;
+									var articles = result.articles;
+									if(articles.length) {
+										var frag = document.createElementFragment();
+										articles.forEach(function(item) {
+											addDom(item, frag);
+										})
+										var addMoreBox = document.querySelector('.addMoreBox');
+										addMoreBox.parentNode.insertBefore(addMoreBox); //插入;
+									} 
+									i++;
+								}
+							}
+						})
+					} else {
+						return false;
+					}
+				}
+			}
+
+			if(addMore) {
+				addMore.onclick = addMoreArticle();
+			}
+
+			function addDom(item, elm) {
+
+				var date = new Date(item.meta.updateAt);
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1 > 9 ? date.getMonth() : '0'+date.getMonth();
+				var day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
+				var time = year+'.'+month+'.'+day;
+
+				var haveImg = item.thumbnail ? ' haveImg' : '';
+
+				var node = document.querySelector('.articleBar').cloneNode(true);
+				node.querySelector('time').textContent = time;
+
+				var articleBody = node.querySelector('articleBody')
+				articleBody.className += haveImg;
+
+				var articleTa = node.querySelector('.articleTitle a');
+				articleTa.href= '/article/' + item._id;
+				articleTa.textContent = item.name;
+				var articleTn = node.querySeletor('.articleImg');
+
+				if(item.thumbnail) {
+					var articleImg = document.createElement('div');
+					var articleImga = document.createElement('a');
+					var articleImgI = document.createElement('img');
+					articleImgI.src = item.thumbnail;
+					articleImga.href = '/article/' + item._id;
+					articleImga.appendChild(articleImgI);
+					articleImg.appendChild(articleImga);
+					if(articleTn) {
+						articleBody.replaceChild(articleImg, articleTn);
+					} else {
+						articleBody.appendChild(articleImg);
+					}
+				}
+				else {
+					if(articleTn) {
+						articleBody.removeChild(articleTn);
+					}
+				}
+
+				elm.appendChild(node);
+				
+			}
+		})(reqwest);
+		
+	
+
+	
+		
+
+

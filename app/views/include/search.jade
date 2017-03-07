@@ -1,0 +1,71 @@
+extends ../layout
+block head
+	link(href="/css/page/index.css",rel="stylesheet")
+block header
+	include header.jade
+	a.moveToT(href="#" style="display:none")
+		span.moveToTIcon
+
+block content
+	canvas#bg-canvas(width=1366,height=1075)
+	script(src="/js/canvas.js")
+	.container.articles
+		if articles.length
+			each item in articles
+				.articleBar
+					.articleInfo
+						.headBox
+							img(src="pic/head/headMonky.jpg")
+						.nameBox
+							span yangsl
+					- var haveImg = item.thumbnail ? ' haveImg' : ''
+					div(class="articleBody#{haveImg}")
+						h1.articleTitle
+							a(href="/article/#{item._id}")
+								| #{item.name}
+						.articleContent
+							p #{item.text}
+						if item.thumbnail
+							.articleImg
+								a(href="/article/#{item._id}")
+									img(src="#{item.thumbnail}")
+		if length > 1
+			ul.pagination
+				- var kw = title.replace(/搜索 - /,'');
+				- var front = page == 1 ? '##' : '/search?kw='+kw+'&page='+(parseInt(page)-1);
+				- var next = page == length ? '##' : '/search?kw='+kw+'&page='+(parseInt(page)+1);
+				li.frontPage
+					a(href='#{front}') 上一页
+				- var _length = length > 7 ? 7 : length;
+				if page < 3
+					- for(var i = 1; i <= _length; i++)
+						if page == i
+							li.pageItem.currentPage
+								a(href="/search?kw=#{kw}&page=#{i}") #{i}
+						else
+							li.pageItem
+								a(href="/search?kw=#{kw}&page=#{i}") #{i}
+				else if page < length - 2
+					- for(var i = page - 3; i <= page + 3; i++)
+						if page == i
+							li.pageItem.currentPage
+								a(href="/search?kw=#{kw}&page=#{i}") #{i}
+						else
+							li.pageItem
+								a(href="/search?kw=#{kw}&page=#{i}") #{i}
+				else
+					- for(var i = length - 7; i <= length; i++)
+						if page == i
+							li.pageItem.currentPage
+								a(href="/search?kw=#{kw}&page=#{i}") #{i}
+						else
+							li.pageItem
+								a(href="/search?kw=#{kw}&page=#{i}") #{i}
+				li.nextPage
+					a(href='#{next}') 下一页
+block foot
+	.foot
+		| 友情链接
+		a(href="http://yangsl.cn:3100") <电影小网站>
+
+	script(src="/js/header.js")

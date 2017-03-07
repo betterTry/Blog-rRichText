@@ -1,0 +1,1073 @@
+/* root */
+html {
+	-webkit-tap-highlight-color: transparent;
+}
+body{
+	color: #555;
+}
+.root{
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+/* leftWrap */
+#leftWrap{
+	width: 16%;
+	height: 100%;
+	background-color: #3f3f3f;
+	overflow: auto;
+
+	color: #fff;
+	float: left;
+
+	position: relative;
+}
+/* backToIndex */
+.backToIndex{
+	width: 100%;
+	padding: 30px 20px 5px 20px;
+	
+	text-align: center;
+	font-size: 1.5rem;
+}
+/* backToIndex */
+.backToIndexLink{
+	width: 100%;
+	background-color: #3498e0;
+	border-radius: 3px;
+	padding: 8px 0;
+	cursor: pointer;
+}
+.backToIndexLink:hover{
+	background-color: #48a8ec;
+}
+.backToIndexLink span{
+}
+/* addNewWork */
+.addNewWork{
+	padding: 20px 15px 10px 15px;
+	background-color: transparent;
+	cursor: pointer;
+	font-size: 1.3rem;
+	line-height: 1.8rem;
+	overflow: hidden;
+
+	transition: height .3s ease-in-out;
+}
+.addNewWork a{
+	margin-bottom: 10px;
+}
+.addNewWork > span{
+	cursor: pointer;
+}
+/* buttonGroup */
+.buttonGroup{
+	width: 100%;
+	margin: 10px 0;
+
+}
+.buttonItem{
+	width: 60px;
+	height: 30px;
+	background-color: inherit;
+	color: #fff;
+	cursor: pointer;
+	font-family: '微软雅黑';
+}
+.buttonSubmit{
+	border-color: #e3e3e3;
+	border-radius: 3px;
+	margin-right: 10px;
+}
+.buttonCancel{
+	color: #fff;
+	border: 0;
+}
+.addNewWorkInput{
+	height: 35px;
+	width: 100%;
+	text-indent: 5px;
+	background-color: rgba(180, 180, 180, .2);
+	color: #ccc;
+	border:1px solid #2f2f2f;
+	border-radius: 3px;
+}
+/* plusSign */
+.plusSign{
+	font-weight: bold;
+	font-size: 1.8rem;
+}
+
+/* WorkType */
+.WorkType{
+	width: 100%;
+	height: 40px;
+	padding: 5px 20px;
+	cursor: pointer;
+
+	line-height: 30px;
+	font-size: 1.4rem;
+	border-left: 3px solid;
+	border-left-color: transparent;
+
+}
+.WorkType:hover, .WorkTypeSelected{
+	background-color: #646464;
+}
+.WorkTypeSelected{
+	border-left-color: #48a8ec;
+}
+/* 被选中的 workType setButton 样式 */
+.WorkTypeSelected .setButton{
+	display: block;
+}
+/* 设置按钮 */
+.setButton{
+	height: 30px;
+	width: 15px;
+	position: absolute;
+	right: 10px;
+	top: 5px;
+	display: none;
+}
+.setButtonIcon{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.setButtonIcon:before{
+	display: block;
+	line-height: 30px;
+	content: '\e60c';
+}
+.setButtonBox{
+	width: 150px;
+	height: 75px;
+	border: 1px solid #aaa;
+
+	position: absolute;
+	right: -10px;
+	top: 35px;
+	background-color: #fbfcfd;
+	border-radius: 5px;
+
+	z-index: 101;
+}
+
+.setButtonType{
+	width: 100%;
+	height: 36px;
+	padding: 5px 0px;
+	
+	color: #333;
+	font-family: '微软雅黑';
+	font-size: 1.4rem;
+	text-align: center;
+}
+.setButtonType:first-child{
+	border-bottom: 1px solid #eee;
+}
+.setButtonType a{
+
+}
+.setButtonType a:hover{
+	background-color: #ececec;
+}
+
+/*================== changeWork ================*/
+.changeWorkBox{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: #fcfdfe;
+	z-index: 105;
+	color: #555;
+	text-align: center;
+	display: block;
+
+	transition: background-color .5s;
+}
+.changeWork{
+	display: inline-block;
+	width: 500px;
+
+	margin-top: 50px;
+}
+.changeWorkLabel{
+	height: 50px;
+	display:block;
+	line-height:30px;
+	font-size: 1.8rem;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #eee;
+	font-weight: bold;
+}
+.changeWorkLabel:before{
+	content: '\e610';
+	font-family: 'write';
+	font-size: 1.8rem;
+}
+.changeWorkInput{
+	height: 35px;
+	width: 230px;
+	border: 1px solid #ccc;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: 3px;
+	font-size: 1.4rem;
+	box-shadow: inset 0 1px 3px rgba(180, 180, 180, .3);
+}
+.changeWorkInput:focus{
+	border-color: rgba(82,168,236,0.8)
+}
+
+.changeWorkButton{
+	border:1px solid;
+	background-color: transparent;
+	width: 70px;
+	height: 30px;
+	display: inline-block;
+	border-radius: 3px;
+	font-size: 1.2rem;
+	font-family: inherit;
+	cursor: pointer;
+}
+.changeWorkButton:first-of-type{
+	border-color: #ccc;
+	background-color: #eee;
+}
+.changeWorkButton:last-of-type{
+	margin-left: 20px;
+	border-color: #3194d0;
+	background-color: #3194d0;
+	color: #fff;
+}
+/*================ changeWork end ================*/
+/* 三角 */
+.triangle, .triangle em{
+	display: inline-block;
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	position: absolute;
+}
+.setButtonTriangle{
+	border-color: transparent transparent #aaa transparent;
+	right: 12px;
+	top: -6px;
+	border-width: 0px 6px 6px;
+}
+.setButtonTriangle em{
+	border-color: transparent transparent #fbfcfd transparent;
+	left: -6px;
+	top: 1px;
+	border-width: 0px 6px 6px;
+}
+
+/* midWrap */
+.midWrap{
+	width: 25%;
+	height: 100%;
+	background-color: #fff;
+	border-right: 1px solid #dcdcdc;
+	float: left;
+	overflow: auto;
+}
+/* addNewArticle */
+.addNewArticle{
+	width: 100%;
+	height: 60px;
+	font-size: 1.2rem;
+	cursor: pointer;
+}
+.addNewArticle a{
+	padding: 20px 10px 20px 20px;
+	line-height: 20px;
+}
+.addNewArticle a:hover{
+	color: #000;
+}
+.addNewArticleSign:before{
+	display: inline;
+	content: '\e610';
+	font-size: 1.6rem;
+}
+/* articles */
+.articles{
+	width: 100%;
+	padding: 20px 20px 5px 50px;
+
+	position: relative;
+	border-top: 1px solid #dcdcdc;
+	border-left: 5px solid;
+	cursor: pointer;
+}
+.articles:last-child{
+	border-bottom: 1px solid #dcdcdc;
+}
+.articlesSelected{
+	border-left-color: #3498e0;
+	background-color: #ececec;
+}
+.articlesSelected .articleIcon{
+	color: #999;
+}
+
+.articleIcon{
+	width: 22px;
+	height: 30px;
+	position: absolute;
+	line-height: 30px;
+	top: 30px;
+	left: 13px;
+	color: #dcdcdc;
+	text-align: center;
+}
+.articleIcon:before{
+	font-family: 'write';
+	content: '\e604';
+	font-size: 2.6rem;
+}
+.articlesTitle{
+	font-size: 1.8rem;
+	height: 50px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+
+}
+.articleDes{
+	font-size: 1.2rem;
+}
+/* articleSet 文章设置按钮 */
+.articlesSelected .articleSet{
+	display: block;
+}
+.articleSet{
+	position: absolute;
+	right: 10px;
+	top: 25px;
+	display: none;
+}
+.articleSetIcon:after{
+	content: '\e60c';
+	font-size: 1.6rem;
+	color: #999999;
+}
+.articleSetBox{
+	width: 200px;
+	border: 1px solid #ccc;
+	position: absolute;
+	right: -10px;
+	top: 30px;
+	background-color: #fff;
+	font-size: 1.4rem;
+	border-radius: 5px;
+
+	z-index: 101;
+}
+
+/* articleSetTriangle */
+.articleSetTriangle{
+	border-color: transparent transparent #aaa transparent;
+	right: 10px;
+	top: -8px;
+	border-width: 0px 8px 8px;
+}
+.articleSetTriangle em{
+	border-color: transparent transparent #fff transparent;
+	right: -8px;
+	top: 1px;
+	border-width: 0px 8px 8px;
+}
+.articleSetTypeBox{
+	text-align: center;
+}
+.articleSetType{
+	width: 100%;
+	height: 36px;
+	border-bottom: 1px solid #eee;
+}
+.articleSetType a{
+	line-height: 36px;
+}
+.articleSetType:last-child{
+	border-bottom: 0;
+}
+
+
+
+/* writeArea */
+.writeArea{
+	width: 59%;
+	height: 100%;
+	float: left;
+	padding-top: 20px;
+}
+.writeAreaBox {
+	height: 100%;
+	position: relative;
+	padding-top: 90px;
+}
+.writeTitleDiv{
+	width: 100%;
+	height: 40px;
+	position: absolute;
+	top: 0;
+}
+
+
+input, textarea{
+	border: 0;
+	font-family: '微软雅黑';
+	outline: none;
+}
+
+.writeTitle{
+	width: 100%;
+	font-size: 3.0rem;
+	padding: 0px 30px;
+	line-height: 30px;
+}
+
+.richTextBox{
+	width: 100%;
+	height: 100%;
+}
+
+/* controlPanel */
+.controlPanel{
+	position: absolute;
+	width: 100%;
+	top: 40px;
+}
+
+/* menu */
+.menu{
+	width: 45px;
+	height: 100%;
+
+	float: left;
+	cursor: pointer;
+	transition: background-color .3s;
+}
+.menu a{
+	height: 40px;
+	position: relative;
+}
+
+/* 字体设置 */
+.fontStrong:before{
+	content: '\e646';
+	color: #666;
+	font-size: 1.3rem;
+}
+.fontItalic:before{
+	content: '\e632';
+	color: #666;
+	font-size: 1.3rem;
+}
+.fontStrike:before{
+	content: '\e60a';
+	color: #666;
+	font-size: 1.8rem;
+}
+.fontQuote:before{
+	content: '\e62c';
+	color: #666;
+	font-size: 1.3rem;
+}
+.code{
+	padding-top: 2px;
+}
+.code:before{
+	content: '\e94b';
+	color: #333;
+	font-size: 1.6rem;
+}
+.menuFontH{
+	font-size: 1.6rem;
+	color: #666;
+}
+.menuFontH, .menuLink{
+	overflow: hidden;
+}
+.menuFontH a, .menuLink a{
+	background-color: #dedede;
+	transition: opacity .3s;
+}
+.menuFontH a:not(:first-child), .menuLink a:not(:first-child){
+	opacity: .3
+}
+
+/* link */
+.menuLink{
+	color: #000;
+}
+.linkFont:before{
+	content: '\e602';
+}
+.fontSplit:before{
+	content: '一';
+	font-size: 1.8rem;
+}
+.linkPic:before{
+	content: '\e62f';
+	font-size: 1.5rem;
+	color: #333;
+}
+
+/* menulist */
+.menulist{
+	width: 100%;
+	height: 40px;
+	background-color: #dedede;
+	text-align: center;
+	line-height: 40px;
+
+	margin-bottom: 0;
+	-webkit-padding-start: 0px;
+}
+
+.menuFontStyle{
+	width: 135px;
+}
+.menuFontStyle a{
+	width: 33.333333%;
+	height: 100%;
+	float: left;
+}
+/* fullscreen */
+.fullscreen:before{
+	content: '\e6ff';
+	color: #666;
+	font-size: 1.8rem;
+}
+.small:before{
+	content: '\e65b';
+}
+.changeShift:before{
+	content: '\e6a5';
+}
+/* saveWrite */
+.fr{
+	float: right;
+}
+.fl{
+	float: left;
+}
+.saveWrite:before{
+	content: '\e60f';
+	color: #333;
+	font-size: 1.6rem;
+}
+/* publishArticle */
+.publishArticle{
+	width: 80px;
+	height: 100%;
+	font-size: 1.4rem;
+	cursor: pointer;
+	color: #555;
+	position: relative;
+}
+
+.publishIconN:before{
+	font-family: 'write';
+	content: '\e620 ';
+}
+.publishIconY:before{
+	font-family: 'write';
+	content: '\e627';
+}
+.publishIconC:before{
+	font-family: 'write';
+	content: '\e684';
+}
+.publishIconHover{
+	display: inline-block;
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 102;
+	color: #fff;
+	background-color: #555;
+}
+
+/* controlWrite */
+.controlWriteBox{
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding: 20px 30px 0px 30px;
+}
+.controlWrite{
+	width: 100%;
+	height: 100%;
+	font-size: 1.6rem;
+	outline: none;
+	color: #2f2f2f;
+	word-break: break-word;
+	line-height: 1.5;
+	font-family:  "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+}
+.controlWrite p:first-child{
+	margin-top: 0px;
+}
+.controlWrite h1:first-child,
+.controlWrite h2:first-child,
+.controlWrite h3:first-child,
+.controlWrite h4:first-child {
+	margin-top: 0;
+}
+.controlWrite p{
+	margin: 25px 0px;
+}
+/* font */
+.fontface{
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-style: normal;
+	font-family: 'write';
+}
+
+/* 显示menu */
+.menu-show{
+	overflow: visible;
+}
+.menu-show a:not(:first-child) {
+	opacity: 1;
+}
+/* 被选中的menu */
+.menu .menu-active, .menu-active{
+	background-color: #555;
+	color: #fff;
+}
+.menu-active:before{
+	color: #fff;
+}
+
+/* modelBox */
+.modelBox{
+	width: 350px;
+	height:250px;
+
+	position: absolute;
+	padding: 30px;
+	top: 50%;
+	margin-top: -150px;
+	left: -5%;
+	text-align: center;
+	background-color: #fff;
+	border-top: 1px solid #f4f5f6;
+	box-shadow: 0px 5px 10px rgba(100, 100, 100, .3)
+}
+.modelBox h1{
+	margin-bottom: 20px;
+}
+/* 切换本地上传 */
+.switchLocal{
+	height: 20px;
+	margin-bottom: 10px;
+	text-align: left;
+	color: #ccc;
+}
+.switchLocal a{
+	display: inline-block;
+	cursor: pointer;
+	padding: 0px 10px;
+	color: #555;
+}
+/* 输入框或者上传按钮 */
+.inputBox, .updateBox{
+	height: 40px;
+	margin-bottom: 10px;
+	line-height: 40px;
+	position: relative;
+}
+.updateBox{
+	width: 100%;
+	background-color: #337ab7;
+	border-radius: 3px;
+	text-align: center;
+	font-size: 1.6rem;
+	color: #fff;
+	cursor: pointer;
+}
+.inputBox{
+	border: 1px solid #dedede;
+}
+.inputBoxNo{
+	border: 1px solid #df3434;
+}
+.updateBox input{
+	display: none;
+}
+/* 图标span */
+.iconSpan {
+	display: inline-block;
+	width: 35px;
+	height: 100%;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	border-right: 1px solid #dedede;
+}
+.iconSpanLink:before{
+	content: '\e602';
+	font-family: write;
+}
+.iconSpanWord:before{
+	content: 'A';
+	font-size: 1.4rem;
+}
+.modelInput{
+	width: 100%;
+	height: 100%;
+	padding-left: 45px;
+	position: absolute;
+	left: 0px;
+	font-size: 1.4rem;
+	color: #555;
+}
+.modelC{
+	width: 50px;
+	height: 20px;
+	display: inline-block;
+	cursor: pointer;
+	color: #555;
+	text-align: center;
+}
+
+.controlWrite a{
+	display: initial;
+	color: #4194d0;
+}
+.controlWrite img{
+	max-width: 100%;
+}
+/* uploadMessage */
+.uploadMessage{
+	position: absolute;
+	top: 50px;
+	left: 50%;
+	margin-left: -75px;
+	width: 150px;
+	height: 40px;
+	border-radius: 5px;
+	background-color: #5cb85c;
+	visibility: hidden;
+	opacity: 1;
+	transition: opacity .3s ease-out 1s;
+}
+
+/* 上传之后的页面 */
+.published{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #fff;
+	text-align: center;
+	z-index: 103;
+	transition: opacity .6s ease-out;
+}
+.publishedBox{
+	margin: 0 auto;
+	max-width: 560px;
+	padding-top: 80px;
+}
+.publishedClose{
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	border: 1px solid #fff;
+	top: 20px;
+	right: 20px;
+	line-height: 50px;
+	color: #888;
+	cursor: pointer;
+}
+.publishedClose:hover{
+	color: #333;
+}
+.rightIcon{
+	margin-right: 10px;
+}
+.rightIcon:before{
+	font-family: 'write';
+	content: '\e627';
+}
+.publishState{
+	width: 100%;
+	line-height: 30px;
+	height: 30px;
+	font-size: 22px;
+	color: #42c02e;
+}
+.blockItem{
+	background-color: rgba(200, 200, 200, .3);
+	border-radius: 5px;
+	width: 100%;
+	height: 200px;
+	padding: 10px 10px;
+}
+.blockItem h1{
+	font-size: 30px;
+	color: #333;
+}
+
+/* loadingComponent */
+.loadingBar{
+	width: 100%;
+	height: 100%;
+	background-color: #dedede;
+	position: relative;
+	transition: opacity .3s ease-out;
+}
+.loadingUl{
+	width: 200px;
+	height: 40px;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	line-height: 40px;
+	margin-left: -100px;
+	text-align: center;
+	font-size: 1.4rem;
+}
+.loadingUl li{
+	float: left;
+	width: 33.33%;
+	height: 100%;
+}
+.loadingIcon{
+	animation-name: 'loading';
+	animation-duration: 0.9s;
+	animation-iteration-count: infinite;
+	width: 100%;
+	height: 40px;
+	display: inline-block;
+}
+.loadingUl li:nth-child(2) .loadingIcon{
+	animation-delay: 0.3s;
+}
+.loadingUl li:nth-child(2) .loadingIcon{
+	animation-delay: 0.4s;
+}
+.loadingUl li:last-child .loadingIcon{
+	animation-delay: 0.5s;
+}
+.loadingIcon:before{
+	font-family: 'write';
+	content: '\e608';
+	color: #71c0e8;
+	display: inline-block;
+	width: 100%;
+	height: 40px;
+}
+.hidden{
+	opacity: 0;
+}
+
+/* 保存的状态 */
+.saveState{
+	height: 20px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding-right: 10px;
+	line-height: 20px;
+}
+
+
+.closeIcon:before{
+	font-family: 'write';
+	content: '\e684';
+	font-size: 3.0rem;
+}
+
+pre{
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	background-color: #f3f4f5;
+	line-height: 20px;
+	padding: 10px;
+	font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+	margin: 5px 0;
+	max-height: 440px;
+	overflow-y: auto;
+	word-break: break-all;
+	white-space: pre-wrap;
+}
+pre::-webkit-scrollbar{
+	width: 10px;
+    background-color: #f5f5f5;
+}
+pre::-webkit-scrollbar-button{
+	display: none;
+}
+pre::-webkit-scrollbar-track{
+    border-radius: 10px;
+    background-color: #f5f5f5;
+}
+pre::-webkit-scrollbar-track-piece{
+	background-color: #f3f4f5;
+}
+pre::-webkit-scrollbar-thumb{
+	height: 10px;
+    border-radius: 5px;
+    background-color: rgba(100, 100, 100, .8)
+}
+code{
+	padding: 5px;
+	line-height: 1.5;
+	display: block;
+	font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+}
+.fontInfoBox{
+	width: 200px;
+	height: 45px;
+	position: absolute;
+	bottom: 45px;
+	left: 50%;
+	margin-left: -100px;
+	text-align: center;
+	display: none;
+	transition: opacity .3s;
+	z-index: 102;
+}
+.fontInfoTriangle{
+	border-width: 4px 4px 0px 4px;
+	border-style: solid;
+	border-color: rgba(0, 0, 0, .8) transparent transparent;
+	vertical-align: top;
+	position: absolute;
+	top: 42px;
+	left: 50%;
+	margin-left: -6px;
+	transition: opacity .3s;
+	opacity: 0;
+}
+
+.fontInfo{
+	position: relative;
+	top: 5px;
+	padding: 8px 15px;
+	border-radius: 5px;
+	background-color: rgba(0, 0, 0, .8);
+	font-family: '微软雅黑';
+	color: #fff;
+	font-size: 1.4rem;
+	transition: opacity .3s;
+	opacity: 0;
+	
+}
+.menu-active .fontInfoBox{
+	display: block;
+}
+.menu-active .fontInfoTriangle{
+	opacity: 1;
+}
+.menu-active .fontInfo{
+	opacity: 1;
+}
+
+
+
+/* =================  fullScreen ================ */
+/* z-index > 110 */
+.fullScreen{
+	position: absolute;
+	width: 100%;
+	height: auto;
+	min-height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 110;
+	background-color: #dedede;
+	float: none;
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+.fullScreen .writeAreaBox{
+	width: 750px;
+	margin: 0 auto;
+	padding-top: 0;
+	height: auto;
+	background-color: #fff;
+}
+.fullScreen .writeTitleDiv{
+	padding: 30px 10px 10px 0px;
+	border-bottom: 1px solid #d6d6d6;
+	height: auto;
+	position: initial;
+}
+.fullScreen .writeTitle{
+	font-size: 3rem;
+	line-height: 40px;
+	color: #555;
+}
+.fullScreen .controlPanel{
+	position: fixed;
+	top: 0;
+	left: 0;
+	border-bottom: 1px solid #ccc;
+}
+.fullScreen .richTextBox{
+	height: auto;
+}
+.fullScreen .controlWriteBox{
+	height: auto;
+}
+.fullScreen .controlWrite{
+	min-height: 230px;
+	height: auto;
+}
+.fullScreen .saveState{
+	position: fixed;
+	top: 10px;
+	right: 180px;
+	z-index: 111;
+
+}
+.fullScreen .menuLink{
+	width: 120px;
+}
+.fullScreen .menuLink a{
+	float: left;
+	width: 40px;
+	opacity: 1;
+}
+.fullScreen .modelBox{
+	position: fixed;
+	left: 50%;
+	margin-left: -175px;
+}
+.controlWrite hr{
+	border: none;
+	border-top:1px solid #dedede;
+}
+/* write */
+@font-face {
+	font-family: 'write';
+	src: url('../../font/write/write.eot');
+	src: url('../../font/write/write.eot') format('embedded-opentype'),
+	url('../../font/write/write.woff') format('woff'),
+	url('../../font/write/write.ttf') format('truetype'),
+	url('../../font/write/write.svg') format('svg');
+}
+
+@keyframes loading{
+	from{ font-size: 1.4rem; opacity: 0}
+	to{ font-size: 3rem; opacity: 1}
+}

@@ -1,0 +1,59 @@
+extends ../layout
+block head
+	link(rel="stylesheet" href="/css/page/error.css")
+
+block content
+	.wrap
+		.movediv
+			.bg(style="top:-25px")
+				img(src="/pic/newmovediv/bg.png")
+			.xing(style="top: 0;margin-left:-250px;")
+				img(src="/pic/newmovediv/xing.png")
+			.ship1(style="top: 100px;right: 150px;")
+				img(src="/pic/newmovediv/ship1.png")
+			.ship2(style="top: 90px;left: 150px;")
+				img(src="/pic/newmovediv/ship2.png")
+		.container.clearfix(style="min-width:850px;padding-left: 300px;position:relative")
+			.errorPic
+				img(src="/pic/newmovediv/404.png")
+			.goBackIndex
+				h1.backInfo 哎呀！找不到页面啦！
+				a.backButton(href="/") 首页
+
+
+	script.
+		window.onmousemove = function(e) {
+			var x = e.clientX,
+				y = e.clientY;
+			var width = window.innerWidth,
+				height = window.innerHeight;
+			var bg = document.querySelector('.bg'),
+				xing = document.querySelector('.xing'),
+				ship1 = document.querySelector('.ship1'),
+				ship2 = document.querySelector('.ship2');
+			bgMove(bg, y, height);
+			xingMove(xing, x, y, width, height);
+			ship1Move(ship1, x, width);
+			ship2Move(ship2, x, width);
+		}
+		function bgMove(elm, y, height) {
+			var rangeTop = 8;
+			var top = y * 2 * rangeTop / height - rangeTop;
+			elm.style.top = -25 + top + 'px';
+		}
+		function xingMove(elm, x, y, width, height) {
+			var rangeTop = rangeLeft = 10;
+			var top = rangeTop - y * 2 * rangeTop / height;
+			var left = rangeLeft - x * 2 * rangeLeft / width;
+			elm.style.cssText = 'top:' + top + 'px;margin-left:' + (-250 + left) + 'px';
+		}
+		function ship1Move(elm, x, width) {
+			var rangeLeft = 5;
+			var left = rangeLeft - x * 2 * rangeLeft / width;
+			elm.style.right = 150 + left + 'px';
+		}
+		function ship2Move(elm, x, width) {
+			var rangeLeft = 5;
+			var left = x * 2 * rangeLeft / width - rangeLeft;
+			elm.style.left = 150 + left + 'px';
+		}

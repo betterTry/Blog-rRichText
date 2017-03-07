@@ -1,0 +1,50 @@
+nav.header
+	- var font = state.font;
+	- var family = state.family;
+	- var night = state.night;
+	.logo.fl
+		a(href="/")
+			img#logoImg(src="/pic/logo/logo.png")
+	#write.fr
+		a(href="/write") 
+			span.writeIcon #{font=='jian'?'写':'寫'}文章
+	#set.fr
+		a(href="#")
+			span.setIcon
+		.setModel(style="display:none")
+			.night
+				span 夜#{font=='jian'?'间':'間'}模式
+				.btn-group
+					span(class="nightOn #{night=='on'?'open':''}") #{font=='jian'?'开':'開'}
+					span(class="nightOff #{night=='on'?'':'open'}") #{font=='jian'?'关':'關'}
+			.btn-group.fFamily
+				span(class="song #{family=='song'?'open':''}") 宋
+				span(class="hei #{family=='hei'?'open':''}") 黑
+			.btn-group.fStyle
+				span(class="jian #{font=='jian'?'open':''}") #{font=='jian'?'简':'簡'}
+				span(class="fan #{font=='jian'?'':'open'}") 繁
+	.container
+		ul.navbar
+			li
+				.searchBox
+					form#search(action="/search")
+						input.searchInput(type="text",placeholder="搜索",name="kw")
+						label
+							span.searchIcon
+script.
+	(function(){
+		var searchInput = document.querySelector('.searchInput');
+		var searchIcon = document.querySelector('.searchIcon');
+		var form = document.querySelector('#search');
+		searchInput.onfocus = function() {
+			searchIcon.style.color = '#333';
+		}
+		searchInput.onblur = function() {
+			searchIcon.style.color = '#888';
+		}
+		searchIcon.onclick = function() {
+			form.submit();
+		}
+	})();
+	
+	
