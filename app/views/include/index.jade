@@ -37,7 +37,7 @@ block content
 							span yangsl
 							- var date = new Date(item.meta.updateAt);
 							- var year = date.getFullYear();
-							- var month = date.getMonth() + 1 > 9 ? date.getMonth() : '0'+date.getMonth();
+							- var month = date.getMonth() + 1 > 9 ? date.getMonth() : '0'+date.getMonth() + 1;
 							- var day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
 							- var time = year+'.'+month+'.'+day;
 							span.time #{time}
@@ -58,8 +58,12 @@ block content
 
 block foot
 	.foot
-		| 友情链接
-		a(href="http://yangsl.cn:3100") <电影小网站>
+		a(href="http://yangsl.cn:3100")
+			img(src="/pic/logo/movie.ico" )
+			span 电影小网站
+		a(href="https://github.com/betterTry")
+			img(src="/pic/logo/git.png")
+			span &nbsp;github
 	//- script(src="js/index.js")
 	script(src="js/reqwest.min.js")
 	script(src="/js/header.js")

@@ -485,6 +485,8 @@ class ControlWriteComponent extends React.Component {
 		} else {
 			var node = elm;
 		}
+		console.log('==')
+		console.log(node.parentNode)
 		while((node.parentNode.tagName !== 'DIV') && (node.parentNode.tagName !== par)) {
 			node = node.parentNode;
 		}
@@ -783,7 +785,7 @@ class ControlWriteComponent extends React.Component {
 			},
 			onIgnoreTag: function(tag, html, options) {
 				// return 的，全部替换;
-				if(/(div)|(ol)|(tbody)|(table)|(td)|(strong)|(ul)|(dl)|(span)|(em)|(label)|(code)|(small)|(select)|(dir)|(font)|(sup)|(tt)|(sub)|(abbr)|(acronym)|(cite)|(big)/i.test(tag)) {
+				if(/(div)|(ol)|(tbody)|(table)|(td)|(th)|(strong)|(ul)|(dl)|(span)|(em)|(label)|(code)|(small)|(select)|(dir)|(font)|(sup)|(tt)|(sub)|(abbr)|(acronym)|(cite)|(big)/i.test(tag)) {
 					return ''
 				}
 				// 否则全部escape;
@@ -835,9 +837,9 @@ class ControlWriteComponent extends React.Component {
 
 			} else { // 若不是纯文本,进行筛选;
 				
-
+	
 				var html = myxss.process(pasteWrite.innerHTML);
-				html = html.replace(/<p><\/p>/g,'').replace(/<p>(?=<p>)/g,'').replace(/<\/p>(?=<\/p>)/g, '');
+				html = html.replace(/<p><\/p>/g,'').replace(/<p>(?=<p>)/g,'').replace(/<\/p>(?=<\/p>)/g, '').replace(/<\w+?><\/\w+?>/,'')
 				
 				pasteWrite.innerHTML = html; // 让文本在paste中进行缓存;
 				var _hh = pasteWrite.innerHTML; // 缓存innerHTML对象;
@@ -846,7 +848,7 @@ class ControlWriteComponent extends React.Component {
 				selection.selectAllChildren(pasteWrite);
 				selection.collapseToEnd();
 				this.anchorNode = selection.anchorNode; // 重新记录anchorNode以及anchorOffset;
-				this.anchorOffset = selection.anchorOffset;
+				this.anchorOffset = selection.anchorOffset; // 此时都在paste中，用于重新确定位置;
 				
 				var childNodes = pasteWrite.childNodes;
 				var clength = childNodes.length;
@@ -894,23 +896,44 @@ class ControlWriteComponent extends React.Component {
 					
 				} else { // 如果是P,则将第一个P插入到原来中，其他的全部以节点加入;
 					console.log('IS P');
-					for(var i = 0; i < clength; i++) { // 插入到数组;
-						if(c[i].tagName !== 'P') { // 如果不是P标签, 换成P标签包裹;
-							var _c = c[i].cloneNode();
-							var p = document.createElement('p');
-							p.appendChild(_c);
-							frag.replaceChild(p, c[i]);
-							c[i] = p;
+					// 首先将br标签之前，p标签之后的元素全部放在一个P中;
+					var childNodes_cache = [];
+					for(var i = 0; i < clength; i++) {
+						var _cacheItem = c[i];
+						var _cacheFrag = document.createElement('p');
+						if(_cacheItem.tagName == 'P') {
+							var _cacheLength = childNodes_cache.length;
+
+							if(_cacheLength) {
+								var _cItem;
+								while(_cItem = childNodes_cache.shift()) {
+									_cacheFrag.appendChild(_cItem);
+								}
+
+								frag.insertBefore(_cacheFrag, _cacheItem)
+							}
+						} else if( _cacheItem.tagName == 'BR') {
+							var _cItem;
+							while(_cItem = childNodes_cache.shift()) {
+								_cacheFrag.appendChild(_cItem);
+							}
+							frag.replaceChild(_cacheFrag, _cacheItem);
+						} else {
+							childNodes_cache.push(_cacheItem)
 						}
-					
 					}
+
+					console.log(frag)
+					
 					
 					var firstNode = frag.removeChild(frag.firstChild); // paste节点的第一个节点;
 					var firstText = firstNode.innerHTML || firstNode.textContent;
-					this.addTextContent(anchorNode, offset, firstText); // 添加第一个节点的文本;
-				
+					var anchorNode = this.addTextContent(anchorNode, offset, firstText); // 添加第一个节点的文本;
+					
+
 					// 后面通过findNode找到元素，在其后面添加其他文本;
 					var currentNode = this.findNode(anchorNode, true);
+					
 					
 					var nextSibling = currentNode.nextSibling;
 					if(!nextSibling || currentNode.tagName == 'div') {
@@ -937,11 +960,14 @@ class ControlWriteComponent extends React.Component {
 		if(node.nodeType == 1) { // 第一段无缝添加;
 
 			node.innerHTML = value;
+			var _r = node;
 		} else if(node.nodeType == 3) {
 			var textContent = node.textContent;
+			var _r = node.parentNode;
+			_r.innerHTML = _r.innerHTML.replace(textContent, textContent.slice(0, offset) + value + textContent.slice(offset));
 
-			node.parentNode.innerHTML = node.parentNode.innerHTML.replace(textContent, textContent.slice(0, offset) + value + textContent.slice(offset));
 		}
+		return _r;
 	}
  
 	changeState(e) {
@@ -1013,6 +1039,7 @@ class ControlWriteComponent extends React.Component {
 			})
 		}
 	}
+
 
 	changeSave() {
 		var data = this.props.data, index = this.props.index;

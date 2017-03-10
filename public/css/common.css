@@ -362,12 +362,28 @@ img{
 	font-size: 1.4rem;
 	color: #666;
 	margin-bottom: 20px;
+	height: 30px;
+	line-height: 30px;
+
 }
 .foot a{
 	display: inline-block;
+	margin-left: 10px;
+	height: 100%;
+	vertical-align: top;
 }
 .foot a:hover{
 	color: #333;
+}
+.foot span{
+	vertical-align: top;
+}
+.foot img{
+	height: 100%;
+}
+.giticon{
+	color: #c6cbd1;
+	margin-top: 2px;
 }
 
 

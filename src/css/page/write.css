@@ -753,6 +753,8 @@ input, textarea{
 }
 .controlWrite img{
 	max-width: 100%;
+	margin: 0 auto;
+	display: block;
 }
 /* uploadMessage */
 .uploadMessage{
