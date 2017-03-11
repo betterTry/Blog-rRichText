@@ -485,8 +485,6 @@ class ControlWriteComponent extends React.Component {
 		} else {
 			var node = elm;
 		}
-		console.log('==')
-		console.log(node.parentNode)
 		while((node.parentNode.tagName !== 'DIV') && (node.parentNode.tagName !== par)) {
 			node = node.parentNode;
 		}
@@ -823,12 +821,15 @@ class ControlWriteComponent extends React.Component {
 			if(_h == pasteWrite.textContent) {
 				
 				var textContent = anchorNode.textContent;
-				var tlength = textContent.length;
+				var tlength = textContent.length; //要复制内容的长度;
 
 				var selection = document.getSelection();
 				if(textContent) {
+					console.log(textContent)
 					anchorNode.textContent = textContent.slice(0, offset)+_h+textContent.slice(offset);
-					selection.collapse(anchorNode, offset+tlength); // 光标定位;
+					
+					
+					selection.collapse(anchorNode, _h.length+offset); // 光标定位;
 				} else {
 					anchorNode.textContent = _h;
 					selection.collapse(anchorNode, 1);
@@ -922,9 +923,6 @@ class ControlWriteComponent extends React.Component {
 							childNodes_cache.push(_cacheItem)
 						}
 					}
-
-					console.log(frag)
-					
 					
 					var firstNode = frag.removeChild(frag.firstChild); // paste节点的第一个节点;
 					var firstText = firstNode.innerHTML || firstNode.textContent;
@@ -946,9 +944,9 @@ class ControlWriteComponent extends React.Component {
 				selection.collapse(this.anchorNode, this.anchorOffset);
 
 			}
-
-			pasteWrite.innerHTML = '';
 			
+			pasteWrite.innerHTML = '';
+			console.log(pasteWrite.innerHTML)
 		}.bind(this), 0)
 		
 	}
@@ -1318,6 +1316,7 @@ class ControlWriteComponent extends React.Component {
 							<a href="#" className="fontSplit" ref='fontSplit' onClick={(event) => {this.handleHr(event)}} onMouseOver={(event) => {this.handleMouseover(event, 'fontSplit')}} onMouseOut={(event) => {this.handleMouseout(event, 'fontSplit')}}><FontInfoComponent text="横线"/></a>
 							<a href="#" className="linkPic" ref='linkPic' onClick={(event) => {this.handlePic(event, 'pic')}} onMouseOver={(event) => {this.handleMouseover(event, 'linkPic')}} onMouseOut={(event) => {this.handleMouseout(event, 'linkPic')}}><FontInfoComponent text="添加图片	"/></a>
 						</li>
+						
 						<li className="menu fontface">
 							<a href="#" className="changeShift" ref="changeShift" onClick={(e) => {this.handleShift(e)}} onMouseOver={(event) => {this.handleMouseover(event, 'changeShift')}} onMouseOut={(event) => {this.handleMouseout(event, 'changeShift')}}><FontInfoComponent text="Shift+Enter/Enter"/></a>
 						</li>

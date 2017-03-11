@@ -137,6 +137,16 @@ gulp.task('clean', function(){
 		.pipe(clean());
 })
 
+gulp.task('compress', function (cb) {
+  pump([
+      gulp.src('public/react/*.js'),
+      uglify(),
+      gulp.dest('public/react')
+    ],
+    cb
+  );
+});
+
 
 
 
