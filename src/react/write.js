@@ -809,7 +809,8 @@ class ControlWriteComponent extends React.Component {
 				} else {
 					anchorNode.textContent = anchorNode.textContent.slice(0, offset) + content + anchorNode.textContent.slice(offset);
 				}
-				this.pre = 'false';
+				this.pre = false;
+				pasteWrite.innerHTML = '';
 				return;
 			}
 			
