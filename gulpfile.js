@@ -29,6 +29,11 @@ var plumber = require('gulp-plumber');//---------------错误
 
 var env = process.env.NODE_ENV || 'development';
 
+var log = function (content) {
+	content = '\x1B[32m' + content.replace('/Users/yangshanglin/www/Blog-rRichText/', '');
+	console.log('\x1B[33m------- ', content, '\x1B[33m -------');
+}
+
 var PATH = {
 	entry: 'src/main.js',
 	bundle: 'bundle.js',
@@ -68,8 +73,7 @@ gulp.task('css', function(){
 			.pipe(plumber())
 			.pipe(autoprefixer())
 			.pipe(gulp.dest(_path));
-
-		console.log('----------  ' + event.path + ' changed  ---------')
+		log(event.path);
 	}).on('change', reload)	
 })
 gulp.task('script', function(){
@@ -78,7 +82,7 @@ gulp.task('script', function(){
 	gulp.watch('src/js/**', function(event){
 		gulp.src(event.path)
 			.pipe(gulp.dest('public/js'));
-		console.log('----------  ' + event.path + ' changed  ---------')
+		log(event.path);
 	}).on('change', reload)
 			
 })
@@ -114,7 +118,7 @@ gulp.task('react', function(){
 			.pipe(gulp.dest(PATH.react));
 		reload();
 		file.forEach(function(value) {
-			console.log('------------ ' + value + ' update  -------------');
+			log(value);
 		})
 	})
 	.bundle()
