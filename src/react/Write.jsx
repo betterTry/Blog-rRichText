@@ -1,12 +1,11 @@
-// === React & ReactDOM
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import util from '../js/util';
-var xss = require('xss');
-var $ = {
+import {util} from '../libs';
+const $ = {
 	ajax: require('reqwest')
 }
+var xss = require('xss');
 
 class FontInfoComponent extends React.Component {
 	render() {

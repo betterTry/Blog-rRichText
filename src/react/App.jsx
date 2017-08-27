@@ -1,24 +1,14 @@
-
-// === React & ReactDOM
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// === React Component
-import MovedivComponent from './movediv';
-import MidAreaComponent from './article';
-import WriteComponent from './write';
+import MovedivComponent from './Movediv.jsx';
+import MidAreaComponent from './Article.jsx';
+import WriteComponent from './Write.jsx';
 
-
-// === util
-import util from '../js/util';
-//ajax
-var $ = {
+import {util} from '../libs';
+const $ = {
 	ajax: require('reqwest')
 }
-
-// ===
-// *** 组件首字母大写
-// ===
 
 class LoadingComponent extends React.Component {
 	constructor(){
@@ -770,5 +760,4 @@ class AppComponent extends React.Component {
 		)
 	}
 }
-
-ReactDOM.render(<AppComponent />, document.getElementById('app'));
+export default AppComponent;

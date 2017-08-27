@@ -30,7 +30,7 @@ var plumber = require('gulp-plumber');//---------------错误
 var env = process.env.NODE_ENV || 'development';
 
 var PATH = {
-	entry: 'src/react/App.js',
+	entry: 'src/main.js',
 	bundle: 'bundle.js',
 	react: 'public/react'
 }
@@ -52,9 +52,7 @@ gulp.task('nodemon', ['css', 'script', 'react'], function(cb){
 			started = true;
 		}
 	})
-	.on('restart', function() {
-		setTimeout(reload,  3000);
-	})
+	.on('restart', reload);
 })
 
 // watch
@@ -76,15 +74,9 @@ gulp.task('css', function(){
 })
 gulp.task('script', function(){
 	gulp.src('src/js/**')
-			.pipe(sourcemaps.init())
-			.pipe(plumber())
-			.pipe(sourcemaps.write('.'))
 			.pipe(gulp.dest('public/js'));
 	gulp.watch('src/js/**', function(event){
 		gulp.src(event.path)
-			.pipe(sourcemaps.init({loadMaps: true}))
-			.pipe(plumber())
-			.pipe(sourcemaps.write('.'))
 			.pipe(gulp.dest('public/js'));
 		console.log('----------  ' + event.path + ' changed  ---------')
 	}).on('change', reload)
@@ -94,12 +86,10 @@ gulp.task('script', function(){
 gulp.task('browser-Sync', ['nodemon'], function(){
 	setTimeout(function(){
 		browserSync.init({
-			proxy: 'http://localhost:3100',
-			browser: 'chrome',
-			port: 3000
+			proxy: 'localhost:3100',
+			port: 3200
 		})
 	}, 3000)
-	
 })
 
 // react
@@ -115,7 +105,7 @@ gulp.task('react', function(){
 		fullPaths: true
 	}), {delay: 1000});
 
-	return b.on('update', function(){
+	return b.on('update', function(file){
 		b.bundle()
 			.pipe(source(PATH.bundle))
 			.pipe(buffer())
@@ -123,7 +113,9 @@ gulp.task('react', function(){
 			.pipe(sourcemaps.write('.'))
 			.pipe(gulp.dest(PATH.react));
 		reload();
-		console.log('------------  update  -------------');
+		file.forEach(function(value) {
+			console.log('------------ ' + value + ' update  -------------');
+		})
 	})
 	.bundle()
 	.pipe(source(PATH.bundle))
@@ -133,7 +125,7 @@ gulp.task('react', function(){
 
 //clean : clean public;
 gulp.task('clean', function(){
-	return gulp.src(['public/css/*', 'public/js/*'], {read: false})
+	return gulp.src(['public/css/*', 'public/js/*', 'public/react/*'], {read: false})
 		.pipe(clean());
 })
 
@@ -146,7 +138,3 @@ gulp.task('compress', function (cb) {
     cb
   );
 });
-
-
-
-

@@ -142,4 +142,3 @@ var setCanvas = (function() {
 		}
 	}
 })();
-//# sourceMappingURL=canvas.js.map

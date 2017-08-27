@@ -34,4 +34,3 @@ var util = {
 	type: type
 };
 export default util;
-//# sourceMappingURL=util.js.map

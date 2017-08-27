@@ -83,7 +83,6 @@ img{
 	border-bottom: 1px solid #e7e7e7;
 	position: fixed;
 	z-index: 200;
-	-webkit-transition: opacity .5s ease-out, -webkit-transform .5s ease-out;
 	transition: opacity .5s ease-out, -webkit-transform .5s ease-out;
 	transition: transform .5s ease-out, opacity .5s ease-out;
 	transition: transform .5s ease-out, opacity .5s ease-out, -webkit-transform .5s ease-out;
@@ -163,7 +162,6 @@ img{
 	position: relative;
 	padding: 0px 35px 0px 20px;
 	top: 15px;
-	-webkit-transition: width .3s, border-color .3s;
 	transition: width .3s, border-color .3s;
 }
 

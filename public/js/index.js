@@ -88,4 +88,3 @@
 // 			img.star1(src=path,width=15,height=15,style="top:20px;left:-4px")
 // 			img.star1(src=path,width=8,height=8,style="top:175px;left:20px")
 // 			img.star1(src=path,width=8,height=8,style="top:10px;left:5px;")
-//# sourceMappingURL=index.js.map

@@ -1,8 +1,7 @@
-// === React & ReactDOM
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var $ = {
+const $ = {
 	ajax: require('reqwest')
 }
 
@@ -107,7 +106,6 @@ class AddNewArticleComponent extends React.Component {
 		)
 	}
 }
-
 
 class MidAreaComponent extends React.Component {
 	

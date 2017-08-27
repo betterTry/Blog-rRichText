@@ -53,8 +53,6 @@ body{
 	line-height: 1.8rem;
 	overflow: hidden;
 
-	-webkit-transition: height .3s ease-in-out;
-
 	transition: height .3s ease-in-out;
 }
 .addNewWork a{
@@ -193,8 +191,6 @@ body{
 	color: #555;
 	text-align: center;
 	display: block;
-
-	-webkit-transition: background-color .5s;
 
 	transition: background-color .5s;
 }
@@ -460,7 +456,6 @@ input, textarea{
 
 	float: left;
 	cursor: pointer;
-	-webkit-transition: background-color .3s;
 	transition: background-color .3s;
 }
 .menu a{
@@ -506,7 +501,6 @@ input, textarea{
 }
 .menuFontH a, .menuLink a{
 	background-color: #dedede;
-	-webkit-transition: opacity .3s;
 	transition: opacity .3s;
 }
 .menuFontH a:not(:first-child), .menuLink a:not(:first-child){
@@ -775,7 +769,6 @@ input, textarea{
 	background-color: #5cb85c;
 	visibility: hidden;
 	opacity: 1;
-	-webkit-transition: opacity .3s ease-out 1s;
 	transition: opacity .3s ease-out 1s;
 }
 
@@ -789,7 +782,6 @@ input, textarea{
 	background-color: #fff;
 	text-align: center;
 	z-index: 103;
-	-webkit-transition: opacity .6s ease-out;
 	transition: opacity .6s ease-out;
 }
 .publishedBox{
@@ -843,7 +835,6 @@ input, textarea{
 	height: 100%;
 	background-color: #dedede;
 	position: relative;
-	-webkit-transition: opacity .3s ease-out;
 	transition: opacity .3s ease-out;
 }
 .loadingUl{
@@ -961,7 +952,6 @@ code{
 	margin-left: -100px;
 	text-align: center;
 	display: none;
-	-webkit-transition: opacity .3s;
 	transition: opacity .3s;
 	z-index: 102;
 }
@@ -974,7 +964,6 @@ code{
 	top: 42px;
 	left: 50%;
 	margin-left: -6px;
-	-webkit-transition: opacity .3s;
 	transition: opacity .3s;
 	opacity: 0;
 }
@@ -988,7 +977,6 @@ code{
 	font-family: '微软雅黑';
 	color: #fff;
 	font-size: 1.4rem;
-	-webkit-transition: opacity .3s;
 	transition: opacity .3s;
 	opacity: 0;
 	

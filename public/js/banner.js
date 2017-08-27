@@ -31,4 +31,3 @@
 	
 
 })();
-//# sourceMappingURL=banner.js.map

@@ -1,8 +1,7 @@
-// === React & ReactDOM
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import util from '../js/util';
+import {util} from '../libs';
 
 class ImagesComponent extends React.Component {
 	render() {
@@ -10,6 +9,8 @@ class ImagesComponent extends React.Component {
 		var src = props.src;
 		var size = props.size;
 		var pos = props.pos;
+		
+
 		var node = [];
 		var transform = props.styleObj || '';
 		src.forEach(function(item, index){
@@ -22,7 +23,6 @@ class ImagesComponent extends React.Component {
 			<div style={{width:'100%',position:'absolute',top:0,left:0,transform:transform}}>{node}</div>
 		)
 	}
-	
 }
 
 class ImageComponent extends React.Component {
@@ -31,7 +31,7 @@ class ImageComponent extends React.Component {
 		var src = props.src;
 		var size = props.size;
 		var pos = props.pos;
-		
+
 		pos.transform = props.styleObj || '';
 		pos.position = 'absolute';
 		return (

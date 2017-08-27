@@ -148,4 +148,3 @@
 	}
 
 })(setCanvas);
-//# sourceMappingURL=header.js.map
