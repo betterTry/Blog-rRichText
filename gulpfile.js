@@ -101,12 +101,11 @@ gulp.task('react', function(){
 	var b = watchify(browserify({
 		entries: [PATH.entry],
 		transform: [
-			[babelify, {presets: ["es2015", "react"], sourceMaps: false}]
+			[babelify, {presets: ["es2015", "react"], sourceMaps: true}]
 		],
 		debug: true,
 		cache: {},
-		packageCache: {},
-		fullPaths: true
+		packageCache: {}
 	}), {delay: 1000});
 
 	return b.on('update', function(file){
