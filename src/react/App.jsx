@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import MovedivComponent from './Movediv.jsx';
 import MidAreaComponent from './Article.jsx';
 import WriteComponent from './Write.jsx';
+import InputComponent from './component/InputComponent.jsx';
 
 import {util} from '../libs';
 const $ = {
@@ -38,9 +39,9 @@ class LoadingComponent extends React.Component {
 			})
 		}.bind(this), 1500)
 	}
-	
+
 	render() {
-		
+
 		var state = this.state;
 		return(
 			<div className={"loadingBar"+(state.hidden?' hidden':'')} style={!this.state.display ? {display:'none'} :{}}>
@@ -132,46 +133,7 @@ class PublishedComponent extends React.Component {
 		)
 	}
 }
-class InputComponent extends React.Component {
-	
-	handleChange(e) {
-		var changeWorkInput = this.refs.changeWorkInput;
-		this.setState({
-			value: changeWorkInput.value
-		})
-	}
 
-	componentWillReceiveProps(nextProps) {
-		var open = nextProps.open;
-		this.setState({
-			value: nextProps.value
-		})
-		if(open) {
-			var changeWorkInput = this.refs.changeWorkInput;
-			setTimeout(function(){
-				changeWorkInput.select();
-			}, 0)
-		}
-	}
-
-	render() {
-
-		var state = this.state;
-		if(state) {
-			var value = state.value
-		}
-		return (
-			<div style={{marginTop:20,padding:20}}>
-				<label className="changeWorkLabel" htmlFor="changeWork">更改文集名</label>
-				<input className="changeWorkInput" name="changeWork" ref="changeWorkInput" value={value} onChange={this.handleChange.bind(this)}/>
-				<div style={{marginTop: 20}}>
-					<button className="changeWorkButton" onClick={this.props.changeWorkClose}>取消</button>
-					<button className="changeWorkButton" onClick={(e) => {this.props.renameWork(value)}}>确认</button>
-				</div>
-			</div>
-		)
-	}
-}
 
 class ChangeWorkComponent extends React.Component {
 
@@ -200,7 +162,7 @@ class ChangeWorkComponent extends React.Component {
 		var changeWorkInput = this.refs.InputComponent.refs.changeWorkInput;
 		this.props.renameWork(changeWorkInput.value);
 	}
-	
+
 	render() {
 		var open = this.props.open;
 		var value = this.props.default;
@@ -231,7 +193,7 @@ class AddNewWorkComponent extends React.Component {
 	constructor(props) {
 		super();
 		this.state = {
-			value: props.default,
+			value: '',
 			change: false,
 			styleObj: {
 				height: '50px'
@@ -267,7 +229,7 @@ class AddNewWorkComponent extends React.Component {
 		var name = this.state.value;
 		var props = this.props;
 		if(name == props.default) {
-			name = '新文集';	
+			name = '新文集';
 		}
 		$.ajax({
 			url: '/write/create/work?name=' + name,
@@ -294,7 +256,7 @@ class AddNewWorkComponent extends React.Component {
 					<span>新建文集</span>
 				</a>
 				<div className>
-					<input type="text" className="addNewWorkInput" onChange={this.handleChange.bind(this)} value={this.state.value} />
+					<input type="text" placeholder="文集名.." className="addNewWorkInput" onChange={this.handleChange.bind(this)} value={this.state.value} />
 					<div className="buttonGroup">
 						<button className="buttonItem buttonSubmit" onClick={this.handleNewWork.bind(this)}>提交</button>
 						<button className="buttonItem buttonCancel" onClick={this.handleClick.bind(this)}>取消</button>
@@ -304,7 +266,7 @@ class AddNewWorkComponent extends React.Component {
 		)
 	}
 }
- 
+
 class SetButtonComponent extends React.Component {
 	constructor() {
 		super();
@@ -403,7 +365,7 @@ class WorkTypeComponent extends React.Component {
 		var WorkType = this.refs.WorkType;
 		var leftWrap = document.getElementById('leftWrap');
 		var position = util.position(WorkType, leftWrap);
-		var left = e.clientX, top = e.clientY; 
+		var left = e.clientX, top = e.clientY;
 		this.position = {
 			left: left,
 			_left: position.left,
@@ -432,7 +394,7 @@ class WorkTypeComponent extends React.Component {
 			left: '',
 			top: ''
 		});
-		
+
 	}
 
 	mousemove(e) {
@@ -448,7 +410,7 @@ class WorkTypeComponent extends React.Component {
 		e.preventDefault();
 	}
 
-	
+
 	render() {
 		var styleObj = this.state;
 		return (
@@ -506,7 +468,7 @@ class LeftAreaComponent extends React.Component {
 		var works = [],
 			Types = this.props.data;
 		if(Types) {
-			Types.forEach(function(item, index) {	
+			Types.forEach(function(item, index) {
 				var selected = false;
 				if (this.props.selected === index) {
 					selected = true;
@@ -522,7 +484,7 @@ class LeftAreaComponent extends React.Component {
 						<span>回首页</span>
 					</a>
 				</div>
-				<AddNewWorkComponent default='文集名...' addNewWork={this.props.addNewWork}/>
+				<AddNewWorkComponent addNewWork={this.props.addNewWork}/>
 				{works}
 				<ChangeWorkComponent open={this.state.open} default={Types[this.props.selected]} changeWorkClose={this.changeWorkClose.bind(this)} renameWork={this.renameWork.bind(this)} />
 			</div>
@@ -582,7 +544,7 @@ class AppComponent extends React.Component {
 			}
 			state.articleSelected = length;
 			this.setState(state);
-			
+
 			this.getArticleContent(state, index, length);
 		}.bind(this)
 	}
@@ -592,10 +554,10 @@ class AppComponent extends React.Component {
 			var state = util.deepCopy(this.state);
 			state.articleSelected = index;
 			this.setState(state);
-			
+
 			var selected = state.selected;
 			var articleSelected = state.articleSelected;
-			
+
 			this.getArticleContent(state, selected, index);
 
 		}.bind(this)
@@ -668,7 +630,7 @@ class AppComponent extends React.Component {
 		if( j == length - 1) {
 			state.articleSelected = j - 1;
 		}
-		articles.splice(j, 1); 
+		articles.splice(j, 1);
 		this.setState(state);
 		this.getArticleContent(state, i, j - 1);
 	}
