@@ -1,0 +1,25 @@
+extends ../layout
+block head
+	link(href="/css/page/login.css",rel="stylesheet")
+
+block content
+	.wrap
+		.head
+			.logo
+			.name orang
+		.body
+			.username
+				input(type="input", class="formInput", placeholder="用户名")
+				span.status
+				.border-bottom
+			.password
+				input(type="password", class="formInput", placeholder="密码")
+				span.status
+				.border-bottom
+			.tip
+				a(href="javascript:;") 忘记密码?
+				//- | 您已阅读#[a 《相关须知》]
+			.loginButton 
+				button 登录
+		
+	script(src="/js/login.js")

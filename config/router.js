@@ -2,7 +2,7 @@
 var main = require('../app/controllers/main');
 var article = require('../app/controllers/article');
 var update = require('../app/controllers/update');
-
+var login = require('../app/controllers/login');
 
 module.exports = function(router){
 
@@ -13,6 +13,9 @@ module.exports = function(router){
 	router.get('/article/:id', main.article);
 	// 搜索文章
 	router.get('/search', main.search);
+
+	// login;
+	router.get('/login', login.login);
 
 	// write;
 	router.get('/write', article.get);
@@ -40,8 +43,6 @@ module.exports = function(router){
 	// 修改文集;
 	router.post('/write/rework', article.rework)
 
-
-	
 
 
 

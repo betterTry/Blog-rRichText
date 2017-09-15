@@ -1,6 +1,6 @@
 npm-debug.log*
 node_modules
 .npm
-public
+public/react
 .DS_Store*
 .idea/

@@ -105,7 +105,7 @@ img{
 #logoImg{
 	height: 100%;
 }
-#write, #set{
+#write, #set, #login {
 	height: 40px;
 	line-height: 40px;
 	border-radius: 5px;
@@ -131,6 +131,14 @@ img{
 }
 #set:hover{
 	color: #555;
+}
+#login {
+	margin: 15px 0 0 0;
+	.signIn, .signUp {
+		color: #666;
+		padding: 0 10px;
+		font-size: 1.4rem;
+	}
 }
 
 .writeIcon:before{
@@ -168,7 +176,7 @@ img{
 	position: absolute;
 	border: none;
 	font-size: 1.4rem;
-	background-color: transparent; 
+	background-color: transparent;
 }
 
 .searchIcon{
@@ -296,7 +304,7 @@ img{
 	border: 1px solid #e4e5e6;
 	display: inline-block;
 }
-.btn-group .nightOn, 
+.btn-group .nightOn,
 .btn-group .nightOff{
 	padding-left: 15px;
 	padding-right: 15px;

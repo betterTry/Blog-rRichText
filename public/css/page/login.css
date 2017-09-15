@@ -1,0 +1,105 @@
+body {
+  background-color: #e5e6e7; }
+
+.wrap {
+  width: 400px;
+  height: 500px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background-color: #fff;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1.4rem; }
+  .wrap .head {
+    height: 180px;
+    border-bottom-left-radius: 3px;
+    background: #1a5694;
+    background: -webkit-gradient(linear, left bottom, right top, from(#518ba3), to(#1a9487));
+    box-shadow: 0 8px 6px -6px #828282;
+    color: #fff;
+    padding-top: 20px;
+    text-align: center; }
+    .wrap .head .logo {
+      height: 100px;
+      background: url("/pic/logo/orang.png") center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin: 0 0 10px;
+      padding-top: 20px; }
+    .wrap .head .name {
+      font-size: 2.4rem; }
+  .wrap .body {
+    padding: 50px 30px 30px; }
+  .wrap .username, .wrap .password {
+    width: 100%;
+    height: 40px;
+    padding-left: 5px;
+    padding-right: 20px;
+    position: relative; }
+    .wrap .username input, .wrap .password input {
+      width: 100%;
+      height: 100%; }
+    .wrap .username input::-webkit-input-placeholder, .wrap .password input::-webkit-input-placeholder {
+      color: #aaa; }
+    .wrap .username span.status, .wrap .password span.status {
+      display: none;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 10px;
+      right: 0px;
+      text-align: center;
+      cursor: pointer; }
+      .wrap .username span.status::before, .wrap .password span.status::before {
+        font-family: icon;
+        content: '\e617';
+        font-size: 1rem; }
+      .wrap .username span.status.wrong::before, .wrap .password span.status.wrong::before {
+        content: '\e60a';
+        color: #bf5270;
+        font-size: 1.6rem; }
+    .wrap .username .border-bottom, .wrap .password .border-bottom {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #ddd; }
+    .wrap .username.bottomColor .border-bottom, .wrap .password.bottomColor .border-bottom {
+      background-color: #3198d4;
+      box-shadow: 0 2px 5px rgba(49, 152, 212, 0.5); }
+    .wrap .username.bgRed .border-bottom, .wrap .password.bgRed .border-bottom {
+      background-color: #bf5270;
+      box-shadow: 0 2px 5px rgba(195, 19, 101, 0.5); }
+  .wrap .password {
+    margin-top: 20px; }
+  .wrap .tip {
+    color: #888;
+    font-size: 1.2rem;
+    text-align: right;
+    margin-top: 20px; }
+    .wrap .tip a {
+      display: inline;
+      color: #3498e0; }
+  .wrap .loginButton {
+    width: 100%;
+    height: 35px;
+    border-radius: 5px;
+    text-align: center;
+    background: #1a5694;
+    background: -webkit-gradient(linear, left bottom, right top, from(#518ba3), to(#1a9487));
+    line-height: 35px;
+    cursor: pointer;
+    margin-top: 20px; }
+    .wrap .loginButton:hover {
+      background: #518ba3; }
+    .wrap .loginButton button {
+      background: none;
+      color: #fff;
+      border: 0; }
+  .wrap input {
+    border: 0; }

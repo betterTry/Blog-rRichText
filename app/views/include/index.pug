@@ -2,10 +2,10 @@ extends ../layout
 block head
 	link(href="/css/page/index.css",rel="stylesheet")
 block header
-	include header.jade
+	include header.pug
 	a.moveToT(href="#" style="display:none")
 		span.moveToTIcon
-		
+
 block content
 	canvas#bg-canvas(width=1366,height=1075)
 	script(src="/js/canvas.js")
@@ -42,16 +42,16 @@ block content
 							- var time = year+'.'+month+'.'+day;
 							span.time #{time}
 					- var haveImg = item.thumbnail ? ' haveImg' : '';
-					div(class="articleBody#{haveImg}")
+					div(class='articleBody'+ haveImg)
 						h1.articleTitle
-							a(href="/article/#{item._id}")
+							a(href='/article/' + item._id)
 								| #{item.name}
 						.articleContent
 							p #{item.text}
 						if item.thumbnail
 							.articleImg
-								a(href="/article/#{item._id}")
-									img(src="#{item.thumbnail}")
+								a(href='/article/' + item._id)
+									img(src=item.thumbnail)
 		if length > articles.length
 			.addMoreBox
 				a(href="javascript:;")#addMore 加载更多
@@ -65,7 +65,7 @@ block foot
 			img(src="/pic/logo/git.png")
 			span &nbsp;github
 	//- script(src="js/index.js")
-	script(src="js/reqwest.min.js")
+	script(src="https://cdn.bootcss.com/reqwest/2.0.5/reqwest.min.js")
 	script(src="/js/header.js")
 	script(src="/js/banner.js")
 	script.
@@ -90,7 +90,7 @@ block foot
 										})
 										var addMoreBox = document.querySelector('.addMoreBox');
 										addMoreBox.parentNode.insertBefore(addMoreBox); //插入;
-									} 
+									}
 									i++;
 								}
 							}
@@ -147,13 +147,6 @@ block foot
 				}
 
 				elm.appendChild(node);
-				
+
 			}
 		})(reqwest);
-		
-	
-
-	
-		
-
-

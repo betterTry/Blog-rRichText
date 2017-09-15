@@ -13,13 +13,12 @@ html
 		- var family = state.family;
 		- var night = state.night;
 		- var className = (family=='hei'?'fhei':'fsong') + (night=='on'?' nightModel':'');
-	body(class="#{className?className:''}")
+	body(class=className ? className : '')
 		block header
 		block content
 		if night == 'on'
 			script.
 				setCanvas();
-				console.log()
 
 		block foot
 		

@@ -10,6 +10,8 @@ var watch = require('gulp-watch');//-------------------watch
 var browserSync = require('browser-sync').create();//--browserSync
 var reload = browserSync.reload;//---------------------reload
 var minifycss = require('gulp-minify-css');//----------minify-css
+var sass = require('gulp-sass');
+var babel = require('gulp-babel');
 
 var uglify = require('gulp-uglify');//-----------------uglify
 var pump = require('pump');//--------------------------pump;
@@ -47,7 +49,7 @@ gulp.task('nodemon', ['css', 'script', 'react'], function(cb){
 	var started = false;
 	nodemon({
 		script: 'app.js',
-		ext: 'js jade css',
+		ext: 'js pug css scss',
 		env: {'NODE_ENV': 'development'},
 		ignore: ['node_modules/**', 'public/**', 'src/**'],
 	})
@@ -57,34 +59,44 @@ gulp.task('nodemon', ['css', 'script', 'react'], function(cb){
 			started = true;
 		}
 	})
-	.on('restart', reload);
+	.on('restart', function() {
+		setTimeout(reload, 1000);
+	});
 })
 
 // watch
 gulp.task('css', function(){
-	
+
     gulp.src('src/css/**')
-			.pipe(plumber())
 			.pipe(autoprefixer())
+			.pipe(plumber())
+			.pipe(sass())
 			.pipe(gulp.dest('public/css'));
 	gulp.watch('src/css/**', function(event){
 		var _path = path.dirname(event.path.replace('src','public'));
 		gulp.src(event.path)
 			.pipe(plumber())
 			.pipe(autoprefixer())
+			.pipe(sass())
 			.pipe(gulp.dest(_path));
 		log(event.path);
-	}).on('change', reload)	
+	}).on('change', reload)
 })
 gulp.task('script', function(){
 	gulp.src('src/js/**')
+			.pipe(babel({
+				presets: ['es2015'],
+			}))
 			.pipe(gulp.dest('public/js'));
 	gulp.watch('src/js/**', function(event){
 		gulp.src(event.path)
+			.pipe(babel({
+				presets: ['es2015'],
+			}))
 			.pipe(gulp.dest('public/js'));
 		log(event.path);
 	}).on('change', reload)
-			
+
 })
 
 gulp.task('browser-Sync', ['nodemon'], function(){

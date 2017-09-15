@@ -54,7 +54,7 @@ app.use(function *(next) {
 })
 
 app.use(views(__dirname + '/app/views' , {
-	extension : 'jade'
+	extension : 'pug'
 }))
 
 app.keys = ['mxysl'];
@@ -63,7 +63,7 @@ app.use(bodyParser({formLimit:'300kb'}))
 
 // app.use(function *(next){
 // 	var user = this.session.user;
-	
+
 // 	if(user && user._id){
 // 		this.session.user = yield User.findOne({_id : user._id}).exec();
 // 		this.state.user = this.session.user;
@@ -83,4 +83,3 @@ app
 app.listen(3100);
 
 console.log('listening at PORT 3100...')
-

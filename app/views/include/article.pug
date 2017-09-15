@@ -2,7 +2,7 @@ extends ../layout
 block head
 	link(href="/css/page/article.css",rel="stylesheet")
 block header
-	include header.jade
+	include header.pug
 	a.moveToT(href="#" style="display:none")
 		span.moveToTIcon
 		
@@ -31,7 +31,7 @@ block content
 				.time
 					span #{time}
 		.content
-			!{article.content}
+			| !{article.content}
 			.copyright
 				span.fr © 著作#{font == 'jian'?'权归':'權歸'}作者所有
 block foot

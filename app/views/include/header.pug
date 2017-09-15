@@ -8,6 +8,9 @@ nav.header
 	#write.fr
 		a(href="/write") 
 			span.writeIcon #{font=='jian'?'写':'寫'}文章
+	#login.fr
+		a.signUp.fr(href="javascript:;") 注册
+		a.signIn.fr(href="javascript:;") 登录
 	#set.fr
 		a(href="#")
 			span.setIcon
@@ -15,14 +18,14 @@ nav.header
 			.night
 				span 夜#{font=='jian'?'间':'間'}模式
 				.btn-group
-					span(class="nightOn #{night=='on'?'open':''}") #{font=='jian'?'开':'開'}
-					span(class="nightOff #{night=='on'?'':'open'}") #{font=='jian'?'关':'關'}
+					span(class='nightOn ' + (night=='on'?'open':'')) #{font=='jian'?'开':'開'}
+					span(class='nightOff ' + (night=='on'?'':'open')) #{font=='jian'?'关':'關'}
 			.btn-group.fFamily
-				span(class="song #{family=='song'?'open':''}") 宋
-				span(class="hei #{family=='hei'?'open':''}") 黑
+				span(class='song ' + (family == 'song' ? 'open' : '')) 宋
+				span(class='hei ' + (family == 'hei' ? 'open' : '')) 黑
 			.btn-group.fStyle
-				span(class="jian #{font=='jian'?'open':''}") #{font=='jian'?'简':'簡'}
-				span(class="fan #{font=='jian'?'':'open'}") 繁
+				span(class='jian ' + (font == 'jian' ? 'open' : '')) #{font=='jian'?'简':'簡'}
+				span(class='fan ' + (font == 'jian' ? '':'open')) 繁
 	.container
 		ul.navbar
 			li
