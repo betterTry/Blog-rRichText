@@ -2,17 +2,39 @@ nav.header
 	- var font = state.font;
 	- var family = state.family;
 	- var night = state.night;
+	- var user = state.user;
 	.logo.fl
 		a(href="/")
 			img#logoImg(src="/pic/logo/logo.png")
 	#write.fr
 		a(href="/write") 
 			span.writeIcon #{font=='jian'?'写':'寫'}文章
-	#login.fr
-		a.signUp.fr(href="javascript:;") 注册
-		a.signIn.fr(href="javascript:;") 登录
+	if user
+		#head.fr
+			.headImg
+				img(src=user.head)
+			.userInfoBox
+				.logOut 登出
+				.userHead
+					img(src=user.head)
+				.userName #{user.name}
+				.levelBox
+					span.levelText lv100
+					span.level 100%
+				.funclist
+					.manCenter
+						| 个人中心
+					.sysMessage
+						| 消息
+					.other
+						| 待开放
+				
+	else
+		#login.fr
+			a.signUp.fr(href="javascript:;") 注册
+			a.signIn.fr(href="/login") 登录
 	#set.fr
-		a(href="#")
+		a(href="javascript:;")
 			span.setIcon
 		.setModel(style="display:none")
 			.night

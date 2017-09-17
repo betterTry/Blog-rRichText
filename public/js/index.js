@@ -1,6 +1,4 @@
-'use strict';
-
-(function () {
+(function() {
 	var movediv = document.querySelector('.movediv');
 	var moon = document.querySelector('.moon');
 	var flight = document.querySelector('.flight');
@@ -9,67 +7,67 @@
 	var rocket = document.querySelector('.rocket');
 	var starBox = document.querySelector('.starBox');
 
-	movediv.onmousemove = function (e) {
+	movediv.onmousemove = function(e) {
 		var _getPos = getPos(),
-		    pagePos = _getPos.pagePos(e),
-		    offset = _getPos.offset(e.currentTarget);
+			pagePos = _getPos.pagePos(e),
+			offset = _getPos.offset(e.currentTarget);
 		var posX = pagePos.x - offset.x,
-		    posY = pagePos.y - offset.y;
+			posY = pagePos.y - offset.y;
 		move(moon, posX, posY, 10, 10);
 		move(flight, posX, posY, 20, 0);
 		move(flyStar, posX, posY, 20, 5);
 		move(land, posX, posY, 3, 3, true);
 		move(rocket, posX, posY, 0, 20);
 		move(starBox, posX, posY, 3, 3);
-	};
+	}
 
 	function getPos() {
-		var pagePos = function pagePos(e) {
+		var pagePos = function(e) {
 			var e = e || window.event;
 			var pageX, pageY;
-			if (e.pageX) {
+			if(e.pageX) {
 				pageX = e.pageX;
 				pageY = e.pageY;
 			} else {
 				var scrollTop = document.documentElement.scrollTop || document.body.scrollTop,
-				    scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+					scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
 				var clientX = e.clientX,
-				    clientY = e.clientY;
+					clientY = e.clientY;
 				pageX = scrollLeft + clientX;
 				pageY = scrollTop + clientY;
 			}
 			return {
 				x: pageX,
 				y: pageY
-			};
+			}
 		};
-		var offset = function offset(elm) {
-			var offsetX = 0,
-			    offsetY = 0;
+		var offset = function(elm) {
+			var offsetX = 0, offsetY = 0;
 			do {
 				offsetX += elm.offsetLeft;
 				offsetY += elm.offsetTop;
-			} while ((elm = elm.offsetParent) && elm.tagName !== 'BODY');
+			} while ((elm = elm.offsetParent) && (elm.tagName !== 'BODY'))
 			return {
 				x: offsetX,
 				y: offsetY
-			};
+			}
 		};
 		return {
 			pagePos: pagePos,
 			offset: offset
-		};
+		}
 	}
+
 
 	function move(elm, posX, posY, left, top, down) {
 		var w = movediv.scrollWidth / 2,
-		    h = movediv.scrollHeight / 2;
+			h = movediv.scrollHeight / 2;
 		var i = 1;
-		if (down) {
+		if(down) {
 			i = -1;
 		}
 		var x = i * (left * posX / w - left),
-		    y = i * (top * posY / h - top);
+			y = i * (top * posY / h - top);
 		elm.style.cssText = 'transform:translateX(' + x + 'px) translateY(' + y + 'px)';
 	}
 })();

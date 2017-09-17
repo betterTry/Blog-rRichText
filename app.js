@@ -61,18 +61,23 @@ app.keys = ['mxysl'];
 app.use(session(app))
 app.use(bodyParser({formLimit:'300kb'}))
 
-// app.use(function *(next){
-// 	var user = this.session.user;
-
-// 	if(user && user._id){
-// 		this.session.user = yield User.findOne({_id : user._id}).exec();
-// 		this.state.user = this.session.user;
-// 	}
-// 	else{
-// 		this.state.user = null
-// 	}
-// 	yield next;
-// })
+var User = require('./app/models/user');
+app.use(function *(next){
+	var user = this.session.user;
+	if(user){
+		var _user = yield User.findOne({_id : user}).exec();
+		if (_user) {
+			this.session.user = _user._id;
+			this.state.user = _user;
+		} else {
+			this.session.user = null;
+		}
+	}
+	else{
+		this.state.user = null
+	}
+	yield next;
+})
 
 //引入router,并且执行;
 require('./config/router')(router);

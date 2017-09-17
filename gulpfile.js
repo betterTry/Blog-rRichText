@@ -45,7 +45,7 @@ gulp.task('default', ['browser-Sync'],function(){
 })
 
 // nodemon : reload server and run tasks(script&styles); (react任务取消)
-gulp.task('nodemon', ['css', 'script', 'react'], function(cb){
+gulp.task('nodemon', ['css', 'script', 'scriptES2015', 'react'], function(cb){
 	var started = false;
 	nodemon({
 		script: 'app.js',
@@ -67,11 +67,11 @@ gulp.task('nodemon', ['css', 'script', 'react'], function(cb){
 // watch
 gulp.task('css', function(){
 
-    gulp.src('src/css/**')
-			.pipe(autoprefixer())
-			.pipe(plumber())
-			.pipe(sass())
-			.pipe(gulp.dest('public/css'));
+  gulp.src('src/css/**')
+		.pipe(autoprefixer())
+		.pipe(plumber())
+		.pipe(sass())
+		.pipe(gulp.dest('public/css'));
 	gulp.watch('src/css/**', function(event){
 		var _path = path.dirname(event.path.replace('src','public'));
 		gulp.src(event.path)
@@ -83,12 +83,22 @@ gulp.task('css', function(){
 	}).on('change', reload)
 })
 gulp.task('script', function(){
-	gulp.src('src/js/**')
+	gulp.src('src/js/!(login).js')
+			.pipe(gulp.dest('public/js'));
+	gulp.watch('src/js/!(login).js', function(event){
+		gulp.src(event.path)
+			.pipe(gulp.dest('public/js'));
+		log(event.path);
+	}).on('change', reload)
+
+})
+gulp.task('scriptES2015', function(){
+	gulp.src('src/js/login.js')
 			.pipe(babel({
 				presets: ['es2015'],
 			}))
 			.pipe(gulp.dest('public/js'));
-	gulp.watch('src/js/**', function(event){
+	gulp.watch('src/js/login.js', function(event){
 		gulp.src(event.path)
 			.pipe(babel({
 				presets: ['es2015'],

@@ -129,7 +129,8 @@ body {
   border-bottom-right-radius: 8px; }
 
 .changeLeft:before {
-  content: '\e6c2';
+  content: '\e636';
+  font-size: 2.4rem;
   line-height: 70px; }
 
 .changeRight {
@@ -138,7 +139,8 @@ body {
   border-bottom-left-radius: 8px; }
 
 .changeRight:before {
-  content: '\e649';
+  content: '\e637';
+  font-size: 2.4rem;
   line-height: 70px; }
 
 /* =================== addMore ====================*/

@@ -18,7 +18,7 @@ exports.init = function *(next) {
 							.exec();
 	var id = data[0].articles[0]._id
 	var article = yield Article.findOne({_id: id}, 'content publish')
-	
+
 	this.response.body = {
 		success: 1,
 		data: data,
@@ -40,11 +40,11 @@ exports.save = function *(next) {
 	} catch(err) {
 		var success = 0;
 	}
-	
+
 	this.response.body = {
 		success: success
 	}
-	
+
 }
 
 exports.removeArticle = function *(next) {
@@ -55,10 +55,9 @@ exports.removeArticle = function *(next) {
 		var work = yield Work.findOne({_id: workId});
 		var articles = work.articles;
 		articles.splice(articles.indexOf(id), 1);
-		
+
 		var success = 1;
 	} catch(err) {
-		console.log('1');
 		var success = 0;
 	}
 	this.response.body = {
@@ -95,7 +94,7 @@ exports.publish = function *(next) {
 	if(img.indexOf('http://localhost:3000') == 0) {
 		img = img.replace(/normal/,'thumbnail');
 	}
-	
+
 	var response = {};
 	try {
 		var article = yield Article.findOne({_id: articleId}).exec();
@@ -114,7 +113,7 @@ exports.publish = function *(next) {
 		console.log(err);
 	}
 	this.response.body = response;
-	
+
 }
 
 exports.cpublish = function *(next) {
@@ -131,7 +130,7 @@ exports.cpublish = function *(next) {
 	this.response.body = {
 		success: success
 	}
-	
+
 }
 
 exports.find = function *(next) {
@@ -216,4 +215,4 @@ exports.rework = function *(next) {
 		success: success
 	}
 
-}	
+}

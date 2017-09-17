@@ -1,6 +1,5 @@
 (function(){
 	var top = 0;
-	
 	window.onscroll = function(e) {
 		var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
 		var header = document.querySelector('.header');
@@ -17,8 +16,7 @@
 			header.style.cssText = 'transform:translateY(0);opacity:1';
 		}
 		top = scrollTop;
-		
-		
+
 		var moveToT = document.querySelector('.moveToT');
 		// 火箭;
 		if(scrollTop >= 450) {
@@ -28,22 +26,7 @@
 		}
 	}
 
-
-	var set = document.getElementById('set');
 	var setModel = document.querySelector('.setModel');
-
-	var t;
-	set.onclick = function(e) {
-		var className = setModel.className;
-		if(className.indexOf('show') > 0) {
-			setModel.className = className.replace(/ show/, '');
-			setModel.style.display = 'none';
-		} else {
-			setModel.className += ' show';
-			setModel.style.display = 'block';
-		}
-	}
-
 	var sets = document.querySelectorAll('.nightOn, .nightOff, .song, .hei, .jian, .fan');
 	var moon = document.querySelector('.night>span');
 	var nightOn = sets[0],
@@ -148,3 +131,70 @@
 	}
 
 })(setCanvas);
+
+(function() {
+	var set = document.getElementById('set');
+	var setModel = set.querySelector('.setModel');
+	var setShow = false;
+	set.onclick = function(e) {
+		if(setShow) {
+			setModel.style.display = 'none';
+			setShow = false;
+		} else {
+			setModel.style.display = 'block';
+			e.stopPropagation();
+			window.addEventListener('click', hideSetModel)
+			setShow = true;
+		}
+		if (headShow) {
+			userInfoBox.style.display = 'none';
+			headShow = false;
+		}
+	}
+	setModel.onclick = function(e) {e.stopPropagation()};
+	function hideSetModel(e) {
+		if (e.target.className !== 'setModel') {
+			setModel.style.display = 'none';
+			setShow = false;
+			window.removeEventListener('click', hideSetModel);
+		}
+	}
+
+	var head = document.querySelector('#head');
+	if (head) {
+		var userInfoBox = head.querySelector('.userInfoBox');
+		var logOut = userInfoBox.querySelector('.logOut');
+		var headShow = false;
+		head.onclick = function(e) {
+			if (headShow) {
+				userInfoBox.style.display = 'none';
+				headShow = false;
+			} else {
+				userInfoBox.style.display = 'block';
+				headShow = true;
+				e.stopPropagation();
+				window.addEventListener('click', hide);
+			}
+			if (setShow) {
+				setModel.style.display = 'none';
+				setShow = false;
+			}
+		};
+		userInfoBox.onclick = function(e) {e.stopPropagation();}
+		logOut.onclick = function() {
+			reqwest({
+				url: '/user/logOut',
+				success: function(response) {
+					if (response.code === 0) location.pathname = '/';
+				}
+			});
+		}
+		function hide(e) {
+			if (e.target.className !== 'userInfoBox') {
+				userInfoBox.style.display = 'none';
+				headShow = false;
+				window.removeEventListener('click', hide);
+			}
+		}
+	}
+})();

@@ -7,8 +7,6 @@
 	var rocket = document.querySelector('.rocket');
 	var starBox = document.querySelector('.starBox');
 
-
-
 	movediv.onmousemove = function(e) {
 		var _getPos = getPos(),
 			pagePos = _getPos.pagePos(e),

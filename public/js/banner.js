@@ -1,8 +1,6 @@
-'use strict';
-
-(function () {
+(function() {
 	var changeLeft = document.querySelector('.changeLeft'),
-	    changeRight = document.querySelector('.changeRight');
+		  changeRight = document.querySelector('.changeRight');
 
 	var item = document.querySelectorAll('.bannerLi');
 	var length = item.length;
@@ -12,12 +10,13 @@
 
 	var banner = document.querySelector('.banner');
 
-	var t = setInterval(changeBanner.bind(null, 'left'), 10000);
+	var t = setInterval(changeBanner.bind(null, 'left'), 10000)
 
 	function changeBanner(type) {
 		clearInterval(t);
 		var currentBanner = document.querySelector('.currentBanner');
-		if (type == 'left') {
+		var _banner;
+		if(type == 'left') {
 			var previous = currentBanner.previousSibling;
 			_banner = previous ? previous : item[length - 1];
 		} else {
@@ -27,6 +26,9 @@
 		_banner.className += ' currentBanner';
 		currentBanner.className = currentBanner.className.replace(' currentBanner', '');
 
-		t = setInterval(changeBanner.bind(null, 'left'), 10000);
+		t = setInterval(changeBanner.bind(null, 'left'), 10000)
 	}
+
+
+
 })();

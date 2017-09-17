@@ -16,10 +16,8 @@ body {
   font-size: 1.4rem; }
   .wrap .head {
     height: 180px;
-    border-bottom-left-radius: 3px;
     background: #1a5694;
     background: -webkit-gradient(linear, left bottom, right top, from(#518ba3), to(#1a9487));
-    box-shadow: 0 8px 6px -6px #828282;
     color: #fff;
     padding-top: 20px;
     text-align: center; }
@@ -31,21 +29,31 @@ body {
       margin: 0 0 10px;
       padding-top: 20px; }
     .wrap .head .name {
-      font-size: 2.4rem; }
+      font-size: 2.4rem;
+      font-style: italic; }
   .wrap .body {
-    padding: 50px 30px 30px; }
-  .wrap .username, .wrap .password {
+    padding: 20px 30px 30px; }
+  .wrap .title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    position: relative;
+    color: #ddd;
+    cursor: pointer; }
+    .wrap .title .current {
+      color: #555f5a; }
+  .wrap .username, .wrap .password, .wrap .surePassword {
     width: 100%;
     height: 40px;
     padding-left: 5px;
     padding-right: 20px;
     position: relative; }
-    .wrap .username input, .wrap .password input {
+    .wrap .username input, .wrap .password input, .wrap .surePassword input {
       width: 100%;
       height: 100%; }
-    .wrap .username input::-webkit-input-placeholder, .wrap .password input::-webkit-input-placeholder {
+    .wrap .username input::-webkit-input-placeholder, .wrap .password input::-webkit-input-placeholder, .wrap .surePassword input::-webkit-input-placeholder {
       color: #aaa; }
-    .wrap .username span.status, .wrap .password span.status {
+    .wrap .username span.status, .wrap .password span.status, .wrap .surePassword span.status {
       display: none;
       width: 20px;
       height: 20px;
@@ -54,28 +62,40 @@ body {
       right: 0px;
       text-align: center;
       cursor: pointer; }
-      .wrap .username span.status::before, .wrap .password span.status::before {
+      .wrap .username span.status::before, .wrap .password span.status::before, .wrap .surePassword span.status::before {
         font-family: icon;
         content: '\e617';
         font-size: 1rem; }
-      .wrap .username span.status.wrong::before, .wrap .password span.status.wrong::before {
+      .wrap .username span.status.wrong::before, .wrap .password span.status.wrong::before, .wrap .surePassword span.status.wrong::before {
         content: '\e60a';
         color: #bf5270;
         font-size: 1.6rem; }
-    .wrap .username .border-bottom, .wrap .password .border-bottom {
+    .wrap .username span.errorInfo, .wrap .password span.errorInfo, .wrap .surePassword span.errorInfo {
+      display: none;
+      position: absolute;
+      right: 0;
+      bottom: 30px;
+      color: #ff5f5f;
+      font-size: 1.2rem;
+      text-align: center;
+      background-color: #f4f5f6;
+      padding: 3px;
+      border-radius: 3px;
+      border: 1px solid #ccc; }
+    .wrap .username .border-bottom, .wrap .password .border-bottom, .wrap .surePassword .border-bottom {
       position: absolute;
       left: 0;
       bottom: 0;
       width: 100%;
       height: 1px;
       background-color: #ddd; }
-    .wrap .username.bottomColor .border-bottom, .wrap .password.bottomColor .border-bottom {
+    .wrap .username.bottomColor .border-bottom, .wrap .password.bottomColor .border-bottom, .wrap .surePassword.bottomColor .border-bottom {
       background-color: #3198d4;
       box-shadow: 0 2px 5px rgba(49, 152, 212, 0.5); }
-    .wrap .username.bgRed .border-bottom, .wrap .password.bgRed .border-bottom {
+    .wrap .username.bgRed .border-bottom, .wrap .password.bgRed .border-bottom, .wrap .surePassword.bgRed .border-bottom {
       background-color: #bf5270;
       box-shadow: 0 2px 5px rgba(195, 19, 101, 0.5); }
-  .wrap .password {
+  .wrap .password, .wrap .surePassword {
     margin-top: 20px; }
   .wrap .tip {
     color: #888;
@@ -93,13 +113,15 @@ body {
     background: #1a5694;
     background: -webkit-gradient(linear, left bottom, right top, from(#518ba3), to(#1a9487));
     line-height: 35px;
-    cursor: pointer;
     margin-top: 20px; }
     .wrap .loginButton:hover {
       background: #518ba3; }
     .wrap .loginButton button {
       background: none;
+      width: 100%;
+      height: 100%;
       color: #fff;
-      border: 0; }
+      border: 0;
+      cursor: pointer; }
   .wrap input {
     border: 0; }

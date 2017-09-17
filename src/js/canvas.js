@@ -8,7 +8,7 @@ var setCanvas = (function() {
 
 		context.fillStyle = '#090723';
 		context.fillRect(0, 0, width * scaleW, scaleH * height);
-		
+
 		// 星星的角度;
 		var angle = 0.904;
 		// Math.asin(1075/1366);
@@ -23,7 +23,7 @@ var setCanvas = (function() {
 
 		var star1 = [], h1, w1, v1;
 		var star2 = [], h2, w2, v2;
-		var ed1 = ed2 = 0;
+		var ed1 = 0, ed2 = 0;
 		setStar1();
 		setStar2();
 
@@ -33,7 +33,7 @@ var setCanvas = (function() {
 			context.clearRect(0, 0, width * scaleW, scaleH * height);
 			context.fillStyle = '#090723';
 			context.fillRect(0, 0, width * scaleW, scaleH * height);
-			
+
 			starMove(0,  30, pos1());
 			starMove(30, 60, pos2());
 			starMove(60, 90, pos3());
@@ -47,7 +47,7 @@ var setCanvas = (function() {
 
 			if(ed1 > 0) ed1-=50;
 			if(ed2 > 0) ed2-=50;
-			
+
 			if(star1[0] <= 0 ) {
 				setStar1(); //重置star;
 				ed1 = random(0, 8, true) * 1000;
@@ -56,8 +56,8 @@ var setCanvas = (function() {
 				setStar2();
 				ed2 = random(0, 8, true) * 1000;
 			}
-			
-			
+
+
 		} ,10)
 
 
@@ -102,7 +102,7 @@ var setCanvas = (function() {
 				star2[0] -= v2;
 				star2[1] += v2 * 1075 / 1366;
 			}
-			
+
 		}
 
 
@@ -124,7 +124,7 @@ var setCanvas = (function() {
 			}
 			context.restore()
 		}
-		
+
 
 		function drawCircle(x, y, radius, color) {
 			context.beginPath();

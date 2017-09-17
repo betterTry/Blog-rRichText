@@ -8,18 +8,42 @@ block content
 			.logo
 			.name orang
 		.body
-			.username
-				input(type="input", class="formInput", placeholder="用户名")
-				span.status
-				.border-bottom
-			.password
-				input(type="password", class="formInput", placeholder="密码")
-				span.status
-				.border-bottom
-			.tip
-				a(href="javascript:;") 忘记密码?
-				//- | 您已阅读#[a 《相关须知》]
-			.loginButton 
-				button 登录
-		
+			- var signIn = '登录';
+			- var signUp = '注册';
+			.title
+				span.signIn.current #{signIn}
+				span(style="color:#555f5a")  | 
+				span.signUp #{signUp}
+			.signInBox
+				.username
+					input(type="input", class="formInput", placeholder="用户名")
+					span.status
+					span.errorInfo 没有此用户
+					.border-bottom
+				.password
+					input(type="password", class="formInput", placeholder="密码")
+					span.status
+					span.errorInfo
+					.border-bottom
+				.tip
+					a(href="javascript:;") 忘记密码?
+					//- | 您已阅读#[a 《相关须知》]
+				.loginButton 
+					button #{signIn}
+			.signUpBox(style="display:none")
+				.username
+					input(type="input", class="formInput", placeholder="用户名")
+					span.status
+					.border-bottom
+				.password
+					input(type="password", class="formInput", placeholder="密码")
+					span.status
+					.border-bottom
+				.surePassword
+					input(type="password", class="formInput", placeholder="确认密码")
+					span.status
+					.border-bottom
+				.loginButton 
+					button #{signUp}
+	script(src="https://cdn.bootcss.com/reqwest/2.0.5/reqwest.min.js")
 	script(src="/js/login.js")

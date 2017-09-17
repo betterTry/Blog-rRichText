@@ -1,3 +1,5 @@
+@import '../variety/variety.scss';
+
 *{
 	box-sizing: border-box;
 }
@@ -105,7 +107,7 @@ img{
 #logoImg{
 	height: 100%;
 }
-#write, #set, #login {
+#write, #set, #login, #head {
 	height: 40px;
 	line-height: 40px;
 	border-radius: 5px;
@@ -116,7 +118,7 @@ img{
 }
 #write{
 	width: 100px;
-	background-color: #3498e0;
+	background-color: $sky-blue;
 	color: #fff;
 	font-size: 1.6rem;
 }
@@ -138,6 +140,105 @@ img{
 		color: #666;
 		padding: 0 10px;
 		font-size: 1.4rem;
+	}
+}
+#head {
+	margin: 15px 0 0 0;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	.headImg {
+		width: 100%;
+		height: 100%;
+		border-radius: 20px;
+		overflow: hidden;
+		img {
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+.userInfoBox {
+	border-radius: 3px;
+	box-shadow: 0px 0px 10px rgba(80, 80, 80, 0.3);
+	right: -35px;
+	top: 55px;
+	background-color: #fff;
+	overflow: hidden;
+	min-width: 300px;
+	line-height: 30px;
+	position: absolute;
+	z-index: 111;
+	color: #666;
+	display: none;
+	animation: scale-out cubic-bezier(.22,.58,.12,.98) .5s;
+	-webkit-transform-origin: 80% 0;
+	transform-origin: 80% 0;
+	cursor: auto;
+	.userHead {
+		width: 50px;
+		height: 50px;
+		overflow: hidden;
+		border-radius: 25px;
+		margin: 10px auto;
+		text-align: center;
+		img {
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.logOut {
+		position: absolute;
+		right: 10px;
+		top: 20px;
+		cursor: pointer;
+	}
+	.userName {
+		font-size: 1.4rem;
+	}
+	.levelBox {
+		.levelText {
+			font-size: 1.3rem;
+		}
+		.level {
+			display: inline-block;
+			width: 200px;
+			height: 12px;
+			color: #fff;
+			line-height: 12px;
+			border-radius: 6px;
+			margin-left: 10px;
+			background-color: $sky-blue;
+		}
+	}
+
+	.funclist {
+		display: flex;
+		background-color: #f3f3f3;
+		padding-top: 10px;
+		font-weight: 300;
+		cursor: pointer;
+		div {
+			flex: 1;
+		}
+		@mixin before {
+			display: block;
+			font-family: icon;
+			font-size: 2rem;
+			line-height: 25px;
+		}
+		.manCenter::before {
+			content: '\e603';
+			@include before;
+		}
+		.sysMessage::before {
+			content: '\e647';
+			@include before;
+		}
+		.other::before {
+			content: '\e62c';
+			@include before;
+		}
 	}
 }
 
@@ -250,7 +351,7 @@ img{
 }
 .currentPage a{
 	border: none;
-	color: #3498e0;
+	color: $sky-blue;
 	font-weight: 700;
 }
 /*=============== 分页器 ===============*/
@@ -268,12 +369,10 @@ img{
 	padding-bottom: 20px;
 	color: #999;
 	display: block;
-
 	transform-origin: 80% 0;
-}
-.show{
 	animation: scale-out cubic-bezier(.22,.58,.12,.98) .5s;
 }
+
 .night{
 	height: 80px;
 	line-height: 80px;
@@ -285,7 +384,7 @@ img{
 	vertical-align: top;
 }
 .night>span:before{
-	content: '\e61a';
+	content: '\e632';
 	font-family: 'icon';
 	font-size: 2rem;
 }

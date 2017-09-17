@@ -3,6 +3,7 @@ var main = require('../app/controllers/main');
 var article = require('../app/controllers/article');
 var update = require('../app/controllers/update');
 var login = require('../app/controllers/login');
+var user = require('../app/controllers/user');
 
 module.exports = function(router){
 
@@ -17,8 +18,9 @@ module.exports = function(router){
 	// login;
 	router.get('/login', login.login);
 
+
 	// write;
-	router.get('/write', article.get);
+	router.get('/write', user.hasLogin, article.get);
 
 	// 保存和提交;
 	router.post('/write/save', article.save);
@@ -41,7 +43,14 @@ module.exports = function(router){
 	// 删除文章;
 	router.delete('/write/delete/article/:id', article.removeArticle);
 	// 修改文集;
-	router.post('/write/rework', article.rework)
+	router.post('/write/rework', article.rework);
+
+	// 添加用户
+	router.post('/user/add', user.addUser);
+	// 登录
+	router.post('/user/signUp', user.signUp);
+	// 登出
+	router.get('/user/logOut', user.logOut);
 
 
 
