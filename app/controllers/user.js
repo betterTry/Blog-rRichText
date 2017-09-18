@@ -16,12 +16,6 @@ exports.hasLogin = function  *(next) {
 exports.signIn = function *(next) {
   var params = this.request.fields;
   var name = params.name;
-
-}
-
-exports.signUp = function *(next) {
-  var params = this.request.fields;
-  var name = params.name;
   var password = params.password;
   var user = yield User.findOne({name: name}).exec();
   var code = 0;

@@ -47,7 +47,7 @@
 			if (!value) return value;
 		}
 		reqwest({
-			url: '/user/signUp',
+			url: '/user/signIn',
 			method: 'post',
 			data: {
 				name: data[0],

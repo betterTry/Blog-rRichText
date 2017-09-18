@@ -48,7 +48,7 @@ module.exports = function(router){
 	// 添加用户
 	router.post('/user/add', user.addUser);
 	// 登录
-	router.post('/user/signUp', user.signUp);
+	router.post('/user/signIn', user.signIn);
 	// 登出
 	router.get('/user/logOut', user.logOut);
 
