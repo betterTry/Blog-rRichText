@@ -34,14 +34,17 @@ block content
 				.username
 					input(type="input", class="formInput", placeholder="用户名")
 					span.status
+					span.errorInfo 没有此用户
 					.border-bottom
 				.password
 					input(type="password", class="formInput", placeholder="密码")
 					span.status
+					span.errorInfo
 					.border-bottom
 				.surePassword
 					input(type="password", class="formInput", placeholder="确认密码")
 					span.status
+					span.errorInfo
 					.border-bottom
 				.loginButton 
 					button #{signUp}

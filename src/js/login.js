@@ -20,6 +20,7 @@
 (function () {
 	var signInBox = document.querySelector('.signInBox');
 	var input = signInBox.querySelectorAll('.formInput');
+	var status = signInBox.querySelectorAll('.status');
 	var state = [];
 	// 输入框
 	input.forEach(function(elm, index) {
@@ -29,6 +30,11 @@
 			text: (index === 0 ? '用户名' : '密码')
 		});
 		checkInput(elm, index, true);
+		status[index].addEventListener('click', function() {
+			elm.value = '';
+			this.style.display = 'none';
+			state[index].show = false;
+		});
 	});
 
 	var loginButton = signInBox.querySelector('.loginButton');
@@ -40,7 +46,6 @@
 	})
 	function handleEnter() {
 		var data = [];
-		if (typeof status === 'object') status = null;
 		for(var i = 0, length = input.length; i < length; i++) {
 			var value = checkInput(input[i], i);
 			data.push(value);
@@ -60,21 +65,21 @@
 	}
 	function checkInput(elm, index, listen) {
 		var parent = elm.parentNode;
-		var status = parent.querySelector('.status');
+		var _status = status[index];
+		var _state = state[index];
 		var errorInfo = parent.querySelector('.errorInfo');
 		if (listen) {
-			elm.addEventListener('input', handleInput.bind(elm, event, index));
+			elm.addEventListener('input', handleInput.bind(elm, event, index, false));
 			elm.addEventListener('focus', function (e) {
 				e.stopPropagation();
-				var className = parent.className;
-				if (state[index].error) {
-					parent.className = className.replace(' bgRed', '');
+				if (_state.error) {
+					parent.className = parent.className.replace(' bgRed', '');
 					errorInfo.style.display = 'none';
-					state[index].error = false;
+					_state.error = false;
 				}
-				if (state[index].show) {
-					status.style.display = 'none';
-					state[index].show = false;
+				if (_state.show) {
+					_status.style.display = 'none';
+					_state.show = false;
 				}
 				parent.className += ' bottomColor';
 			});
@@ -82,43 +87,45 @@
 				parent.className = parent.className.replace(' bottomColor', '');
 			});
 		} else {
-			var value = handleInput(elm, index);
-			if (state[index].error) return false;
+			var value = handleInput(elm, index, true);
+			if (_state.error) return false;
 			return value;
 		}
 
-		function handleInput(elm, index) {
+		function handleInput(elm, index, click) {
 			var value = (this || elm).value;
 			var length = value.length;
-			var error = state[index].error;
-			var show = state[index].show;
-			var text = state[index].text;
-			if (length > 20 && !error) {
+			var _state = state[index];
+			var _status = status[index];
+			var error = _state.error;
+			var show = _state.show;
+			var text = _state.text;
+			if ((length <6 && click || length > 20) && !error) {
 				parent.className += ' bgRed';
-				status.className += ' wrong';
+				_status.className += ' wrong';
 				errorInfo.textContent = `${text}在6-20字符之内`;
 				errorInfo.style.display = 'inline';
-				state[index].error = true;
-			} else if (length <= 20 && error) {
+				_state.error = true;
+			} else if (length <= 20 && length >= 6 && error) {
 				parent.className = parent.className.replace(' bgRed', '');
-				status.className = status.className.replace(' wrong', '');
+				_status.className = _status.className.replace(' wrong', '');
 				errorInfo.style.display = 'none';
-				state[index].error = false;
+				_state.error = false;
 			}
 			if (!show && value) {
-				status.style.display = 'inline-block';
-				state[index].show = true;
+				_status.style.display = 'inline-block';
+				_state.show = true;
 			} else if (show && !value) {
-				status.style.display = 'none';
+				_status.style.display = 'none';
 				errorInfo.style.display = 'none';
-				state[index].show = false;
+				_state.show = false;
 			} else if (!show && !value) {
-				status.style.display = 'inline-block';
-				state[index].show = true;
+				_status.style.display = 'inline-block';
+				_state.show = true;
 				parent.className += ' bgRed';
 				errorInfo.textContent = `${text}在6-20字符之内`;
 				errorInfo.style.display = 'inline';
-				state[index].error = true;
+				_state.error = true;
 			}
 			return value;
 		}
@@ -129,9 +136,21 @@
 (function() {
 	var signUpBox = document.querySelector('.signUpBox');
 	var input = signUpBox.querySelectorAll('.formInput');
+	var status = signUpBox.querySelectorAll('.status');
+	var state = [];
 	// 输入框
-	input.forEach(function(elm) {
-		checkInput(elm, true);
+	input.forEach(function(elm, index) {
+		state.push({
+			show: false,
+			error: false,
+			text: (index === 0 ? '用户名' : '密码')
+		});
+		checkInput(elm, index, true);
+		status[index].addEventListener('click', function() {
+			elm.value = '';
+			this.style.display = 'none';
+			state[index].show = false;
+		});
 	});
 
 	var loginButton = signUpBox.querySelector('.loginButton');
@@ -144,7 +163,7 @@
 	function handleEnter() {
 		var data = [];
 		for(var i = 0, length = input.length; i < length; i++) {
-			var value = checkInput(input[i]);
+			var value = checkInput(input[i], i);
 			data.push(value);
 			if (!value) return value;
 		}
@@ -160,26 +179,23 @@
 			}
 		})
 	}
-	function handleInputNoStatus() {
-
-	}
-	function checkInput(elm, listen) {
-		var show = false;
-		var more = false;
+	function checkInput(elm, index, listen) {
 		var parent = elm.parentNode;
-		var status = parent.querySelector('.status');
+		var errorInfo = parent.querySelector('.errorInfo');
+		var _state = state[index];
+		var _status = status[index];
 		if (listen) {
-			elm.addEventListener('input', handleInput);
+			elm.addEventListener('input', handleInput.bind(elm, event, index, false));
 			elm.addEventListener('focus', function (e) {
 				e.stopPropagation();
-				var className = parent.className;
-				if (className.indexOf('bgRed') > -1) {
-					parent.className = className.replace(' bgRed', '');
-					more = false;
+				if (_state.error) {
+					parent.className = parent.className.replace(' bgRed', '');
+					errorInfo.style.display = 'none';
+					_state.error = false;
 				}
-				if (status.style.display === 'block') {
-					status.style.display = 'none';
-					show = false;
+				if (_state.show) {
+					_status.style.display = 'none';
+					_state.show = false;
 				}
 				parent.className += ' bottomColor';
 			});
@@ -187,34 +203,52 @@
 				parent.className = parent.className.replace(' bottomColor', '');
 			});
 		} else {
-			var value = handleInput(elm);
-			if (more) return false;
+			var value = handleInput(elm, index, true);
+			if (_state.error) return false;
 			return value;
 		}
 
-		function handleInput(elm) {
+		function handleInput(elm, index, click) {
 			var value = (this || elm).value;
 			var length = value.length;
-			if (length > 20 && !more) {
+			var _state = state[index];
+			var _status = status[index];
+			var error = _state.error;
+			var show = _state.show;
+			var text = _state.text;
+
+			if ((click && length < 6 || length > 20) && !error) {
 				parent.className += ' bgRed';
-				status.className += ' wrong';
-				more = true;
-			} else if (length <= 20 && more) {
+				_status.className += ' wrong';
+				errorInfo.textContent = `${text}在6-20字符之内`;
+				errorInfo.style.display = 'inline';
+				_state.error = true;
+			} else if (length <= 20 && length >= 6 && error) {
 				parent.className = parent.className.replace(' bgRed', '');
-				status.className = status.className.replace(' wrong', '');
-				more = false;
+				_status.className = _status.className.replace(' wrong', '');
+				errorInfo.style.display = 'none';
+				_state.error = false;
+			} else if (click && index === 2 && value !== input[1].value) {
+				parent.className += ' bgRed';
+				_status.className += ' wrong';
+				errorInfo.textContent = '两次输入密码不一致';
+				errorInfo.style.display = 'inline';
+				_state.error = true;
 			}
 			if (!show && value) {
-				status.style.display = 'inline-block';
-				show = true;
+				_status.style.display = 'inline-block';
+				_state.show = true;
 			} else if (show && !value) {
-				status.style.display = 'none';
-				show = false;
+				_status.style.display = 'none';
+				errorInfo.style.display = 'none';
+				_state.show = false;
 			} else if (!show && !value) {
-				status.style.display = 'inline-block';
-				show = true;
+				_status.style.display = 'inline-block';
+				_state.show = true;
 				parent.className += ' bgRed';
-				more = true;
+				errorInfo.textContent = `${text}在6-20字符之内`;
+				errorInfo.style.display = 'inline';
+				_state.error = true;
 			}
 			return value;
 		}
