@@ -20,7 +20,7 @@ module.exports = function(router){
 
 
 	// write;
-	router.get('/write', user.hasLogin, article.get);
+	router.get('/write', article.get);
 
 	// 保存和提交;
 	router.post('/write/save', article.save);

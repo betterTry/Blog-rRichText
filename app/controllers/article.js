@@ -31,6 +31,7 @@ exports.save = function *(next) {
 	var html = body.content,
 		articleId = body.article,
 		title = body.title;
+
 	var article = yield Article.findOne({_id: articleId}).exec();
 	article.name = title;
 	article.content = html;
@@ -48,13 +49,19 @@ exports.save = function *(next) {
 }
 
 exports.removeArticle = function *(next) {
+	var user = this.state.user;
 	var id = this.params.id,
 		workId = this.request.query.workId;
 	try {
-		yield Article.remove({_id: id}).exec();
+		var article = yield Article.remove({_id: id}).exec();
 		var work = yield Work.findOne({_id: workId});
 		var articles = work.articles;
 		articles.splice(articles.indexOf(id), 1);
+		yield work.save();
+		if (article.publish) {
+			user.articles.splice(user.articles.indexOf(id), 1);
+			yield user.save();
+		}
 
 		var success = 1;
 	} catch(err) {
@@ -66,6 +73,7 @@ exports.removeArticle = function *(next) {
 }
 
 exports.publish = function *(next) {
+	var user = this.state.user;
 	var body = this.request.fields;
 	var html = body.content,
 		articleId = body.article,
@@ -104,6 +112,8 @@ exports.publish = function *(next) {
 		article.thumbnail = img;
 		article.text = text;
 		yield article.save();
+		user.articles.push(articleId);
+		yield user.save();
 		response = {
 			success: 1,
 			id: articleId

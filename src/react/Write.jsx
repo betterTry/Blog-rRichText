@@ -74,11 +74,11 @@ class UploadComponent extends React.Component {
 			} else { //图片过大提示信息;
 
 			}
-			
+
 		} else { // 如果不是,提示信息;
 
 		}
-		
+
 	}
 	render() {
 		return (
@@ -143,7 +143,7 @@ class InputComponent extends React.Component {
 			change: false
 		}
 	}
-	
+
 	handleChange(e) {
 		this.setState({
 			value: e.target.value,
@@ -197,7 +197,7 @@ class ModelComponent extends React.Component {
 			selection.collapse(elm.firstChild, word.length);
 		} else {// 如果a标签不存在;
 			// 重新查找selection;
-			
+
 			var anchorNode = selection.anchorNode;
 
 			var a = document.createElement('a');
@@ -270,7 +270,7 @@ class ModelComponent extends React.Component {
 			local: local
 		})
 	}
-	
+
 	render() {
 		var props = this.props;
 		var title = '插入', node = [];
@@ -279,7 +279,7 @@ class ModelComponent extends React.Component {
 			title += '链接';
 			node.push(<div className="inputBox" key='word1'><InputComponent ref="InputComponentLink" link={props.link}/><span className="iconSpan iconSpanLink"></span></div>);
 			node.push(<div className="inputBox" key='word2'><InputComponent ref="InputComponentWord" text={props.text}/><span className="iconSpan iconSpanWord"></span></div>);
-			var handleClick = this.createLink.bind(this); 
+			var handleClick = this.createLink.bind(this);
 		} else if(props.type == 'pic') {
 			title += '图片';
 			var state = this.state;
@@ -287,7 +287,7 @@ class ModelComponent extends React.Component {
 			if(local) {
 				node.push(<div className="switchLocal" key="12"><a href="#" style={{color:'#1e90ff'}} onClick={(e) => {this.switchLocal(e)}}>本地图片</a>或者<a href="#" onClick={(e) => {this.switchLocal(e)}}>网络图片</a></div>)
 				node.push(<div className="updateBox" key="34"><a href="#" onClick={(e) => {this.handleUpdate(e)}}>上传图片</a><UploadComponent ref="UploadComponent"/></div>)
-				
+
 			} else {
 				node.push(<div className="switchLocal" key="12"><a href="#" onClick={(e) => {this.switchLocal(e)}}>本地图片</a>或者<a href="#" onClick={(e) => {this.switchLocal(e)}} style={{color:'#1e90ff'}}>网络图片</a></div>)
 				var className = "inputBox" + (state.no ? ' inputBoxNo' : '');
@@ -304,7 +304,7 @@ class ModelComponent extends React.Component {
 					<h1>{title}</h1>
 					{node}
 				</div>
-				
+
 				<div style={{textAlign: 'right',paddingTop:10}}>
 					<span className="modelC" onClick={props.changeState}>取消</span>
 					{spanEnter}
@@ -339,7 +339,7 @@ class ControlWriteComponent extends React.Component {
 	shouldComponentUpdate(nextProps) {
 		return true;
 	}
-	
+
 	islastchild(node) {
 		var lastChild = true;
 		do{
@@ -348,14 +348,14 @@ class ControlWriteComponent extends React.Component {
 				break;
 			}
 		} while((node = node.parentNode) && node.parentNode.tagName !== 'DIV')
-		
+
 		return lastChild;
 	}
 
 	handleFocus() {
 		this.focus = true;
 		var controlWrite = this.refs.controlWrite;
-		
+
 		controlWrite.addEventListener('DOMSubtreeModified',this.changeSave);
 	}
 
@@ -372,6 +372,12 @@ class ControlWriteComponent extends React.Component {
 		e.preventDefault();
 		if(this.isPreCode()) {
 			return false;
+		}
+		const elm = e.target;
+		if (elm.className.indexOf('menu-chose') < 0) {
+			elm.className += ' menu-chose';
+		} else {
+			elm.className = elm.className.replace(' menu-chose', '');
 		}
 		this.format(type, value);
 	}
@@ -409,12 +415,12 @@ class ControlWriteComponent extends React.Component {
 
 					var blockquote = document.createElement('blockquote');
 					blockquote.appendChild(controlWrite.replaceChild(blockquote, node));
-					
+
 					range.setStart(startContainer, startOffset);
 					range.setEnd(endContainer, endOffset);
 					selection.removeAllRanges();
 					selection.addRange(range);
-					
+
 				}
 			} else { // 取消blockquote;
 				if(!node.textContent) {
@@ -435,7 +441,7 @@ class ControlWriteComponent extends React.Component {
 						frag.appendChild(item);
 					})
 					controlWrite.replaceChild(frag, node);
-					
+
 					range.setStart(startContainer, startOffset);
 					range.setEnd(endContainer, endOffset);
 					selection.removeAllRanges();
@@ -477,7 +483,7 @@ class ControlWriteComponent extends React.Component {
 		if(elm && !value) {
 			par = elm;
 		}
-		
+
 		if(!value) {
 			var selection = window.getSelection();
 			var node = selection.anchorNode;
@@ -506,8 +512,8 @@ class ControlWriteComponent extends React.Component {
 		var data = this.props.data, index = this.props.index;
 		var controlWrite = this.refs.controlWrite;
 		var html = controlWrite.innerHTML;
-		
-		
+
+
 		var _data = data[index[0]].articles[index[1]];
 		var article = _data._id, title = _data.name;
 		$.ajax({
@@ -587,25 +593,20 @@ class ControlWriteComponent extends React.Component {
 			var node = this.findNode();
 			var pre = document.createElement('pre');
 			var code = document.createElement('code');
-			var br = document.createElement('br');
-			code.appendChild(br);
+			var p = document.createElement('p');
+			p.innerHTML = '<br/>';
+			code.appendChild(p);
 			pre.appendChild(code);
 			var par = node.parentNode;
-			var nextSibling = node.nextSibling;
-			
-			if(nextSibling) {
-				par.insertBefore(pre, nextSibling,);
-			} else {
-				par.appendChild(pre);
-			}
+			var nextSibling = node.nextSibling || node;
+			par.insertBefore(pre, nextSibling);
 
 			var selection = document.getSelection();
-			selection.collapse(code, 0);
+			selection.collapse(p, 0);
 		}
 
 	}
 	codeFocus(e) {
-		
 	}
 	codeKeyDown(e) {
 		e.stopPropagation();
@@ -624,7 +625,7 @@ class ControlWriteComponent extends React.Component {
 		}
 	}
 	handleKeyDown(e) { //ctrl+s;
-		if(e.ctrlKey && (e.keyCode == 83)) {
+		if((e.ctrlKey || e.metakey) && (e.keyCode == 83)) {
 			e.preventDefault();
 			this.handleClickSave(e);
 		}
@@ -633,7 +634,7 @@ class ControlWriteComponent extends React.Component {
 	handleMouseover(e, value) {
 		this.refs[value].className += ' menu-active';
 	}
-	
+
 
 	handleMouseout(e, value) {
 		this.refs[value].className = this.refs[value].className.replace(/ menu-active/,'');
@@ -650,7 +651,7 @@ class ControlWriteComponent extends React.Component {
 		if(this.isPreCode()) {
 			return false;
 		}
-		document.execCommand('insertHorizontalRule', true);
+		var hr = document.execCommand('insertHorizontalRule', true);
 		this.format('formatBlock', '<p>');
 	}
 	handleFullScreen(e) {
@@ -715,8 +716,8 @@ class ControlWriteComponent extends React.Component {
 								elm = anchorNode;
 							}
 						}
-						
-					} 
+
+					}
 
 					// 设置text为选中的文字;
 					text = text || anchorNode.textContent.slice(startOffset, endOffset);
@@ -735,7 +736,7 @@ class ControlWriteComponent extends React.Component {
 				elm: elm
 			})
 		}
-		
+
 	}
 
 	handlePaste(e) {
@@ -743,7 +744,7 @@ class ControlWriteComponent extends React.Component {
 		var controlWrite = this.refs.controlWrite;
 		var node = this.findNode();
 		var selection = document.getSelection();
-		
+
 		if(!selection.isCollapsed) {
 			document.execCommand('delete');
 		}
@@ -759,7 +760,7 @@ class ControlWriteComponent extends React.Component {
 		if(!this.copy) { //如果不是在编辑器中进行复制;
 			pasteWrite.focus();
 		}
-		
+
 	}
 
 	handleCopy(e) {
@@ -812,14 +813,14 @@ class ControlWriteComponent extends React.Component {
 				pasteWrite.innerHTML = '';
 				return;
 			}
-			
+
 			var controlWrite = this.refs.controlWrite;
 
 			var _h = pasteWrite.innerHTML; // 第一次获取paste的值;
 
 			// 如果是纯文本，则不进行剔除;
 			if(_h == pasteWrite.textContent) {
-				
+
 				var textContent = anchorNode.textContent;
 				var tlength = textContent.length; //要复制内容的长度;
 
@@ -827,21 +828,20 @@ class ControlWriteComponent extends React.Component {
 				if(textContent) {
 					console.log(textContent)
 					anchorNode.textContent = textContent.slice(0, offset)+_h+textContent.slice(offset);
-					
-					
+
+
 					selection.collapse(anchorNode, _h.length+offset); // 光标定位;
 				} else {
 					anchorNode.textContent = _h;
 					selection.collapse(anchorNode, 1);
 				}
-				
+
 
 			} else { // 若不是纯文本,进行筛选;
-				
-	
+
 				var html = myxss.process(pasteWrite.innerHTML);
 				html = html.replace(/<p><\/p>/g,'').replace(/<p>(?=<p>)/g,'').replace(/<\/p>(?=<\/p>)/g, '').replace(/<\w+?><\/\w+?>/,'')
-				
+
 				pasteWrite.innerHTML = html; // 让文本在paste中进行缓存;
 				var _hh = pasteWrite.innerHTML; // 缓存innerHTML对象;
 				// 此时对selection进行缓存;
@@ -850,7 +850,7 @@ class ControlWriteComponent extends React.Component {
 				selection.collapseToEnd();
 				this.anchorNode = selection.anchorNode; // 重新记录anchorNode以及anchorOffset;
 				this.anchorOffset = selection.anchorOffset; // 此时都在paste中，用于重新确定位置;
-				
+
 				var childNodes = pasteWrite.childNodes;
 				var clength = childNodes.length;
 				var c = []; // 让nodelist数组化;
@@ -892,11 +892,10 @@ class ControlWriteComponent extends React.Component {
 							_frag.appendChild(text2);
 							anchorNode.parentNode.replaceChild(_frag, anchorNode);
 						}
-						
+
 					}
-					
+
 				} else { // 如果是P,则将第一个P插入到原来中，其他的全部以节点加入;
-					console.log('IS P');
 					// 首先将br标签之前，p标签之后的元素全部放在一个P中;
 					var childNodes_cache = [];
 					for(var i = 0; i < clength; i++) {
@@ -923,16 +922,16 @@ class ControlWriteComponent extends React.Component {
 							childNodes_cache.push(_cacheItem)
 						}
 					}
-					
+
 					var firstNode = frag.removeChild(frag.firstChild); // paste节点的第一个节点;
 					var firstText = firstNode.innerHTML || firstNode.textContent;
 					var anchorNode = this.addTextContent(anchorNode, offset, firstText); // 添加第一个节点的文本;
-					
+
 
 					// 后面通过findNode找到元素，在其后面添加其他文本;
 					var currentNode = this.findNode(anchorNode, true);
-					
-					
+
+
 					var nextSibling = currentNode.nextSibling;
 					if(!nextSibling || currentNode.tagName == 'div') {
 						controlWrite.appendChild(frag);
@@ -944,11 +943,11 @@ class ControlWriteComponent extends React.Component {
 				selection.collapse(this.anchorNode, this.anchorOffset);
 
 			}
-			
+
 			pasteWrite.innerHTML = '';
 			console.log(pasteWrite.innerHTML)
 		}.bind(this), 0)
-		
+
 	}
 
 	// 添加内容;
@@ -967,7 +966,7 @@ class ControlWriteComponent extends React.Component {
 		}
 		return _r;
 	}
- 
+
 	changeState(e) {
 		if(e) {
 			e.stopPropagation();
@@ -1030,8 +1029,8 @@ class ControlWriteComponent extends React.Component {
 			var type = this.state.type;
 			if(type) {
 				value = '';
-			} 
-			
+			}
+
 			this.setState({
 				type: value
 			})
@@ -1072,7 +1071,7 @@ class ControlWriteComponent extends React.Component {
 						document.execCommand('delete');
 					}
 					var anchorNode = selection.anchorNode;
-					
+
 					var anchorOffset = selection.anchorOffset;
 					var textContent = anchorNode.textContent;
 					if(textContent) {
@@ -1094,14 +1093,14 @@ class ControlWriteComponent extends React.Component {
 			}
 		} else if(e.keyCode == 8) {
 			var child = controlWrite.childNodes;
-			
+
 			if ((child.length == 1) && !child[0].textContent && child[0].childNodes.length <= 1) {
 				if(child[0].tagName === 'P'){}
 				else{
 					controlWrite.removeChild(child[0]);
 					document.execCommand('formatBlock', false, '<p>')
 				}
-				
+
 			} else {
 				document.execCommand('delete');
 			}
@@ -1128,7 +1127,7 @@ class ControlWriteComponent extends React.Component {
 			if(!selection.isCollapsed) {
 				document.execCommand('delete');
 			}
-			
+
 			if(e.shiftKey) {
 				var anchorNode = selection.anchorNode;
 				if(anchorNode.tagName == 'CODE' || anchorNode.parentNode.tagName == 'CODE') {
@@ -1162,13 +1161,13 @@ class ControlWriteComponent extends React.Component {
 						node.textContent = '\r\n';
 						selection.collapse(node, 2);
 					}
-					
+
 				} else {
 					if(nodeType == 1) {
 					node.appendChild(br);
 					selection.collapse(node, anchorOffset+1);
 					} else if(nodeType == 3) {
-						
+
 						var parentNode = node.parentNode;
 						var partext = parentNode.textContent;
 						var textContent = node.textContent;
@@ -1216,7 +1215,7 @@ class ControlWriteComponent extends React.Component {
 						}
 					}
 				}
-				
+
 			}
 			e.preventDefault();
 		} else if(e.keyCode == 8) {
@@ -1284,7 +1283,7 @@ class ControlWriteComponent extends React.Component {
 		} else{
 			var publish = '';
 		}
-		
+
 		if(state.shift) {
 			var handleShift = this.shiftEnter.bind(this);
 		} else {
@@ -1316,12 +1315,12 @@ class ControlWriteComponent extends React.Component {
 							<a href="#" className="fontSplit" ref='fontSplit' onClick={(event) => {this.handleHr(event)}} onMouseOver={(event) => {this.handleMouseover(event, 'fontSplit')}} onMouseOut={(event) => {this.handleMouseout(event, 'fontSplit')}}><FontInfoComponent text="横线"/></a>
 							<a href="#" className="linkPic" ref='linkPic' onClick={(event) => {this.handlePic(event, 'pic')}} onMouseOver={(event) => {this.handleMouseover(event, 'linkPic')}} onMouseOut={(event) => {this.handleMouseout(event, 'linkPic')}}><FontInfoComponent text="添加图片	"/></a>
 						</li>
-						
+
 						<li className="menu fontface">
 							<a href="#" className="changeShift" ref="changeShift" onClick={(e) => {this.handleShift(e)}} onMouseOver={(event) => {this.handleMouseover(event, 'changeShift')}} onMouseOut={(event) => {this.handleMouseout(event, 'changeShift')}}><FontInfoComponent text="Shift+Enter/Enter"/></a>
 						</li>
 						<Publishli publish={publish} handleClickPublish={this.handleClickPublish.bind(this)} handleCanclePublish={this.handleCanclePublish.bind(this)}/>
-						
+
 						<li className="menu fr fontface">
 							<a href="#" className={"fullscreen"+(this.props.screen?' small':'')} ref='fullscreen' onClick={(e) => {this.handleFullScreen(e)}} onMouseOver={(event) => {this.handleMouseover(event, 'fullscreen')}} onMouseOut={(event) => {this.handleMouseout(event, 'fullscreen')}}><FontInfoComponent text="全屏"/></a>
 						</li>
@@ -1360,7 +1359,7 @@ class WriteComponent extends React.Component {
 	}
 
 	handleKeyDown(e) {
-		if(e.ctrlKey && (e.keyCode == 83)) {
+		if((e.ctrlKey || e.metaKey) && (e.keyCode == 83)) {
 			var ControlWriteComponent = this.refs.ControlWriteComponent;
 			var save = ControlWriteComponent.handleClickSave.bind(ControlWriteComponent);
 			save(e);
@@ -1386,7 +1385,7 @@ class WriteComponent extends React.Component {
 				save = item.save;
 			}
 		}
-		
+
 		return (
 			<div className={'writeArea'+(this.state.fullscreen?' fullScreen':'')} style={show?{}:{display:'none'}}>
 				<SavedComponent save={save}/>

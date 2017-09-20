@@ -211,7 +211,6 @@
 			if (_state.error) return false;
 			return value;
 		}
-		console.log(2);
 
 		function handleInput(elm, index, click) {
 			var value = (this || elm).value;

@@ -410,11 +410,10 @@ class WorkTypeComponent extends React.Component {
 		e.preventDefault();
 	}
 
-
 	render() {
 		var styleObj = this.state;
 		return (
-			<div style={styleObj} className={"WorkType"+(this.props.selected?' WorkTypeSelected':'')} onClick={this.handleClick.bind(this)} onMouseDown={this.handleMouseDown.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} ref="WorkType" >
+			<div style={styleObj} className={'WorkType' + (this.props.selected ? ' WorkTypeSelected' : '')} onClick={this.handleClick.bind(this)} onMouseDown={this.handleMouseDown.bind(this)} onMouseUp={this.handleMouseUp.bind(this)} ref="WorkType" >
 				<a className="WorkTypeLink">{this.props.Type}</a>
 				<SetButtonComponent workId={this.props.workId} removeWork={this.props.removeWork} changeWorkOpen={this.props.changeWorkOpen}/>
 			</div>
@@ -474,7 +473,7 @@ class LeftAreaComponent extends React.Component {
 					selected = true;
 
 				}
-				works.push(<WorkTypeComponent Type={item} key={'work'+index} ref={'workType' + index} selected={selected} workSelected={this.props.workSelected(index)} workId={this.props.workId} removeWork={this.props.removeWork} changeWorkOpen={this.changeWorkOpen.bind(this)}/>)
+				works.push(<WorkTypeComponent Type={item} key={'work'+index} ref={'workType' + index} selected={selected} workSelected={this.props.workSelected(index)} workId={this.props.workId} removeWork={this.props.removeWork} changeWorkOpen={this.changeWorkOpen.bind(this)} index={index}/>)
 			}.bind(this));
 		}
 		return (

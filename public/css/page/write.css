@@ -579,6 +579,9 @@ input, textarea {
 .controlWrite p:first-child {
   margin-top: 0px; }
 
+.controlWrite p:last-child {
+  margin-bottom: 0px; }
+
 .controlWrite h1:first-child,
 .controlWrite h2:first-child,
 .controlWrite h3:first-child,
@@ -603,11 +606,11 @@ input, textarea {
   opacity: 1; }
 
 /* 被选中的menu */
-.menu .menu-active, .menu-active {
+.menu .menu-active, .menu-active, .menu-chose {
   background-color: #555;
   color: #fff; }
 
-.menu-active:before {
+.menu-active::before, .menu-chose::before {
   color: #fff; }
 
 /* modelBox */
@@ -883,11 +886,13 @@ pre::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: rgba(100, 100, 100, 0.8); }
 
-code {
+.controlWrite code {
   padding: 5px;
   line-height: 1.5;
   display: block;
   font-family: Menlo,Monaco,Consolas,"Courier New",monospace; }
+  .controlWrite code p {
+    margin: 0; }
 
 .fontInfoBox {
   width: 200px;

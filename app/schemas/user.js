@@ -19,6 +19,7 @@ var userSchema = new Schema({
     type: Number,
     default: 0
   },
+  articles: [{type: ObjectId, ref: 'Article'}],
   collections: [{type: ObjectId , ref: ''}],
   sign: String,
   head: {
