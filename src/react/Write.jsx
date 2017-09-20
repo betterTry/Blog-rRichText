@@ -355,12 +355,17 @@ class ControlWriteComponent extends React.Component {
 	handleFocus() {
 		this.focus = true;
 		var controlWrite = this.refs.controlWrite;
-
-		controlWrite.addEventListener('DOMSubtreeModified',this.changeSave);
+		controlWrite.addEventListener('DOMSubtreeModified', this.changeSave);
 	}
 
 	handleBlur() {
 		this.focus = false;
+	}
+
+	handleWriteBlur(e) {
+		e.stopPropagation();
+		this.copy = false;
+		this.refs.controlWrite.removeEventListener('DOMSubtreeModified', this.changeSave);
 	}
 
 	format(type, value) {
@@ -1037,7 +1042,6 @@ class ControlWriteComponent extends React.Component {
 		}
 	}
 
-
 	changeSave() {
 		var data = this.props.data, index = this.props.index;
 		if(data[index[0]].articles[index[1]].save == false) {
@@ -1255,7 +1259,6 @@ class ControlWriteComponent extends React.Component {
 			endContainer = range.endContainer,
 			endOffset = range.endOffset;
 
-
 		var shift = this.state.shift ? false : true;
 		this.setState({
 			shift: shift
@@ -1330,9 +1333,19 @@ class ControlWriteComponent extends React.Component {
 					</ul>
 				</div>
 				<div className="controlWriteBox">
-					<div className="controlWrite" id="controlWrite" ref="controlWrite" contentEditable="true" onFocus={this.handleFocus.bind(this)} onBlur={(event) => {this.copy=false;this.refs.controlWrite.removeEventListener('DOMSubtreeModified',this.changeSave);event.stopPropagation()}} onKeyDown={(e) => {handleShift(e)}} onPaste={(e) => {this.handlePaste(e)}} onCopy={(e) => {this.handleCopy(e)}} onCut={(e) => {this.handleCopy(e)}}></div>
+					<div className="controlWrite" id="controlWrite" ref="controlWrite"
+						contentEditable="true"
+						onFocus={(e) => {this.handleFocus(e)}}
+						onBlur={(e) => {this.handleWriteBlur(e)}}
+						onKeyDown={(e) => {this.handleShift(e)}}
+						onPaste={(e) => {this.handlePaste(e)}}
+						onCopy={(e) => {this.handleCopy(e)}}
+						onCut={(e) => {this.handleCopy(e)}}>
+					</div>
 				</div>
-				<div ref="pasteWrite" contentEditable="true" style={{width: 1,height: 1, position:'absolute', left: -10000, top: 0,zIndex:-1, overflow:'hidden'}} onFocus={(e) => {this.pasteFocus(e)}}></div>
+				<div ref="pasteWrite" contentEditable="true"
+					style={{width: 1, height: 1, position:'absolute', left: -10000, top: 0, zIndex:-1, overflow:'hidden'}}
+					onFocus={(e) => {this.pasteFocus(e)}></div>
 				{state.type ? <ModelComponent type={state.type} text={state.text} link={state.link} elm={state.elm} changeState={this.changeState.bind(this)} clickListener={this.clickListener}/> :''}
 			</div>
 		)
@@ -1395,7 +1408,16 @@ class WriteComponent extends React.Component {
 							<input ref="writeTitle" className="writeTitle" type="text" name="writeTitle" onChange={this.handleChange.bind(this)} value={value}/>
 						</div>
 					</form>
-					<ControlWriteComponent index={index} data={data} key="ControlWriteComponent" ref="ControlWriteComponent" changeContent={this.props.changeContent} changeSave={this.props.changeSave} changePublish={this.props.changePublish} fullscreen={this.fullscreen.bind(this)} screen={this.state.fullscreen}/>
+					<ControlWriteComponent
+						index={index}
+						data={data}
+						key="ControlWriteComponent"
+						ref="ControlWriteComponent"
+						changeContent={this.props.changeContent}
+						changeSave={this.props.changeSave}
+						changePublish={this.props.changePublish}
+						fullscreen={this.fullscreen.bind(this)}
+						screen={this.state.fullscreen}/>
 				</div>
 			</div>
 		)

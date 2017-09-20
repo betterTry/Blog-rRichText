@@ -1,6 +1,8 @@
 import {createStore} from 'redux';
 
-const store = createStore(() => {
+
+
+const store = createStore((state = {}, action) => {
   return {
 
   }

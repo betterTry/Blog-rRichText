@@ -1,7 +1,10 @@
 'use strict'
 var gulp = require('gulp');
+var webpack = require('webpack');
+var webpackConfig = require('./webpack.config');
+var ora = require('ora');
 
-
+var $ = require('gulp-load-plugins')();
 var nodemon = require('gulp-nodemon');//---------------nodemon
 var jshint = require('gulp-jshint');//-----------------jshint
 var autoprefixer = require('gulp-autoprefixer');//-----autoprefixer
@@ -82,7 +85,7 @@ gulp.task('css', function(){
 		log(event.path);
 	}).on('change', reload)
 })
-gulp.task('script', function(){
+gulp.task('script', function() {
 	gulp.src('src/js/!(login).js')
 			.pipe(gulp.dest('public/js'));
 	gulp.watch('src/js/!(login).js', function(event){
@@ -92,6 +95,14 @@ gulp.task('script', function(){
 	}).on('change', reload)
 
 })
+
+gulp.task('webpack', function() {
+	var spinner = ora("yangsl's blog building...");
+	spinner.start();
+	webpack(webpackConfig, function(err, stat) {
+
+	})
+)
 gulp.task('scriptES2015', function(){
 	gulp.src('src/js/login.js')
 			.pipe(babel({
