@@ -1,6 +1,6 @@
 'use strict'
 var gulp = require('gulp');
-var webpack = require('webpack');
+var webpack = require('webpack-stream');
 var webpackConfig = require('./webpack.config');
 var ora = require('ora');
 
@@ -10,8 +10,7 @@ var jshint = require('gulp-jshint');//-----------------jshint
 var autoprefixer = require('gulp-autoprefixer');//-----autoprefixer
 var sourcemaps = require('gulp-sourcemaps');//---------sourcemaps
 var watch = require('gulp-watch');//-------------------watch
-var browserSync = require('browser-sync').create();//--browserSync
-var reload = browserSync.reload;//---------------------reload
+
 var minifycss = require('gulp-minify-css');//----------minify-css
 var sass = require('gulp-sass');
 var babel = require('gulp-babel');
@@ -31,6 +30,9 @@ var source = require('vinyl-source-stream');//---------vinyl-source-stream
 var buffer = require('vinyl-buffer');//----------------vinyl-buffer
 var plumber = require('gulp-plumber');//---------------错误
 
+var browserSync = require('browser-sync').create();//--browserSync
+var reload = browserSync.reload;//---------------------reload
+
 
 var env = process.env.NODE_ENV || 'development';
 
@@ -48,7 +50,7 @@ gulp.task('default', ['browser-Sync'],function(){
 })
 
 // nodemon : reload server and run tasks(script&styles); (react任务取消)
-gulp.task('nodemon', ['css', 'script', 'scriptES2015', 'react'], function(cb){
+gulp.task('nodemon', ['css', 'script', 'scriptES2015', 'webpack'], function(cb){
 	var started = false;
 	nodemon({
 		script: 'app.js',
@@ -96,13 +98,27 @@ gulp.task('script', function() {
 
 })
 
-gulp.task('webpack', function() {
+gulp.task('webpack', function(callback) {
 	var spinner = ora("yangsl's blog building...");
 	spinner.start();
-	webpack(webpackConfig, function(err, stat) {
+	var webpackChangeHandler = function(err, stats) {
+		spinner.stop();
+		if (err) throw err;
+		process.stdout.write(stats.toString({
+	    colors: true,
+	    modules: false,
+	    children: false,
+	    chunks: false,
+	    chunkModules: false,
+	  }) + '\n');
+		browserSync.reload();
+	}
+	return gulp.src('src/main.js')
+		.pipe($.plumber())
+		.pipe(webpack(webpackConfig, null, webpackChangeHandler))
+		.pipe(gulp.dest('publish/react'));
+});
 
-	})
-)
 gulp.task('scriptES2015', function(){
 	gulp.src('src/js/login.js')
 			.pipe(babel({
@@ -130,33 +146,33 @@ gulp.task('browser-Sync', ['nodemon'], function(){
 })
 
 // react
-gulp.task('react', function(){
-	var b = watchify(browserify({
-		entries: [PATH.entry],
-		transform: [
-			[babelify, {presets: ["es2015", "react"], sourceMaps: true}]
-		],
-		debug: true,
-		cache: {},
-		packageCache: {}
-	}), {delay: 1000});
-
-	return b.on('update', function(file){
-		b.bundle()
-			.pipe(source(PATH.bundle))
-			.pipe(buffer())
-			.pipe(sourcemaps.init({loadMaps: true}))
-			.pipe(sourcemaps.write('.'))
-			.pipe(gulp.dest(PATH.react));
-		reload();
-		file.forEach(function(value) {
-			log(value);
-		})
-	})
-	.bundle()
-	.pipe(source(PATH.bundle))
-	.pipe(gulp.dest(PATH.react));
-});
+// gulp.task('react', function(){
+// 	var b = watchify(browserify({
+// 		entries: [PATH.entry],
+// 		transform: [
+// 			[babelify, {presets: ["es2015", "react"], sourceMaps: true}]
+// 		],
+// 		debug: true,
+// 		cache: {},
+// 		packageCache: {}
+// 	}), {delay: 1000});
+//
+// 	return b.on('update', function(file){
+// 		b.bundle()
+// 			.pipe(source(PATH.bundle))
+// 			.pipe(buffer())
+// 			.pipe(sourcemaps.init({loadMaps: true}))
+// 			.pipe(sourcemaps.write('.'))
+// 			.pipe(gulp.dest(PATH.react));
+// 		reload();
+// 		file.forEach(function(value) {
+// 			log(value);
+// 		})
+// 	})
+// 	.bundle()
+// 	.pipe(source(PATH.bundle))
+// 	.pipe(gulp.dest(PATH.react));
+// });
 
 
 //clean : clean public;
