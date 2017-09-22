@@ -14,20 +14,14 @@ var watch = require('gulp-watch');//-------------------watch
 var minifycss = require('gulp-minify-css');//----------minify-css
 var sass = require('gulp-sass');
 var babel = require('gulp-babel');
-
 var uglify = require('gulp-uglify');//-----------------uglify
 var pump = require('pump');//--------------------------pump;
 
 var path = require('path');//--------------------------path
-
 var clean = require('gulp-clean');//-------------------clean
 
-var browserify = require('browserify');//--------------browserify
 var babelify = require('babelify');//------------------babelify
 var watchify = require('watchify');//------------------watchify
-var streamify = require('gulp-streamify');//-----------streamify
-var source = require('vinyl-source-stream');//---------vinyl-source-stream
-var buffer = require('vinyl-buffer');//----------------vinyl-buffer
 var plumber = require('gulp-plumber');//---------------错误
 
 var browserSync = require('browser-sync').create();//--browserSync
@@ -43,7 +37,7 @@ var log = function (content) {
 
 var PATH = {
 	entry: 'src/main.js',
-	bundle: 'bundle.js',
+	js: 'public/js',
 	react: 'public/react'
 }
 gulp.task('default', ['browser-Sync'],function(){
@@ -89,16 +83,18 @@ gulp.task('css', function(){
 })
 gulp.task('script', function() {
 	gulp.src('src/js/!(login).js')
-			.pipe(gulp.dest('public/js'));
+			.pipe(gulp.dest(PATH.js));
 	gulp.watch('src/js/!(login).js', function(event){
 		gulp.src(event.path)
-			.pipe(gulp.dest('public/js'));
+			.pipe(gulp.dest(PATH.js));
 		log(event.path);
 	}).on('change', reload)
 
 })
 
-gulp.task('webpack', function(callback) {
+
+gulp.task('webpack', function(cb) {
+	var start = false;
 	var spinner = ora("yangsl's blog building...");
 	spinner.start();
 	var webpackChangeHandler = function(err, stats) {
@@ -112,11 +108,15 @@ gulp.task('webpack', function(callback) {
 	    chunkModules: false,
 	  }) + '\n');
 		browserSync.reload();
+		if (!start) {
+			cb();
+			start = true;
+		}
 	}
 	return gulp.src('src/main.js')
 		.pipe($.plumber())
 		.pipe(webpack(webpackConfig, null, webpackChangeHandler))
-		.pipe(gulp.dest('publish/react'));
+		.pipe(gulp.dest(PATH.react));
 });
 
 gulp.task('scriptES2015', function(){
@@ -124,13 +124,13 @@ gulp.task('scriptES2015', function(){
 			.pipe(babel({
 				presets: ['es2015'],
 			}))
-			.pipe(gulp.dest('public/js'));
+			.pipe(gulp.dest(PATH.js));
 	gulp.watch('src/js/login.js', function(event){
 		gulp.src(event.path)
 			.pipe(babel({
 				presets: ['es2015'],
 			}))
-			.pipe(gulp.dest('public/js'));
+			.pipe(gulp.dest(PATH.js));
 		log(event.path);
 	}).on('change', reload)
 
@@ -145,36 +145,6 @@ gulp.task('browser-Sync', ['nodemon'], function(){
 	}, 3000)
 })
 
-// react
-// gulp.task('react', function(){
-// 	var b = watchify(browserify({
-// 		entries: [PATH.entry],
-// 		transform: [
-// 			[babelify, {presets: ["es2015", "react"], sourceMaps: true}]
-// 		],
-// 		debug: true,
-// 		cache: {},
-// 		packageCache: {}
-// 	}), {delay: 1000});
-//
-// 	return b.on('update', function(file){
-// 		b.bundle()
-// 			.pipe(source(PATH.bundle))
-// 			.pipe(buffer())
-// 			.pipe(sourcemaps.init({loadMaps: true}))
-// 			.pipe(sourcemaps.write('.'))
-// 			.pipe(gulp.dest(PATH.react));
-// 		reload();
-// 		file.forEach(function(value) {
-// 			log(value);
-// 		})
-// 	})
-// 	.bundle()
-// 	.pipe(source(PATH.bundle))
-// 	.pipe(gulp.dest(PATH.react));
-// });
-
-
 //clean : clean public;
 gulp.task('clean', function(){
 	return gulp.src(['public/css/*', 'public/js/*', 'public/react/*'], {read: false})
@@ -185,7 +155,7 @@ gulp.task('compress', function (cb) {
   pump([
       gulp.src('public/react/*.js'),
       uglify(),
-      gulp.dest('public/react')
+      gulp.dest(PATH.react)
     ],
     cb
   );

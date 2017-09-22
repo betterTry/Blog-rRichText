@@ -72,7 +72,6 @@ class UploadComponent extends React.Component {
 					}.bind(this)
 				})
 			} else { //图片过大提示信息;
-
 			}
 
 		} else { // 如果不是,提示信息;
@@ -1337,7 +1336,6 @@ class ControlWriteComponent extends React.Component {
 						contentEditable="true"
 						onFocus={(e) => {this.handleFocus(e)}}
 						onBlur={(e) => {this.handleWriteBlur(e)}}
-						onKeyDown={(e) => {this.handleShift(e)}}
 						onPaste={(e) => {this.handlePaste(e)}}
 						onCopy={(e) => {this.handleCopy(e)}}
 						onCut={(e) => {this.handleCopy(e)}}>
@@ -1345,7 +1343,7 @@ class ControlWriteComponent extends React.Component {
 				</div>
 				<div ref="pasteWrite" contentEditable="true"
 					style={{width: 1, height: 1, position:'absolute', left: -10000, top: 0, zIndex:-1, overflow:'hidden'}}
-					onFocus={(e) => {this.pasteFocus(e)}></div>
+					onFocus={(e) => {this.pasteFocus(e)}}></div>
 				{state.type ? <ModelComponent type={state.type} text={state.text} link={state.link} elm={state.elm} changeState={this.changeState.bind(this)} clickListener={this.clickListener}/> :''}
 			</div>
 		)

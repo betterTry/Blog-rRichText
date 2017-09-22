@@ -6,9 +6,11 @@ module.exports = {
     bundle: './src/main.js'
   },
   output: {
-    filename: '[name].js'
+    filename: 'bundle.js'
   },
-  devtool: '#cheap-modules-source-map',
+  watch: true,
+  // devtool: '#cheap-modules-source-map',
+  devtool: 'inline-source-map',
   //模块解析配置项;
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
