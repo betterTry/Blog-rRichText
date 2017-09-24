@@ -3,6 +3,7 @@ nav.header
 	- var family = state.family;
 	- var night = state.night;
 	- var user = state.user;
+	- var level = state.level
 	.logo.fl
 		a(href="/")
 			img#logoImg(src="/pic/logo/logo.png")
@@ -18,12 +19,18 @@ nav.header
 				.userHead
 					img(src=user.head)
 				.userName #{user.name}
+				if user.sign
+					.signBox #{user.sign}
 				.levelBox
-					span.levelText lv100
-					span.level 100%
+					- var levelClass = Math.ceil(level.level / 3) + 'x';
+					- var leverScale = Math.round(level.score/level.exp * 1000) / 10;
+					span.levelText(class='Co_' + levelClass) #{level.level}
+					span.level
+						span.levelBg(class='Bg_'+ levelClass,style='width:' + leverScale + '%;')
+						span.levelScale #{level.score + '/' + level.exp}
 				.funclist
 					.manCenter
-						| 个人中心
+						a(href="/center") 个人中心
 					.sysMessage
 						| 消息
 					.other

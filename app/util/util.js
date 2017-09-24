@@ -3,7 +3,6 @@ var Promise = require('bluebird');
 
 exports.resize = function(src, dest) {
 	return new Promise(function(resolve, reject) {
-	
 		gm(src)
 		.noProfile()
 		.size(function(err, size) {
@@ -16,7 +15,7 @@ exports.resize = function(src, dest) {
 					var rWeight = height * 1.25;
 					var x = (width - rWeight) / 2;
 					this.crop(rWeight, height, x, 0);
-					
+
 				} else {
 					var rHeight = width / 1.25;
 					var y = (height - rHeight) / 2;

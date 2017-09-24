@@ -194,21 +194,59 @@ img{
 		cursor: pointer;
 	}
 	.userName {
-		font-size: 1.4rem;
+		font-size: 1.5rem;
 	}
 	.levelBox {
+		position: relative;
 		.levelText {
-			font-size: 1.3rem;
+			font-size: 1.2rem;
+			color: #fff;
+			vertical-align: 2px;
+			&::before {
+				content: '\e604';
+				position: absolute;
+				top: 0;
+				left: 20px;
+				z-index: -1;
+				font-family: icon;
+
+				font-size: 3.2rem;
+			}
+		}
+		@each $i, $color in (1, $pre-grey), (2, $sky-blue), (3, $light-blue),
+										(4, $pure-cyan), (5, $pre-orange), (6, $pure-red),
+										(7, $pure-red) {
+			.Co_#{$i}x::before {color: $color};
 		}
 		.level {
 			display: inline-block;
+			position: relative;
 			width: 200px;
 			height: 12px;
 			color: #fff;
 			line-height: 12px;
 			border-radius: 6px;
 			margin-left: 10px;
-			background-color: $sky-blue;
+			background-color: #d8d8d8;
+			overflow: hidden;
+			.levelScale {
+				display: inline-block;
+				position: relative;
+			}
+			.levelBg {
+				display: inline-block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 100%;
+				z-index: 0;
+			}
+			@each $i, $color in (1, $pre-grey), (2, $sky-blue), (3, $light-blue),
+											(4, $pure-cyan), (5, $pre-orange), (6, $pure-red),
+											(7, $pure-red) {
+				.Bg_#{$i}x {background-color: $color};
+			}
+			.Bg_7x {background: -webkit-gradient(linear, left bottom, right top, from($pre-cyan), to($pure-red))}
 		}
 	}
 

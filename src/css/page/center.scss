@@ -1,0 +1,55 @@
+@import "../variety/variety.scss";
+body {
+	background-color: #f8f8f8;
+}
+.container.center {
+	margin-top: 80px;
+	border-radius: 3px;
+	overflow: hidden;
+	position: relative;
+	border: 1px solid #eaebec;
+	.infoBox {
+		width: 100%;
+		.cover {
+			height: 150px;
+			background-color: #c3c3c3;
+		}
+		.pvtInfo {
+			height: 50px;
+			background-color: #fff;
+			padding-left: 100px;
+			.head {
+				width: 80px;
+				height: 80px;
+				position: absolute;
+				bottom: 10px;
+				left: 20px;
+				border-radius: 40px;
+				overflow: hidden;
+				img {
+					width: 100%;
+				}
+			}
+			.sign {
+				height: 30px;
+				padding-right: 30px;
+				margin: 10px 0 0 20px;
+				input {
+					width: 100%;
+					height: 100%;
+					border: 1px solid #fff;
+					font-size: 1.4rem;
+					border-radius: 5px;
+					text-indent: 10px;
+					&:hover {
+						background-color: #eee;
+
+					}
+					&:focus {
+						background-color: #eee;
+					}
+				}
+			}
+		}
+	}
+}

@@ -59,7 +59,7 @@ gulp.task('nodemon', ['css', 'script', 'scriptES2015', 'webpack'], function(cb){
 		}
 	})
 	.on('restart', function() {
-		setTimeout(reload, 1000);
+		setTimeout(reload, 2000);
 	});
 })
 
@@ -67,16 +67,16 @@ gulp.task('nodemon', ['css', 'script', 'scriptES2015', 'webpack'], function(cb){
 gulp.task('css', function(){
 
   gulp.src('src/css/**')
-		.pipe(autoprefixer())
 		.pipe(plumber())
 		.pipe(sass())
+		.pipe(autoprefixer())
 		.pipe(gulp.dest('public/css'));
 	gulp.watch('src/css/**', function(event){
-		var _path = path.dirname(event.path.replace('src','public'));
+		var _path = path.dirname(event.path.replace('src', 'public'));
 		gulp.src(event.path)
 			.pipe(plumber())
-			.pipe(autoprefixer())
 			.pipe(sass())
+			.pipe(autoprefixer())
 			.pipe(gulp.dest(_path));
 		log(event.path);
 	}).on('change', reload)

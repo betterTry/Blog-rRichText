@@ -1,0 +1,22 @@
+extends ../layout
+block head
+	link(href="/css/page/center.css",rel="stylesheet")
+block header
+	include header.pug
+
+block content
+	canvas#bg-canvas(width=1366,height=1075)
+	script(src="/js/canvas.js")
+	- var user = state.user;
+	.container.center
+		.infoBox
+			.cover
+			.pvtInfo
+				.head
+					img(src=user.head)
+				.sign
+					input(type="text", value=user.sign)
+  
+block foot
+	script(src="https://cdn.bootcss.com/reqwest/2.0.5/reqwest.min.js")
+	script(src="/js/header.js")

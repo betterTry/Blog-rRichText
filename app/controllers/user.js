@@ -2,6 +2,7 @@
 
 var User = require('../models/user');
 var Promise = require('bluebird');
+var exp = require('../constant/exp');
 
 exports.hasLogin = function  *(next) {
 	var user = this.session.user;
@@ -75,5 +76,22 @@ exports.removeUser = function *(next) {
   this.response.body = {
     code: code
   }
+}
 
+exports.getLevel = function *(next) {
+	var user = this.state.user;
+	if (user) {
+		var EXP = user.EXP;
+		var arr = Object.keys(exp);
+		for(var i = 0, length = arr.length, sum = 0; i < length; i++) {
+			if(sum > EXP) break;
+			sum += exp[i+1];
+		}
+		this.state.level = {
+			level: i,
+			score: EXP - sum + exp[i],
+			exp: exp[i]
+		}
+	}
+	yield next
 }

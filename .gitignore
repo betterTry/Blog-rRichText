@@ -3,6 +3,7 @@ node_modules
 .npm
 public/react
 public/js
+public/image
 public/css
 .DS_Store*
 .idea/

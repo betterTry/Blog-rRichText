@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import WriteWelcome from 'component/WriteWelcome';
 
 import {util} from '../libs';
 const $ = {
@@ -170,7 +171,7 @@ class ModelComponent extends React.Component {
 	componentDidMount() {
 		window.addEventListener('click', this.props.clickListener);
 	}
-	添加链接;
+	//添加链接;
 	createLink() {
 		var InputComponentLink = this.refs.InputComponentLink.state,
 			InputComponentWord = this.refs.InputComponentWord.state;
@@ -1385,38 +1386,45 @@ class WriteComponent extends React.Component {
 	}
 
 	render() {
-
-		var index = this.props.index, data = this.props.data;
-		var value = '',save = '';
-		var show = index[1] < 0 ? false : true;
-		if(show) {
-			if(data.length && data[index[0]].articles[index[1]]){
-				var item = data[index[0]].articles[index[1]];
-				value = item.name;
-				save = item.save;
-			}
+		const {index, data, changeContent, changeSave, changePublish} = this.props;
+		const show = index[1] < 0 ? false : true;
+		let value = '', save = '';
+		if(show && data.length && data[index[0]].articles[index[1]]) {
+			const item = data[index[0]].articles[index[1]];
+			value = item.name;
+			save = item.save;
 		}
-
+		let wrapClass = {width: '100%', height: '100%', position: 'relative'};
+		let Welcome = null;
+		if (!data.length) {
+			wrapClass.display = 'none';
+			Welcome = (<WriteWelcome />);
+		}
 		return (
-			<div className={'writeArea'+(this.state.fullscreen?' fullScreen':'')} style={show?{}:{display:'none'}}>
-				<SavedComponent save={save}/>
-				<div className="writeAreaBox" onKeyDown={this.handleKeyDown.bind(this)}>
-					<form>
-						<div className="writeTitleDiv">
-							<input ref="writeTitle" className="writeTitle" type="text" name="writeTitle" onChange={this.handleChange.bind(this)} value={value}/>
-						</div>
-					</form>
-					<ControlWriteComponent
-						index={index}
-						data={data}
-						key="ControlWriteComponent"
-						ref="ControlWriteComponent"
-						changeContent={this.props.changeContent}
-						changeSave={this.props.changeSave}
-						changePublish={this.props.changePublish}
-						fullscreen={this.fullscreen.bind(this)}
-						screen={this.state.fullscreen}/>
+			<div className={'writeArea' + (this.state.fullscreen ? ' fullScreen' : '')} style={show ? {} : {display : 'none'}}>
+				<div style={wrapClass}>
+					<SavedComponent save={save}/>
+					<div className="writeAreaBox"
+							 onKeyDown={(e) => {this.handleKeyDown(e)}}>
+						<form>
+							<div className="writeTitleDiv">
+								<input ref="writeTitle" className="writeTitle"
+											 value={value} type="text" name="writeTitle"
+											 onChange={(e) => {this.handleChange(e)}}/>
+							</div>
+						</form>
+						<ControlWriteComponent
+							data={data}
+							index={index}
+							ref="ControlWriteComponent"
+							changeSave={changeSave}
+							changeContent={changeContent}
+							changePublish={changePublish}
+							screen={this.state.fullscreen}
+							fullscreen={(e) => {this.fullscreen(e)}}/>
+					</div>
 				</div>
+				{Welcome}
 			</div>
 		)
 	}

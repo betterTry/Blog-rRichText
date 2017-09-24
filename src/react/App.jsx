@@ -507,18 +507,20 @@ class AppComponent extends React.Component {
 		$.ajax({
 			url: '/write/init',
 			method: 'GET',
-			success: function(result) {
-				if(result.success) {
-					document.getElementById('controlWrite').innerHTML = result.article.content;
-					var data = result.data;
-					data.forEach(function(item, index) {
-						var articles = data[index].articles;
-						articles.forEach(function(item, index){
-							articles[index].save = true;
-						})
-					})
-
-					this.content = [[data[0].articles[0].content]];
+			success: function({success, data}) {
+				if (success) {
+					if (data.length) {
+						document.getElementById('controlWrite').innerHTML = result.article.content;
+						data.forEach((item, index) => {
+							var articles = data[index].articles;
+							articles.forEach((item) => {
+								item.save = true;
+							});
+						});
+						this.content = [[data[0].articles[0].content]];
+					} else {
+						this.content = '';
+					}
 					this.setState({
 						data: data,
 						selected: 0,
@@ -712,10 +714,19 @@ class AppComponent extends React.Component {
 		var title = published ? articles[articleSelected].name : '';
 		return (
 			<div className="root">
-				<LeftAreaComponent data={works} workSelected={this.workSelected.bind(this)} selected={selected} key='LeftArea' workId={workId} addNewWork={this.addNewWork.bind(this)} removeWork={this.removeWork.bind(this)} renameWork={this.renameWork.bind(this)}/>
-				<MidAreaComponent data={articles} articleSelected={this.articleSelected.bind(this)} selected={articleSelected} workId={workId} addNewArticle={this.addNewArticle.bind(this)} changeContent={this.changeContent.bind(this)} removeState={this.removeState.bind(this)} key='MidArea'/>
-				<WriteComponent index={[selected, articleSelected]} data={data} key='Write' changeTitle={this.changeTitle.bind(this)} changeContent={this.changeContent.bind(this)} changeSave={this.changeSave.bind(this)} changePublish={this.changePublish.bind(this)}/>
-				<PublishedComponent show={state.published} closePublish={this.closePublish.bind(this)} id={id} title={title}/>
+				<LeftAreaComponent data={works} key='LeftArea'
+						selected={selected} workId={workId}
+						workSelected={this.workSelected.bind(this)}
+						addNewWork={this.addNewWork.bind(this)} removeWork={this.removeWork.bind(this)} renameWork={this.renameWork.bind(this)}/>
+				<MidAreaComponent data={articles} key='MidArea'
+						workId={workId} selected={articleSelected}
+						articleSelected={this.articleSelected.bind(this)}
+						addNewArticle={this.addNewArticle.bind(this)} changeContent={this.changeContent.bind(this)} removeState={this.removeState.bind(this)}/>
+				<WriteComponent data={data} key='Write'
+						index={[selected, articleSelected]}
+						changeTitle={this.changeTitle.bind(this)} changeContent={this.changeContent.bind(this)} changeSave={this.changeSave.bind(this)} changePublish={this.changePublish.bind(this)}/>
+				<PublishedComponent show={state.published}
+					 closePublish={this.closePublish.bind(this)} id={id} title={title}/>
 				<LoadingComponent props={state.loading}/>
 			</div>
 		)

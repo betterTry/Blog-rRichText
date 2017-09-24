@@ -1,3 +1,4 @@
+@import "../variety/variety.scss";
 body {
   background-color: #e5e6e7;
 }
@@ -18,7 +19,7 @@ body {
     height: 180px;
     // border-bottom-left-radius: 3px;
     background: #1a5694;
-    background: -webkit-gradient(linear, left bottom, right top, from(#518ba3), to(#1a9487));
+    background: -webkit-gradient(linear, left bottom, right top, from($dark-cyan), to($light-green));
     // box-shadow: 0 8px 6px -6px #828282;
     color: #fff;
     padding-top: 20px;
@@ -91,7 +92,7 @@ body {
       color: #ff5f5f;
       font-size: 1.2rem;
       text-align: center;
-      background-color: #dff5f7;
+      background-color: $cyan-blue;
       padding: 3px;
       font-weight: 300;
       border-radius: 3px;

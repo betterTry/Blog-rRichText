@@ -5,6 +5,10 @@ var ObjectId = Schema.Types.ObjectId;
 
 var workSchema = new Schema({
 	name: String,
+	user: {
+		type: String,
+		ref: 'User'
+	},
 	articles: [{ type: ObjectId, ref: 'Article'}],
 	meta : {
 		createAt : {
@@ -29,4 +33,3 @@ workSchema.pre('save' , function(next){
 })
 
 module.exports = workSchema;
-

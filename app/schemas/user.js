@@ -12,15 +12,17 @@ var userSchema = new Schema({
   },
   openid: String,
   password: String,
-  // 0: normal,
-  // 1: verified,
-  // 2: professional
   role: {
+    type: Number,
+    default: 0  // 0: normal, 1: verified, 2: professional
+  },
+  works: [{type: ObjectId, ref: 'Work'}],
+  articles: [{type: ObjectId, ref: 'Article'}],
+  collections: [{type: ObjectId , ref: ''}],
+  EXP: {
     type: Number,
     default: 0
   },
-  articles: [{type: ObjectId, ref: 'Article'}],
-  collections: [{type: ObjectId , ref: ''}],
   sign: String,
   head: {
     type: String,

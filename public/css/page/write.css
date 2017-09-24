@@ -808,26 +808,26 @@ input, textarea {
 
 .loadingIcon {
   -webkit-animation-name: 'loading';
-  animation-name: 'loading';
+          animation-name: 'loading';
   -webkit-animation-duration: 0.9s;
-  animation-duration: 0.9s;
+          animation-duration: 0.9s;
   -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
   width: 100%;
   height: 40px;
   display: inline-block; }
 
 .loadingUl li:nth-child(2) .loadingIcon {
   -webkit-animation-delay: 0.3s;
-  animation-delay: 0.3s; }
+          animation-delay: 0.3s; }
 
 .loadingUl li:nth-child(2) .loadingIcon {
   -webkit-animation-delay: 0.4s;
-  animation-delay: 0.4s; }
+          animation-delay: 0.4s; }
 
 .loadingUl li:last-child .loadingIcon {
   -webkit-animation-delay: 0.5s;
-  animation-delay: 0.5s; }
+          animation-delay: 0.5s; }
 
 .loadingIcon:before {
   font-family: 'write';

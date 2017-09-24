@@ -4,23 +4,26 @@ var article = require('../app/controllers/article');
 var update = require('../app/controllers/update');
 var login = require('../app/controllers/login');
 var user = require('../app/controllers/user');
+var center = require('../app/controllers/center');
 
 module.exports = function(router){
 
 	// 主页
-	router.get('/', main.index);
+	router.get('/', user.getLevel, main.index);
 	router.get('/more', main.more);
 	// 文章
 	router.get('/article/:id', main.article);
 	// 搜索文章
-	router.get('/search', main.search);
+	router.get('/search', user.getLevel, main.search);
 
 	// login;
 	router.get('/login', login.login);
+	// center;
+	router.get('/center', user.getLevel, center.index);
 
 
 	// write;
-	router.get('/write', article.get);
+	router.get('/write', user.hasLogin, article.get);
 
 	// 保存和提交;
 	router.post('/write/save', article.save);
@@ -56,6 +59,7 @@ module.exports = function(router){
 
 
 	router.post('/update/pic',  update.pic);
+
 	// 404;
 	router.get('*', function *() {
 		yield this.render('include/error',{

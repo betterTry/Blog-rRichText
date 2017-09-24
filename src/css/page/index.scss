@@ -13,75 +13,100 @@ body{
 }
 
 .articleInfo{
-	height: 50px;
+	height: 34px;
 	padding: 5px 0px;
-	line-height: 40px;
+	line-height: 30px;
 	font-size: 1.5rem;
-}
-.headBox{
-	width: 40px;
-	height: 40px;
-	border-radius: 20px;
-	overflow: hidden;
-	display: inline-block;
-	margin-right: 10px;
-	border: 1px solid #e4e5e6;
-}
-.headBox img{
-	width: 100%;
-	height: 100%;
+	.headBox{
+		width: 34px;
+		height: 34px;
+		border-radius: 20px;
+		overflow: hidden;
+		display: inline-block;
+		margin-right: 10px;
+		border: 1px solid #e4e5e6;
+		img{
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.nameBox{
+		display: inline-block;
+		vertical-align: top;
+		.time{
+			color: #969696;
+			font-size: 1.3rem;
+			margin-left: 10px;
+		}
+	}
 }
 
-.nameBox{
-	display: inline-block;
-	vertical-align: top;
-}
-.time{
-	color: #969696;
-	font-size: 1.3rem;
-	margin-left: 10px;
-}
 .articleBody{
 	margin-top: 10px;
 	position: relative;
+	&.haveImg {
+		padding-right: 180px;
+	}
+	.articleTitle{
+		font-size: 2rem;
+		margin-top: 0px;
+		a {
+			white-space: pre-wrap;
+		}
+	}
+	.articleContent p {
+		white-space: pre-wrap;
+		line-height: 1.7;
+		font-size: 1.5rem;
+		margin: 10px 0;
+	}
+	.articleImg{
+		position: absolute;
+		width: 150px;
+		height: 120px;
+		right: 0;
+		top: 50%;
+		margin-top: -60px;
+		border: 1px solid #e4e5e6;
+		overflow: hidden;
+		a{
+			width: 100%;
+			height: 100%;
+		}
+		img{
+			width: 100%;
+			height: 100%;
+			transition: transform .5s;
+			&:hover {
+				transform: scale(1.1, 1.1)
+			}
+		}
+	}
 }
-.haveImg{
-	padding-right: 180px;
-}
-.articleTitle{
-	font-size: 2.4rem;
-	margin-top: 0px;
-}
-.articleTitle a{
-	white-space: pre-wrap;
-}
-
-.articleContent p{
-	white-space: pre-wrap;
-	line-height: 1.7;
-	font-size: 1.6rem;
-}
-.articleImg{
-	position: absolute;
-	width: 150px;
-	height: 120px;
-	right: 0;
-	top: 50%;
-	margin-top: -60px;
-	border: 1px solid #e4e5e6;
-	overflow: hidden;
-}
-.articleImg a{
-	width: 100%;
-	height: 100%;
-}
-.articleImg img{
-	width: 100%;
-	height: 100%;
-	transition: transform .5s;
-}
-.articleImg img:hover{
-	transform: scale(1.1, 1.1)
+.metaBox {
+	a {
+		display: inline;
+		margin: 0 5px;
+		color: #aaa;
+		&::before {
+			margin-right: 4px;
+			font-size: 1.3rem;
+			font-family: icon;
+		}
+		&:hover {
+			color: #666;
+		}
+	}
+	.readed::before {
+		content: '\e65e';
+		font-size: 1.4rem;
+	}
+	.liked::before {
+		content: '\e7a4';
+	}
+	.confirmed::before {
+		content: '\e612';
+	}
 }
 
 /* ============== banner ================*/

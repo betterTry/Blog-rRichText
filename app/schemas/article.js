@@ -6,6 +6,10 @@ var ObjectId = Schema.Types.ObjectId;
 var articleSchema = new Schema({
 	name: {type: String, default: '无标题文章'},
 	content: {type: String, default: '<p><br/></p>'},
+	user: {
+		type: String,
+		ref: 'User'
+	},
 	work: {
 		type: ObjectId,
 		ref: 'Work'
@@ -16,6 +20,18 @@ var articleSchema = new Schema({
 	},
 	thumbnail: String,
 	text: String,
+	liked: {
+		type: Number,
+		default: 0
+	},
+	readed: {
+		type: Number,
+		default: 0
+	},
+	confirmed: {
+		type: Number,
+		default: 0
+	},
 	meta: {
 		createAt: {
 			type: Date,

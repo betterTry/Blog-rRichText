@@ -15,7 +15,8 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     alias: {
-      '@': path.join(__dirname, './src')
+      '@': path.join(__dirname, './src'),
+      'component': path.join(__dirname, './src/react/component')
     }
   },
   module: {
@@ -48,9 +49,4 @@ module.exports = {
       loader: 'url-loader?limit=8192'
     }]
   },
-
-  plugins: [
-     new webpack.HotModuleReplacementPlugin()
-  ]
-
 };

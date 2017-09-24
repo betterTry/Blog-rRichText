@@ -13,16 +13,21 @@ exports.get = function *(next) {
 }
 
 exports.init = function *(next) {
-	var data = yield Work.find({})
+	var user = this.state.user;
+	var data = yield Work.find({_id: {$in: user.works}})
 							.populate('articles', '-meta -content')
 							.exec();
-	var id = data[0].articles[0]._id
-	var article = yield Article.findOne({_id: id}, 'content publish')
+	var article;
+	if (data.length) {
+		var id = data[0].articles[0]._id
+		article = yield Article.findOne({_id: id}, 'content publish')
+	}
+
 
 	this.response.body = {
 		success: 1,
 		data: data,
-		article: article
+		article: article || {}
 	}
 }
 
@@ -51,12 +56,11 @@ exports.save = function *(next) {
 exports.removeArticle = function *(next) {
 	var user = this.state.user;
 	var id = this.params.id,
-		workId = this.request.query.workId;
+			workId = this.request.query.workId;
 	try {
 		var article = yield Article.remove({_id: id}).exec();
 		var work = yield Work.findOne({_id: workId});
-		var articles = work.articles;
-		articles.splice(articles.indexOf(id), 1);
+		work.articles.splice(work.articles.indexOf(id), 1);
 		yield work.save();
 		if (article.publish) {
 			user.articles.splice(user.articles.indexOf(id), 1);
@@ -160,10 +164,13 @@ exports.find = function *(next) {
 }
 
 exports.newWork = function *(next) {
+	var user = this.state.user;
 	var name = this.request.query.name;
 	try {
 		var work = new Work({name: name});
 		yield work.save();
+		user.works.push(work._id);
+		yield user.save();
 		var success = 1;
 	} catch(err) {
 		var success = 0, work = '';
@@ -175,10 +182,13 @@ exports.newWork = function *(next) {
 }
 
 exports.removeWork = function *(next) {
+	var user = this.state.user;
 	var workId = this.request.query.workId;
 	try {
 		yield Work.remove({_id: workId}).exec();
 		yield Article.remove({work: workId}).exec();
+		user.works.splice(user.works.indexOf(workId), 1);
+		yield user.save();
 		var success = 1;
 	} catch(err) {
 		var success = 0
