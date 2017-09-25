@@ -256,7 +256,7 @@ img{
 		padding-top: 10px;
 		font-weight: 300;
 		cursor: pointer;
-		div {
+		a {
 			flex: 1;
 		}
 		@mixin before {
@@ -265,6 +265,9 @@ img{
 			font-size: 2rem;
 			line-height: 25px;
 		}
+    .manCenter, .sysMessage, .other {
+      display: block;
+    }
 		.manCenter::before {
 			content: '\e603';
 			@include before;

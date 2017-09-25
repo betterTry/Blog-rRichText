@@ -9,7 +9,7 @@ exports.index = function *(next) {
 		var articles = articles.slice(0 ,15);
 		articles.forEach(function(item, index) {
 			if(item.text) {
-				articles[index].text = item.text.slice(0, 90);
+				item.text = item.text.slice(0, 90);
 			}
 		})
 	}
@@ -37,7 +37,7 @@ exports.article = function *(next) {
 			title: '您要找的页面不存在'
 		})
 	}
-	
+
 }
 
 exports.search = function *(next) {
@@ -77,7 +77,7 @@ exports.more = function *(next) {
 		var success = 0;
 		console.log(err);
 	}
-	
+
 	yield this.response.body = {
 		articles: articles,
 		success: success

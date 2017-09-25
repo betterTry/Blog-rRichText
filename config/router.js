@@ -12,7 +12,7 @@ module.exports = function(router){
 	router.get('/', user.getLevel, main.index);
 	router.get('/more', main.more);
 	// 文章
-	router.get('/article/:id', main.article);
+	router.get('/article/:id', user.getLevel, main.article);
 	// 搜索文章
 	router.get('/search', user.getLevel, main.search);
 

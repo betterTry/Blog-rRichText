@@ -507,10 +507,10 @@ class AppComponent extends React.Component {
 		$.ajax({
 			url: '/write/init',
 			method: 'GET',
-			success: function({success, data}) {
+			success: function({success, data, article}) {
 				if (success) {
 					if (data.length) {
-						document.getElementById('controlWrite').innerHTML = result.article.content;
+						document.getElementById('controlWrite').innerHTML = article.content;
 						data.forEach((item, index) => {
 							var articles = data[index].articles;
 							articles.forEach((item) => {

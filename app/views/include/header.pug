@@ -29,12 +29,9 @@ nav.header
 						span.levelBg(class='Bg_'+ levelClass,style='width:' + leverScale + '%;')
 						span.levelScale #{level.score + '/' + level.exp}
 				.funclist
-					.manCenter
-						a(href="/center") 个人中心
-					.sysMessage
-						| 消息
-					.other
-						| 待开放
+					a.manCenter(href="/center") 个人中心
+					a.sysMessage 消息
+					a.other 待开放
 				
 	else
 		#login.fr
