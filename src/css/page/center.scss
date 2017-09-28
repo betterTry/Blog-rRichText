@@ -65,15 +65,38 @@ body {
       position: relative;
       li {
         float: left;
-        padding: 0 15px;
+        padding: 0 20px;
       }
       .slider {
-        width: 50px;
+        width: 65px;
         height: 3px;
         background-color: $sky-blue;
         position: absolute;
         bottom: 0;
       }
+    }
+    .articleBox {
+      background-color: #fff;
+      .worksNav {
+        @include clearfix;
+        margin-top: 10px;
+        .workTag {
+          float: left;
+          padding: 5px 15px;
+          border-radius: 15px;
+          border: 1px solid #ccc;
+          margin-left: 20px;
+          cursor: pointer;
+          &:hover {
+            border: 1px solid $sky-blue;
+            box-shadow: 0 0 10px -8px $sky-blue inset;
+          }
+          &:first-of-type {
+            display: none;
+          }
+        }
+      }
+
     }
   }
 }
