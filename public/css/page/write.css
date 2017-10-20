@@ -563,11 +563,12 @@ input, textarea {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 20px 30px 0px 30px; }
+  box-sizing: border-box;
+  padding: 20px 30px 20px 30px; }
 
 .controlWrite {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   font-size: 1.6rem;
   outline: none;
   color: #2f2f2f;
@@ -844,7 +845,7 @@ input, textarea {
 .saveState {
   height: 20px;
   position: absolute;
-  top: 0;
+  top: -20px;
   right: 0;
   padding-right: 10px;
   line-height: 20px; }

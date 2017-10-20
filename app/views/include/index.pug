@@ -37,7 +37,7 @@ block content
 							span yangsl
 							- var date = new Date(item.meta.updateAt);
 							- var year = date.getFullYear();
-							- var month = date.getMonth() + 1 > 9 ? date.getMonth() : '0' + (date.getMonth() + 1);
+							- var month = date.getMonth() + 1 > 9 ? date.getMonth() + 1: '0' + (date.getMonth() + 1);
 							- var day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
 							- var time = year+'.'+month+'.'+day;
 							span.time #{time}
