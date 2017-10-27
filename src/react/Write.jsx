@@ -317,8 +317,6 @@ class ModelComponent extends React.Component {
 
 
 class ControlWriteComponent extends React.Component {
-
-
 	constructor(props) {
 		super();
 		var index = props.index;
@@ -339,10 +337,13 @@ class ControlWriteComponent extends React.Component {
 	shouldComponentUpdate(nextProps) {
 		return true;
 	}
+  componentDidMount() {
+
+  }
 
 	islastchild(node) {
 		var lastChild = true;
-		do{
+		do {
 			if(node.nextSibling) {
 				lastChild = false;
 				break;
@@ -357,11 +358,9 @@ class ControlWriteComponent extends React.Component {
 		var controlWrite = this.refs.controlWrite;
 		controlWrite.addEventListener('DOMSubtreeModified', this.changeSave);
 	}
-
 	handleBlur() {
 		this.focus = false;
 	}
-
 	handleWriteBlur(e) {
 		e.stopPropagation();
 		this.copy = false;
@@ -502,12 +501,11 @@ class ControlWriteComponent extends React.Component {
 	}
 
 	isLastChild(elm) {
-		var controlWrite = this.refs.controlWrite;
-		return (elm === controlWrite.lastChild) ? true : false;
+		return (elm === this.refs.controlWrite.lastChild) ? true : false;
 	}
 
 	createP() {
-		var p = document.createElement('p');
+		const p = document.createElement('p');
 		p.appendChild(document.createElement('br'));
 		return p;
 	}
@@ -629,18 +627,23 @@ class ControlWriteComponent extends React.Component {
 			e.preventDefault();
 		}
 	}
-	handleKeyDown(e) { //ctrl+s;
-		if((e.ctrlKey || e.metakey) && (e.keyCode == 83)) {
-			e.preventDefault();
-			this.handleClickSave(e);
-		}
+	handleKeyDown(e) {
+    if (e.keyCode === 8) {
+      e.stopPropagation();
+      setTimeout(() => {
+        const {controlWrite} = this.refs;
+        if (!controlWrite.childNodes.length) {
+          const p = this.createP();
+          controlWrite.appendChild(p);
+          p.focus();
+        }
+      }, 0);
+    }
 	}
 
 	handleMouseover(e, value) {
 		this.refs[value].className += ' menu-active';
 	}
-
-
 	handleMouseout(e, value) {
 		this.refs[value].className = this.refs[value].className.replace(/ menu-active/,'');
 	}
@@ -651,6 +654,7 @@ class ControlWriteComponent extends React.Component {
 	handlehidden(value) {
 		this.refs[value].className = this.refs[value].className.replace(/ menu-show/,'');
 	}
+
 	handleHr(e) {
 		e.preventDefault();
 		if(this.isPreCode()) {
@@ -745,24 +749,22 @@ class ControlWriteComponent extends React.Component {
 	}
 
 	handlePaste(e) {
-		var pasteWrite = this.refs.pasteWrite;
-		var controlWrite = this.refs.controlWrite;
-		var node = this.findNode();
-		var selection = document.getSelection();
+		const pasteWrite = this.refs.pasteWrite;
+		const controlWrite = this.refs.controlWrite;
+		const node = this.findNode();
+		const selection = document.getSelection();
 
 		if(!selection.isCollapsed) {
 			document.execCommand('delete');
 		}
 
-		var anchorNode = selection.anchorNode;
-		var anchorOffset = selection.anchorOffset;
-		this.anchorNode = anchorNode;
-		this.anchorOffset = anchorOffset;
+		this.anchorNode = selection.anchorNode;
+		this.anchorOffset = selection.anchorOffset;
 
-		if(node.tagName == 'PRE') {
+		if (node.tagName == 'PRE' || node.tagName == 'CODE') {
 			this.pre = true;
 		}
-		if(!this.copy) { //如果不是在编辑器中进行复制;
+		if (!this.copy) { //如果不是在编辑器中进行复制;
 			pasteWrite.focus();
 		}
 
@@ -774,11 +776,11 @@ class ControlWriteComponent extends React.Component {
 
 	pasteFocus(e) {
 		e.stopPropagation();
-		var pasteWrite = this.refs.pasteWrite;
-		pasteWrite.addEventListener('DOMNodeInserted', this.pasteWrite)
+		this.refs.pasteWrite.addEventListener('DOMNodeInserted', this.pasteWrite)
 	}
+
 	pasteWrite(e) {
-		var options = {
+		const options = {
 			whiteList: {
 				a: ['href', 'title', 'target'],
 				img: ['alt', 'src'],
@@ -786,7 +788,7 @@ class ControlWriteComponent extends React.Component {
 				b: '', strike: '', i: '',
 				br: ''
 			},
-			onIgnoreTag: function(tag, html, options) {
+			onIgnoreTag(tag, html, options) {
 				// return 的，全部替换;
 				if(/(div)|(ol)|(tbody)|(table)|(td)|(th)|(strong)|(ul)|(dl)|(span)|(em)|(label)|(code)|(small)|(select)|(dir)|(font)|(sup)|(tt)|(sub)|(abbr)|(acronym)|(cite)|(big)/i.test(tag)) {
 					return ''
@@ -794,131 +796,121 @@ class ControlWriteComponent extends React.Component {
 				// 否则全部escape;
 			},
 			stripIgnoreTagBody: ['script', 'iframe', 'frame', 'input', 'textarea', 'form', 'hr'],
-			escapeHtml: function(html) {
+			escapeHtml(html) {
 				// 全部变成p标签;
 				return html.replace(/<\w.*?>/,'<p>').replace(/<\/.*?>/,'</p>');
 			}
 		}
-		var myxss = new xss.FilterXSS(options);
-		var pasteWrite = this.refs.pasteWrite;
+		const myxss = new xss.FilterXSS(options);
+		const pasteWrite = this.refs.pasteWrite;
 		pasteWrite.removeEventListener('DOMNodeInserted', this.pasteWrite);
-		setTimeout(function() {
+		setTimeout(() => {
 
 			// 插入的位置, 粘贴之前保存的位置;
-			var offset = this.anchorOffset;
-			var anchorNode = this.anchorNode;
-			if(this.pre) {
-				var content = pasteWrite.textContent;
-				if(anchorNode.nodeType == 1) {
+			let offset = this.anchorOffset;
+			let anchorNode = this.anchorNode;
+			if (this.pre) {
+				const content = pasteWrite.textContent;
+				if (anchorNode.nodeType === 1) {
 					anchorNode.innerHTML = content;
 				} else {
-					anchorNode.textContent = anchorNode.textContent.slice(0, offset) + content + anchorNode.textContent.slice(offset);
+          const anchorNodeContent = anchorNode.textContent;
+					anchorNode.textContent = anchorNodeContent.slice(0, offset) + content + anchorNodeContent.slice(offset);
 				}
 				this.pre = false;
 				pasteWrite.innerHTML = '';
 				return;
 			}
 
-			var controlWrite = this.refs.controlWrite;
+			const controlWrite = this.refs.controlWrite;
 
-			var _h = pasteWrite.innerHTML; // 第一次获取paste的值;
+			const _h = pasteWrite.innerHTML; // 第一次获取paste的值;
 
 			// 如果是纯文本，则不进行剔除;
 			if(_h == pasteWrite.textContent) {
 
-				var textContent = anchorNode.textContent;
-				var tlength = textContent.length; //要复制内容的长度;
+				const textContent = anchorNode.textContent;
+				const selection = document.getSelection();
 
-				var selection = document.getSelection();
-				if(textContent) {
-					console.log(textContent)
-					anchorNode.textContent = textContent.slice(0, offset)+_h+textContent.slice(offset);
-
-
-					selection.collapse(anchorNode, _h.length+offset); // 光标定位;
+				if (textContent) {
+					anchorNode.textContent = textContent.slice(0, offset) + _h + textContent.slice(offset);
+					selection.collapse(anchorNode, _h.length + offset); // 光标定位;
 				} else {
 					anchorNode.textContent = _h;
 					selection.collapse(anchorNode, 1);
 				}
 
-
-			} else { // 若不是纯文本,进行筛选;
-
-				var html = myxss.process(pasteWrite.innerHTML);
-				html = html.replace(/<p><\/p>/g,'').replace(/<p>(?=<p>)/g,'').replace(/<\/p>(?=<\/p>)/g, '').replace(/<\w+?><\/\w+?>/,'')
-
+			} else {
+        // 若不是纯文本,进行筛选;
+				let html = myxss.process(pasteWrite.innerHTML);
+				html = html.replace(/<p><\/p>|<\w+?><\/\w+?>/g, '').replace(/<p><p>/g, '<p>').replace(/<\/p><\/p>/g, '</p>').replace(/<p><\/p>/g, '');
 				pasteWrite.innerHTML = html; // 让文本在paste中进行缓存;
-				var _hh = pasteWrite.innerHTML; // 缓存innerHTML对象;
+				const _hh = pasteWrite.innerHTML; // 缓存innerHTML对象;
 				// 此时对selection进行缓存;
-				var selection = document.getSelection();
+				const selection = document.getSelection();
 				selection.selectAllChildren(pasteWrite);
 				selection.collapseToEnd();
-				this.anchorNode = selection.anchorNode; // 重新记录anchorNode以及anchorOffset;
-				this.anchorOffset = selection.anchorOffset; // 此时都在paste中，用于重新确定位置;
 
-				var childNodes = pasteWrite.childNodes;
-				var clength = childNodes.length;
-				var c = []; // 让nodelist数组化;
-				for(var i = 0; i < clength; i++) { // 插入到数组;
-					var _childNode = childNodes[i];
-					c.push(_childNode);
+        const frag = document.createDocumentFragment();
+				const childNodes = pasteWrite.childNodes;
+				const cLength = childNodes.length;
+				const c = []; // 让nodelist数组化;
+				for(let i = 0; i < cLength; i++) { // 插入到数组和碎片;
+          const item = childNodes[i];
+          c.push(item);
 				}
+        c.forEach((item) => {
+          frag.appendChild(item);
+        });
+        this.anchorNode = c[cLength - 1];
 
-				var frag = document.createDocumentFragment();
-				for(var i = 0; i < clength; i++) { // 插入到碎片;
-					frag.appendChild(c[i]);
-				}
-
-
-				if(!/<p>|<img/.test(_hh)) {	// 如果不含P和img,全部加入anchorNode中;
-					console.log('not p');
-					if(anchorNode.nodeType == 1) {
-						var _ac = anchorNode.firstChild;
+				if (!/<(p>|img)/.test(_hh)) {	// 如果不含P和img,全部加入anchorNode中;
+					console.log('not p | img');
+					if (anchorNode.nodeType == 1) {
+						const _ac = anchorNode.firstChild;
 						if(_ac) { // 如果里面有空元素，替换掉;
 							anchorNode.replaceChild(frag, _ac);
 						} else {
 							anchorNode.appendChild(frag);
 						}
 					} else{
-						var textContent = anchorNode.textContent;
-						if(offset == textContent.length) {
-							var nextSibling = anchorNode.nextSibling;
-							if(nextSibling) {
+						const textContent = anchorNode.textContent;
+						if (offset == textContent.length) {
+							const nextSibling = anchorNode.nextSibling;
+							if (nextSibling) {
 								anchorNode.parentNode.insertBefore(frag, nextSibling);
 							} else {
 								anchorNode.parentNode.appendChild(frag);
 							}
 						} else {
-							var text1 = document.createTextNode(textContent.slice(0, offset));
-							var text2 = document.createTextNode(textContent.slice(offset));
-							var _frag = document.createDocumentFragment();
+							const text1 = document.createTextNode(textContent.slice(0, offset));
+							const text2 = document.createTextNode(textContent.slice(offset));
+							const _frag = document.createDocumentFragment();
 							_frag.appendChild(text1);
 							_frag.appendChild(frag);
 							_frag.appendChild(text2);
 							anchorNode.parentNode.replaceChild(_frag, anchorNode);
 						}
-
 					}
-
-				} else { // 如果是P,则将第一个P插入到原来中，其他的全部以节点加入;
+				} else {
+          // 如果是P,则将第一个P插入到原来中，其他的全部以节点加入;
 					// 首先将br标签之前，p标签之后的元素全部放在一个P中;
-					var childNodes_cache = [];
-					for(var i = 0; i < clength; i++) {
-						var _cacheItem = c[i];
-						var _cacheFrag = document.createElement('p');
+					const childNodes_cache = [];
+					for(let i = 0; i < cLength; i++) {
+						const _cacheItem = c[i];
+						const _cacheFrag = document.createElement('p');
 						if(_cacheItem.tagName == 'P') {
-							var _cacheLength = childNodes_cache.length;
+							const _cacheLength = childNodes_cache.length;
 
 							if(_cacheLength) {
-								var _cItem;
-								while(_cItem = childNodes_cache.shift()) {
+								let _cItem;
+								while (_cItem = childNodes_cache.shift()) {
 									_cacheFrag.appendChild(_cItem);
 								}
-
 								frag.insertBefore(_cacheFrag, _cacheItem)
 							}
-						} else if( _cacheItem.tagName == 'BR') {
-							var _cItem;
+						} else if ( _cacheItem.tagName === 'BR') {
+							let _cItem;
 							while(_cItem = childNodes_cache.shift()) {
 								_cacheFrag.appendChild(_cItem);
 							}
@@ -928,14 +920,12 @@ class ControlWriteComponent extends React.Component {
 						}
 					}
 
-					var firstNode = frag.removeChild(frag.firstChild); // paste节点的第一个节点;
-					var firstText = firstNode.innerHTML || firstNode.textContent;
-					var anchorNode = this.addTextContent(anchorNode, offset, firstText); // 添加第一个节点的文本;
-
+					const firstNode = frag.removeChild(frag.firstChild); // paste节点的第一个节点;
+					const firstText = firstNode.innerHTML || firstNode.textContent;
+					anchorNode = this.addTextContent(anchorNode, offset, firstText); // 添加第一个节点的文本;
 
 					// 后面通过findNode找到元素，在其后面添加其他文本;
 					var currentNode = this.findNode(anchorNode, true);
-
 
 					var nextSibling = currentNode.nextSibling;
 					if(!nextSibling || currentNode.tagName == 'div') {
@@ -943,15 +933,18 @@ class ControlWriteComponent extends React.Component {
 					} else {
 						controlWrite.insertBefore(frag, nextSibling);
 					}
-				}
-				var selection = document.getSelection();
-				selection.collapse(this.anchorNode, this.anchorOffset);
 
+        }
+        let lastCollapseNode = this.anchorNode;
+        if (this.anchorNode.nodeType === 1) {
+          const firstChild = this.anchorNode.firstChild;
+          firstChild && (lastCollapseNode = firstChild);
+        }
+        console.log(lastCollapseNode);
+        selection.collapse(lastCollapseNode, lastCollapseNode.length);
 			}
-
 			pasteWrite.innerHTML = '';
-			console.log(pasteWrite.innerHTML)
-		}.bind(this), 0)
+		}, 0);
 
 	}
 
@@ -1270,11 +1263,7 @@ class ControlWriteComponent extends React.Component {
 	}
 
 	isPreCode() {
-		var node = this.findNode();
-		if(node.tagName == 'PRE') {
-			return true;
-		}
-		return false;
+    return this.findNode().tagName === 'PRE';
 	}
 
 	render() {
@@ -1339,13 +1328,14 @@ class ControlWriteComponent extends React.Component {
 						onBlur={(e) => {this.handleWriteBlur(e)}}
 						onPaste={(e) => {this.handlePaste(e)}}
 						onCopy={(e) => {this.handleCopy(e)}}
-						onCut={(e) => {this.handleCopy(e)}}>
+						onCut={(e) => {this.handleCopy(e)}}
+            onKeyDown={(e) => {this.handleKeyDown(e)}}>
 					</div>
 				</div>
 				<div ref="pasteWrite" contentEditable="true"
-					style={{width: 1, height: 1, position:'absolute', left: -10000, top: 0, zIndex:-1, overflow:'hidden'}}
-					onFocus={(e) => {this.pasteFocus(e)}}></div>
-				{state.type ? <ModelComponent type={state.type} text={state.text} link={state.link} elm={state.elm} changeState={this.changeState.bind(this)} clickListener={this.clickListener}/> :''}
+             style={{width: 1, height: 1, position:'absolute', left: -10000, top: 0, zIndex:-1, overflow:'hidden'}}
+             onFocus={(e) => {this.pasteFocus(e)}}></div>
+				{state.type ? <ModelComponent type={state.type} text={state.text} link={state.link} elm={state.elm} changeState={this.changeState.bind(this)} clickListener={this.clickListener}/> : null}
 			</div>
 		)
 	}
@@ -1382,7 +1372,7 @@ class WriteComponent extends React.Component {
 		var fullscreen = this.state.fullscreen ? false : true;
 		this.setState({
 			fullscreen: fullscreen
-		})
+		});
 	}
 
 	render() {
