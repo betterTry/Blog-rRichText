@@ -25,7 +25,7 @@ exports.signIn = function *(next) {
     var isMatch = yield user.comparePassword(password);
     if (!isMatch) code = 1002;
   }
-  this.session.user = user ? user.id : null;
+  this.session.user = user && isMatch ? user.id : null;
   this.response.body = {
     code: code
   }

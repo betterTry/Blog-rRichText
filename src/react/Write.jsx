@@ -764,10 +764,10 @@ class ControlWriteComponent extends React.Component {
 		if (node.tagName == 'PRE' || node.tagName == 'CODE') {
 			this.pre = true;
 		}
+    console.log(!this.copy);
 		if (!this.copy) { //如果不是在编辑器中进行复制;
-			pasteWrite.focus();
+      selection.collapse(pasteWrite);
 		}
-
 	}
 
 	handleCopy(e) {
@@ -804,6 +804,7 @@ class ControlWriteComponent extends React.Component {
 		const myxss = new xss.FilterXSS(options);
 		const pasteWrite = this.refs.pasteWrite;
 		pasteWrite.removeEventListener('DOMNodeInserted', this.pasteWrite);
+
 		setTimeout(() => {
 
 			// 插入的位置, 粘贴之前保存的位置;
@@ -943,6 +944,9 @@ class ControlWriteComponent extends React.Component {
         console.log(lastCollapseNode);
         selection.collapse(lastCollapseNode, lastCollapseNode.length);
 			}
+      if (this.props.screen) {
+        document.documentElement.style.overflow = 'scroll';
+      }
 			pasteWrite.innerHTML = '';
 		}, 0);
 
@@ -1332,8 +1336,8 @@ class ControlWriteComponent extends React.Component {
             onKeyDown={(e) => {this.handleKeyDown(e)}}>
 					</div>
 				</div>
-				<div ref="pasteWrite" contentEditable="true"
-             style={{width: 1, height: 1, position:'absolute', left: -10000, top: 0, zIndex:-1, overflow:'hidden'}}
+				<div id="pasteWrite" ref="pasteWrite" contentEditable="true"
+             style={{width: 1, height: 1, position:'fixed', left: -10000, top: 0, zIndex:-1, overflow:'hidden'}}
              onFocus={(e) => {this.pasteFocus(e)}}></div>
 				{state.type ? <ModelComponent type={state.type} text={state.text} link={state.link} elm={state.elm} changeState={this.changeState.bind(this)} clickListener={this.clickListener}/> : null}
 			</div>

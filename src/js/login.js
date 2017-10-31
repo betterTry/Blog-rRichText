@@ -18,10 +18,10 @@
 })();
 // 登录
 (function () {
-	var signInBox = document.querySelector('.signInBox');
-	var input = signInBox.querySelectorAll('.formInput');
-	var status = signInBox.querySelectorAll('.status');
-	var state = [];
+	const signInBox = document.querySelector('.signInBox');
+	const input = signInBox.querySelectorAll('.formInput');
+	const status = signInBox.querySelectorAll('.status');
+	const state = [];
 	// 输入框
 	input.forEach(function(elm, index) {
 		state.push({

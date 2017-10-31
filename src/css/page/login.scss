@@ -66,6 +66,9 @@ body {
     input::-webkit-input-placeholder {
       color: #aaa;
     }
+    input:-webkit-autofill {
+      background-color: #fff!important;
+    }
     span.status {
       display: none;
       width: 20px;

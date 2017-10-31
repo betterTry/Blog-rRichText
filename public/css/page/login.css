@@ -53,6 +53,8 @@ body {
       height: 100%; }
     .wrap .username input::-webkit-input-placeholder, .wrap .password input::-webkit-input-placeholder, .wrap .surePassword input::-webkit-input-placeholder {
       color: #aaa; }
+    .wrap .username input:-webkit-autofill, .wrap .password input:-webkit-autofill, .wrap .surePassword input:-webkit-autofill {
+      background-color: #fff !important; }
     .wrap .username span.status, .wrap .password span.status, .wrap .surePassword span.status {
       display: none;
       width: 20px;

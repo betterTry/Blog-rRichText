@@ -1,3 +1,4 @@
+@import "../config/mixin.scss";
 /* root */
 html {
 	-webkit-tap-highlight-color: transparent;
@@ -602,7 +603,7 @@ input, textarea{
 }
 
 /* controlWrite */
-.controlWriteBox{
+.controlWriteBox {
 	width: 100%;
 	height: 100%;
 	overflow-x: hidden;
@@ -610,7 +611,8 @@ input, textarea{
   box-sizing: border-box;
 	padding: 20px 30px 20px 30px;
 }
-.controlWrite{
+.controlWrite {
+  @include clearfix;
 	width: 100%;
   min-height: 100%;
 	font-size: 1.6rem;
@@ -621,10 +623,10 @@ input, textarea{
 	line-height: 1.5;
 	font-family:  "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
-.controlWrite p:first-child{
+.controlWrite p:first-child {
 	margin-top: 0px;
 }
-.controlWrite p:last-child{
+.controlWrite p:last-child {
 	margin-bottom: 0px;
 }
 .controlWrite h1:first-child,
@@ -645,23 +647,23 @@ input, textarea{
 }
 
 /* 显示menu */
-.menu-show{
+.menu-show {
 	overflow: visible;
 }
 .menu-show a:not(:first-child) {
 	opacity: 1;
 }
 /* 被选中的menu */
-.menu .menu-active, .menu-active, .menu-chose{
+.menu .menu-active, .menu-active, .menu-chose {
 	background-color: #555;
 	color: #fff;
 }
-.menu-active::before, .menu-chose::before{
+.menu-active::before, .menu-chose::before {
 	color: #fff;
 }
 
 /* modelBox */
-.modelBox{
+.modelBox {
 	width: 350px;
 	height:250px;
 
@@ -675,30 +677,30 @@ input, textarea{
 	border-top: 1px solid #f4f5f6;
 	box-shadow: 0px 5px 10px rgba(100, 100, 100, .3)
 }
-.modelBox h1{
+.modelBox h1 {
 	margin-bottom: 20px;
 }
 /* 切换本地上传 */
-.switchLocal{
+.switchLocal {
 	height: 20px;
 	margin-bottom: 10px;
 	text-align: left;
 	color: #ccc;
 }
-.switchLocal a{
+.switchLocal a {
 	display: inline-block;
 	cursor: pointer;
 	padding: 0px 10px;
 	color: #555;
 }
 /* 输入框或者上传按钮 */
-.inputBox, .updateBox{
+.inputBox, .updateBox {
 	height: 40px;
 	margin-bottom: 10px;
 	line-height: 40px;
 	position: relative;
 }
-.updateBox{
+.updateBox {
 	width: 100%;
 	background-color: #337ab7;
 	border-radius: 3px;
@@ -707,13 +709,13 @@ input, textarea{
 	color: #fff;
 	cursor: pointer;
 }
-.inputBox{
+.inputBox {
 	border: 1px solid #dedede;
 }
-.inputBoxNo{
+.inputBoxNo {
 	border: 1px solid #df3434;
 }
-.updateBox input{
+.updateBox input {
 	display: none;
 }
 /* 图标span */
@@ -726,15 +728,15 @@ input, textarea{
 	top: 0px;
 	border-right: 1px solid #dedede;
 }
-.iconSpanLink:before{
+.iconSpanLink:before {
 	content: '\e602';
 	font-family: write;
 }
-.iconSpanWord:before{
+.iconSpanWord:before {
 	content: 'A';
 	font-size: 1.4rem;
 }
-.modelInput{
+.modelInput {
 	width: 100%;
 	height: 100%;
 	padding-left: 45px;
@@ -743,7 +745,7 @@ input, textarea{
 	font-size: 1.4rem;
 	color: #555;
 }
-.modelC{
+.modelC {
 	width: 50px;
 	height: 20px;
 	display: inline-block;
@@ -752,17 +754,17 @@ input, textarea{
 	text-align: center;
 }
 
-.controlWrite a{
+.controlWrite a {
 	display: initial;
 	color: #4194d0;
 }
-.controlWrite img{
+.controlWrite img {
 	max-width: 100%;
 	margin: 0 auto;
 	display: block;
 }
 /* uploadMessage */
-.uploadMessage{
+.uploadMessage {
 	position: absolute;
 	top: 50px;
 	left: 50%;
@@ -777,7 +779,7 @@ input, textarea{
 }
 
 /* 上传之后的页面 */
-.published{
+.published {
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -788,12 +790,12 @@ input, textarea{
 	z-index: 103;
 	transition: opacity .6s ease-out;
 }
-.publishedBox{
+.publishedBox {
 	margin: 0 auto;
 	max-width: 560px;
 	padding-top: 80px;
 }
-.publishedClose{
+.publishedClose {
 	position: absolute;
 	width: 50px;
 	height: 50px;
@@ -804,44 +806,44 @@ input, textarea{
 	color: #888;
 	cursor: pointer;
 }
-.publishedClose:hover{
+.publishedClose:hover {
 	color: #333;
 }
-.rightIcon{
+.rightIcon {
 	margin-right: 10px;
 }
-.rightIcon:before{
+.rightIcon:before {
 	font-family: 'write';
 	content: '\e627';
 }
-.publishState{
+.publishState {
 	width: 100%;
 	line-height: 30px;
 	height: 30px;
 	font-size: 22px;
 	color: #42c02e;
 }
-.blockItem{
+.blockItem {
 	background-color: rgba(200, 200, 200, .3);
 	border-radius: 5px;
 	width: 100%;
 	height: 200px;
 	padding: 10px 10px;
 }
-.blockItem h1{
+.blockItem h1 {
 	font-size: 30px;
 	color: #333;
 }
 
 /* loadingComponent */
-.loadingBar{
+.loadingBar {
 	width: 100%;
 	height: 100%;
 	background-color: #dedede;
 	position: relative;
 	transition: opacity .3s ease-out;
 }
-.loadingUl{
+.loadingUl {
 	width: 200px;
 	height: 40px;
 	position: absolute;
@@ -852,12 +854,12 @@ input, textarea{
 	text-align: center;
 	font-size: 1.4rem;
 }
-.loadingUl li{
+.loadingUl li {
 	float: left;
 	width: 33.33%;
 	height: 100%;
 }
-.loadingIcon{
+.loadingIcon {
 	animation-name: 'loading';
 	animation-duration: 0.9s;
 	animation-iteration-count: infinite;
@@ -865,16 +867,16 @@ input, textarea{
 	height: 40px;
 	display: inline-block;
 }
-.loadingUl li:nth-child(2) .loadingIcon{
+.loadingUl li:nth-child(2) .loadingIcon {
 	animation-delay: 0.3s;
 }
-.loadingUl li:nth-child(2) .loadingIcon{
+.loadingUl li:nth-child(2) .loadingIcon {
 	animation-delay: 0.4s;
 }
-.loadingUl li:last-child .loadingIcon{
+.loadingUl li:last-child .loadingIcon {
 	animation-delay: 0.5s;
 }
-.loadingIcon:before{
+.loadingIcon:before {
 	font-family: 'write';
 	content: '\e608';
 	color: #71c0e8;
@@ -882,12 +884,12 @@ input, textarea{
 	width: 100%;
 	height: 40px;
 }
-.hidden{
+.hidden {
 	opacity: 0;
 }
 
 /* 保存的状态 */
-.saveState{
+.saveState {
 	height: 20px;
 	position: absolute;
 	top: -20px;
@@ -897,13 +899,13 @@ input, textarea{
 }
 
 
-.closeIcon:before{
+.closeIcon:before {
 	font-family: 'write';
 	content: '\e684';
 	font-size: 3.0rem;
 }
 
-pre{
+pre {
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	background-color: #f3f4f5;
@@ -916,26 +918,26 @@ pre{
 	word-break: break-all;
 	white-space: pre-wrap;
 }
-pre::-webkit-scrollbar{
+pre::-webkit-scrollbar {
 	width: 10px;
     background-color: #f5f5f5;
 }
-pre::-webkit-scrollbar-button{
+pre::-webkit-scrollbar-button {
 	display: none;
 }
-pre::-webkit-scrollbar-track{
+pre::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: #f5f5f5;
 }
-pre::-webkit-scrollbar-track-piece{
+pre::-webkit-scrollbar-track-piece {
 	background-color: #f3f4f5;
 }
-pre::-webkit-scrollbar-thumb{
+pre::-webkit-scrollbar-thumb {
 	height: 10px;
     border-radius: 5px;
     background-color: rgba(100, 100, 100, .8)
 }
-.controlWrite code{
+.controlWrite code {
 	padding: 5px;
 	line-height: 1.5;
 	display: block;
@@ -944,7 +946,7 @@ pre::-webkit-scrollbar-thumb{
 		margin: 0;
 	}
 }
-.fontInfoBox{
+.fontInfoBox {
 	width: 200px;
 	height: 45px;
 	position: absolute;
@@ -956,7 +958,7 @@ pre::-webkit-scrollbar-thumb{
 	transition: opacity .3s;
 	z-index: 102;
 }
-.fontInfoTriangle{
+.fontInfoTriangle {
 	border-width: 4px 4px 0px 4px;
 	border-style: solid;
 	border-color: rgba(0, 0, 0, .8) transparent transparent;
@@ -969,7 +971,7 @@ pre::-webkit-scrollbar-thumb{
 	opacity: 0;
 }
 
-.fontInfo{
+.fontInfo {
 	position: relative;
 	top: 5px;
 	padding: 8px 15px;
@@ -982,10 +984,10 @@ pre::-webkit-scrollbar-thumb{
 	opacity: 0;
 
 }
-.menu-active .fontInfoBox{
+.menu-active .fontInfoBox {
 	display: block;
 }
-.menu-active .fontInfoTriangle{
+.menu-active .fontInfoTriangle {
 	opacity: 1;
 }
 .menu-active .fontInfo{
@@ -996,7 +998,7 @@ pre::-webkit-scrollbar-thumb{
 
 /* =================  fullScreen ================ */
 /* z-index > 110 */
-.fullScreen{
+.fullScreen {
 	position: absolute;
 	width: 100%;
 	height: auto;

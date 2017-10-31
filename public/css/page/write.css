@@ -576,6 +576,11 @@ input, textarea {
   white-space: pre-wrap;
   line-height: 1.5;
   font-family: "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif; }
+  .controlWrite::before, .controlWrite::after {
+    content: '';
+    display: table; }
+  .controlWrite::after {
+    clear: both; }
 
 .controlWrite p:first-child {
   margin-top: 0px; }
