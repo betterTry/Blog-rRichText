@@ -79,12 +79,14 @@ app.use(function *(next){
 	yield next;
 })
 
+var port = 3100 || process.env.PORT;
+
 //引入router,并且执行;
 require('./config/router')(router);
 app
 	.use(router.routes())
 	.use(router.allowedMethods());
 
-app.listen(3100);
+app.listen(port);
 
 console.log('listening at PORT 3100...')

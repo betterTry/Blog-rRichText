@@ -62,7 +62,8 @@
     "webpack-stream": "^4.0.0"
   },
   "scripts": {
-    "dev": "gulp"
+    "dev": "gulp",
+    "serve": "node PORT=80 app"
   },
   "keywords": [
     "richtext"
