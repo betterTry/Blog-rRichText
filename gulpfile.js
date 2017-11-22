@@ -49,7 +49,7 @@ gulp.task('nodemon', ['css', 'script', 'scriptES2015', 'webpack'], function(cb){
 	nodemon({
 		script: 'app.js',
 		ext: 'js pug css scss',
-		env: {'NODE_ENV': 'development'},
+		env: {'NODE_ENV': 'development', 'PORT': 3100},
 		ignore: ['node_modules/**', 'public/**', 'src/**'],
 	})
 	.on('start', function(){

@@ -175,7 +175,7 @@
 				password: data[1]
 			},
 			success: function(response) {
-				if (response.code === 0) location.path = '/';
+				if (response.code === 0) location.pathname = '/';
 			}
 		})
 	}

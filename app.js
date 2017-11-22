@@ -2,6 +2,7 @@
 'use strict'
 
 var Koa = require('koa');
+var crypto = require('crypto');
 
 var mongoose = require('mongoose');
 var fs = require('fs');
@@ -40,12 +41,18 @@ var session = require('koa-session');
 var views = require('koa-views');
 
 
+app.use(function *(next) {
+	if (/(^\/)pic|font|react|js|image|css/.test(this.request.url)) {
+		this.set('Cache-Control', 'must-revalidate');
+	}
+	yield next;
+});
 app.use(require('koa-static')('public'));
 
 app.use(function *(next) {
 	var font = this.cookies.get('font'),
-		night = this.cookies.get('night'),
-		family = this.cookies.get('family');
+		  night = this.cookies.get('night'),
+		  family = this.cookies.get('family');
 	this.state.font = font ? font : 'jian'; // 默认是简体;
 	this.state.night = night ? night : 'off'; // 默认夜晚模式关闭;
 	this.state.family = family ? family : 'hei';
@@ -79,7 +86,7 @@ app.use(function *(next){
 	yield next;
 })
 
-var port = 3100 || process.env.PORT;
+var port = process.env.PORT || 80;
 
 //引入router,并且执行;
 require('./config/router')(router);
@@ -89,4 +96,4 @@ app
 
 app.listen(port);
 
-console.log('listening at PORT 3100...')
+console.log('\x1B[32m%s\x1B[0m', 'listening at PORT ' + port);

@@ -2,7 +2,7 @@
 
 var Article = require('../models/article');
 exports.index = function *(next) {
-	var articles = yield Article.find({publish: true}, {publish: 0, content: 0});
+	var articles = yield Article.find({publish: true}, {publish: 0, content: 0}).sort({'meta.updateAt': -1});
 	var length = articles.length;
 
 	if(articles.length) {

@@ -10,11 +10,12 @@ block content
 		.body
 			- var signIn = '登录';
 			- var signUp = '注册';
+			- var signUpStatus = state.signUp;
 			.title
-				span.signIn.current #{signIn}
+				span.signIn(class=!signUpStatus && 'current') #{signIn}
 				span(style="color:#555f5a")  | 
-				span.signUp #{signUp}
-			.signInBox
+				span.signUp(class=signUpStatus && 'current') #{signUp}
+			.signInBox(style={display: signUpStatus ? 'none' : 'block'})
 				.username
 					input(type="input", class="formInput", placeholder="用户名")
 					span.status
@@ -30,7 +31,7 @@ block content
 					//- | 您已阅读#[a 《相关须知》]
 				.loginButton 
 					button #{signIn}
-			.signUpBox(style="display:none")
+			.signUpBox(style={display: signUpStatus ? 'block' : 'none'})
 				.username
 					input(type="input", class="formInput", placeholder="用户名")
 					span.status

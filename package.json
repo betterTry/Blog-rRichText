@@ -63,7 +63,7 @@
   },
   "scripts": {
     "dev": "gulp",
-    "serve": "node PORT=80 app"
+    "serve": "sudo node app"
   },
   "keywords": [
     "richtext"

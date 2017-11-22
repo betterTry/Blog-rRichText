@@ -7,6 +7,7 @@ block header
 		span.moveToTIcon
 
 block content
+	- var user = state.user;
 	canvas#bg-canvas(width=1366,height=1075)
 	script(src="/js/canvas.js")
 	.container.banner
@@ -34,7 +35,7 @@ block content
 						.headBox
 							img(src="pic/head/headMonky.jpg")
 						.nameBox
-							span yangsl
+							span #{item.user || '无名超人'}
 							- var date = new Date(item.meta.updateAt);
 							- var year = date.getFullYear();
 							- var month = date.getMonth() + 1 > 9 ? date.getMonth() + 1: '0' + (date.getMonth() + 1);

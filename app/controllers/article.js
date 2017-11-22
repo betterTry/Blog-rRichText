@@ -19,7 +19,7 @@ exports.init = function *(next) {
 							.exec();
 	var article;
 	if (data.length) {
-		var id = data[0].articles[0]._id
+		var id = data[0].articles[0] || data[0].articles[0]._id;
 		article = yield Article.findOne({_id: id}, 'content publish')
 	}
 
@@ -94,6 +94,7 @@ exports.publish = function *(next) {
 			p: '',
 			b: '', strike: '', i: '',
 			blockquote: '',
+      span: '',
 			pre: '', code:'',
 			br: '', hr: ''
 		},
