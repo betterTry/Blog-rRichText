@@ -17,17 +17,10 @@ exports.init = function *(next) {
 	var data = yield Work.find({_id: {$in: user.works}})
 							.populate('articles', '-meta -content')
 							.exec();
-	var article;
-	if (data.length && data[0].articles[0]) {
-		var id = data[0].articles[0]._id;
-		article = yield Article.findOne({_id: id}, 'content publish')
-	}
-
 
 	this.response.body = {
 		success: 1,
-		data: data,
-		article: article || {}
+		data: data
 	}
 }
 
@@ -203,6 +196,7 @@ exports.newArticle = function *(next) {
 	try {
 
 		var article = new Article({work: id});
+    article.content = '<p><br></p>'
 		yield article.save();
 		var work = yield Work.findOne({_id: id}).exec();
 		work.articles.unshift(article._id);

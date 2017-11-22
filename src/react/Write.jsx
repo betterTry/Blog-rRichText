@@ -1271,19 +1271,18 @@ class ControlWriteComponent extends React.Component {
 	}
 
 	render() {
-		var state = this.state;
-		var data = this.props.data, index = this.props.index;
-		var length = index[1];
-		if(length > -1) {
-			var publish = data.length ? data[index[0]].articles[index[1]].publish : '';
-		} else{
-			var publish = '';
+		const state = this.state;
+		const data = this.props.data, index = this.props.index;
+		const curIndex = index[1]; // 被选中的article;
+    let publish = '';
+		if (curIndex > -1) {
+			publish = data.length ? data[index[0]].articles[index[1]].publish : '';
 		}
-
-		if(state.shift) {
-			var handleShift = this.shiftEnter.bind(this);
+    let handleShift;
+		if (state.shift) {
+			handleShift = this.shiftEnter.bind(this);
 		} else {
-			var handleShift = this.noshiftEnter.bind(this);
+			handleShift = this.noshiftEnter.bind(this);
 		}
 		return (
 			<div className="richTextBox" onBlur={this.handleBlur.bind(this)}>
@@ -1381,21 +1380,21 @@ class WriteComponent extends React.Component {
 
 	render() {
 		const {index, data, changeContent, changeSave, changePublish} = this.props;
-		const show = index[1] < 0 ? false : true;
 		let value = '', save = '';
-		if(show && data.length && data[index[0]].articles[index[1]]) {
+		if(index[1] > -1 && data.length && data[index[0]].articles[index[1]]) {
 			const item = data[index[0]].articles[index[1]];
 			value = item.name;
 			save = item.save;
 		}
 		let wrapClass = {width: '100%', height: '100%', position: 'relative'};
 		let Welcome = null;
-		if (!data.length) {
+
+		if (!data.length || !data[0].articles.length) {
 			wrapClass.display = 'none';
 			Welcome = (<WriteWelcome />);
 		}
 		return (
-			<div className={'writeArea' + (this.state.fullscreen ? ' fullScreen' : '')} style={show ? {} : {display : 'none'}}>
+			<div className={'writeArea' + (this.state.fullscreen ? ' fullScreen' : '')}>
 				<div style={wrapClass}>
 					<SavedComponent save={save}/>
 					<div className="writeAreaBox"

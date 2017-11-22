@@ -507,24 +507,26 @@ class AppComponent extends React.Component {
 		$.ajax({
 			url: '/write/init',
 			method: 'GET',
-			success: function({success, data, article}) {
+			success: function({success, data}) {
 				if (success) {
 					if (data.length) {
-						document.getElementById('controlWrite').innerHTML = article.content;
+            const curArticle = data[0].articles[0] && data[0].articles[0].content || '';
+						document.getElementById('controlWrite').innerHTML = curArticle;
 						data.forEach((item, index) => {
 							var articles = data[index].articles;
 							articles.forEach((item) => {
 								item.save = true;
 							});
 						});
-						this.content = [[data[0].articles[0].content]];
+            this.content = curArticle ? [[curArticle]] : [];
 					} else {
-						this.content = '';
+						this.content = [];
 					}
+          console.log(this.content);
 					this.setState({
 						data: data,
 						selected: 0,
-						articleSelected: 0,
+						articleSelected: this.content.length ? 0 : -1,
 						loading: false
 					})
 				}
@@ -605,6 +607,8 @@ class AppComponent extends React.Component {
 			work: data._id
 		}
 		data.articles.unshift(article);
+    const curWorks = this.content[state.selected];
+    if (!curWorks) this.content[state.selected] = [];
 		this.content[state.selected].unshift('<p><br/></p>');
 		state.articleSelected = 0;
 		var controlWrite = document.getElementById('controlWrite');
