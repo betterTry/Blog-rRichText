@@ -18,7 +18,7 @@ exports.init = function *(next) {
 							.populate('articles', '-meta -content')
 							.exec();
 	var article;
-	if (data.length && data[0].articles[0]) {
+	if (data.length && data[0].articles[0].length) {
 		var id = data[0].articles[0]._id;
 		article = yield Article.findOne({_id: id}, 'content publish')
 	}
