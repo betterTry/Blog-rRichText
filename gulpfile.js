@@ -1,5 +1,6 @@
 'use strict'
 var gulp = require('gulp');
+var fs = require('fs');
 var webpack = require('webpack-stream');
 var webpackConfig = require('./webpack.config');
 var ora = require('ora');
@@ -152,6 +153,13 @@ gulp.task('clean', function(){
 })
 
 gulp.task('compress', function (cb) {
+  try {
+    if (!fs.existsSync(PATH.react)) {
+      fs.mkdirSync(PATH.react);
+    }
+  } catch(e) {
+    // haha..
+  }
   pump([
       gulp.src('public/react/*.js'),
       uglify(),
