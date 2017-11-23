@@ -20,7 +20,7 @@ block content
 			.infoBody
 				.author
 					span 作者
-					| yangsl
+					| #{article.user || '无名超人'}
 				- var date = new Date(article.meta.updateAt);
 				- var year = date.getFullYear();
 				- var month = date.getMonth() + 1;

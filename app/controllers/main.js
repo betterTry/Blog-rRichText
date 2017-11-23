@@ -13,6 +13,7 @@ exports.index = function *(next) {
 			}
 		})
 	}
+  console.log(articles);
 
 	yield this.render('include/index', {
 		title: '首页',

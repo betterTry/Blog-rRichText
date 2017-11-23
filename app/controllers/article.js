@@ -194,9 +194,9 @@ exports.removeWork = function *(next) {
 exports.newArticle = function *(next) {
 	var id = this.params.id;
 	try {
-
 		var article = new Article({work: id});
-    article.content = '<p><br></p>'
+    article.content = '<p><br></p>';
+    article.user = this.state.user.name;
 		yield article.save();
 		var work = yield Work.findOne({_id: id}).exec();
 		work.articles.unshift(article._id);
