@@ -581,7 +581,6 @@ class AppComponent extends React.Component {
 							}
 							this.content[selected][index] = content;
 							document.getElementById('controlWrite').innerHTML = content;
-              console.log(content);
 						}
 					}.bind(this)
 				})

@@ -48,19 +48,5 @@ module.exports = {
       loader: 'url-loader?limit=8192'
     }]
   },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      output: {
-        comments: false,
-      },
-      compress: {
-        warnings: false,
-      },
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
-    }),
-  ]
+  plugins: [],
 };
