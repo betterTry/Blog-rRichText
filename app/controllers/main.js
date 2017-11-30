@@ -1,5 +1,6 @@
 'use strict'
 
+var bcrypt = require('bcryptjs');
 var Article = require('../models/article');
 exports.index = function *(next) {
 	var articles = yield Article.find({publish: true}, {publish: 0, content: 0}).sort({'meta.updateAt': -1});
@@ -13,7 +14,6 @@ exports.index = function *(next) {
 			}
 		})
 	}
-  console.log(articles);
 
 	yield this.render('include/index', {
 		title: '首页',

@@ -510,25 +510,26 @@ class AppComponent extends React.Component {
 			success: function({success, data}) {
 				if (success) {
 					if (data.length) {
-            const curArticle = data[0].articles[0] && data[0].articles[0].content || '';
-						document.getElementById('controlWrite').innerHTML = curArticle;
+            const curTitle = data[0].articles[0] && data[0].articles[0].name || '';
+						// document.getElementById('controlWrite').innerHTML = curArticle;
 						data.forEach((item, index) => {
 							var articles = data[index].articles;
 							articles.forEach((item) => {
 								item.save = true;
 							});
 						});
-            this.content = curArticle ? [[curArticle]] : [];
+            this.content = curTitle ? [[]] : [];
 					} else {
 						this.content = [];
 					}
-          console.log(this.content);
 					this.setState({
 						data: data,
 						selected: 0,
 						articleSelected: this.content.length ? 0 : -1,
 						loading: false
-					})
+					}, () => {
+            this.articleSelected(0)();
+          });
 				}
 			}.bind(this)
 		})
@@ -580,6 +581,7 @@ class AppComponent extends React.Component {
 							}
 							this.content[selected][index] = content;
 							document.getElementById('controlWrite').innerHTML = content;
+              console.log(content);
 						}
 					}.bind(this)
 				})

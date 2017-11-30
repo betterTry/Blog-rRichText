@@ -6,17 +6,16 @@ module.exports = {
     bundle: './src/main.js'
   },
   output: {
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
-  watch: true,
   // devtool: '#cheap-modules-source-map',
   devtool: 'inline-source-map',
   //模块解析配置项;
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     alias: {
-      '@': path.join(__dirname, './src'),
-      'component': path.join(__dirname, './src/react/component')
+      '@': path.join(__dirname, '../src'),
+      'component': path.join(__dirname, '../src/react/component')
     }
   },
   module: {
@@ -49,4 +48,19 @@ module.exports = {
       loader: 'url-loader?limit=8192'
     }]
   },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      output: {
+        comments: false,
+      },
+      compress: {
+        warnings: false,
+      },
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
+    }),
+  ]
 };

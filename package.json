@@ -59,11 +59,13 @@
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.8.0",
     "webpack": "^3.6.0",
+    "webpack-merge": "^4.1.1",
     "webpack-stream": "^4.0.0"
   },
   "scripts": {
     "dev": "gulp",
-    "serve": "sudo node app"
+    "serve": "sudo node app",
+    "build": "NODE_ENV=production gulp webpack"
   },
   "keywords": [
     "richtext"

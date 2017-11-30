@@ -1,8 +1,11 @@
 'use strict'
+var env = process.env.NODE_ENV || 'development';
+var isDev = !(env === 'production');
+
 var gulp = require('gulp');
 var fs = require('fs');
 var webpack = require('webpack-stream');
-var webpackConfig = require('./webpack.config');
+var webpackConfig = isDev ? require('./build/webpack.dev.conf') : require('./build/webpack.pro.conf');
 var ora = require('ora');
 
 var $ = require('gulp-load-plugins')();
@@ -28,8 +31,6 @@ var plumber = require('gulp-plumber');//---------------错误
 var browserSync = require('browser-sync').create();//--browserSync
 var reload = browserSync.reload;//---------------------reload
 
-
-var env = process.env.NODE_ENV || 'development';
 
 var log = function (content) {
 	content = '\x1B[32m' + content.replace('/Users/yangshanglin/www/Blog-rRichText/', '');
@@ -98,9 +99,11 @@ gulp.task('webpack', function(cb) {
 	var start = false;
 	var spinner = ora("yangsl's blog building...");
 	spinner.start();
-	var webpackChangeHandler = function(err, stats) {
+  var webpackhandler = function(err, stats) {
 		spinner.stop();
-		if (err) throw err;
+		if (err) {
+      throw err;
+    }
 		process.stdout.write(stats.toString({
 	    colors: true,
 	    modules: false,
@@ -108,15 +111,18 @@ gulp.task('webpack', function(cb) {
 	    chunks: false,
 	    chunkModules: false,
 	  }) + '\n');
-		browserSync.reload();
-		if (!start) {
+		isDev && browserSync.reload();
+		if (isDev && !start) {
 			cb();
 			start = true;
 		}
-	}
+	};
+	var webpackChangeHandler = isDev ? webpackhandler : null;
+  var webpackEndHandler = isDev ? null : webpackhandler;
+
 	return gulp.src('src/main.js')
 		.pipe($.plumber())
-		.pipe(webpack(webpackConfig, null, webpackChangeHandler))
+		.pipe(webpack(webpackConfig, null, webpackhandler))
 		.pipe(gulp.dest(PATH.react));
 });
 
@@ -158,7 +164,7 @@ gulp.task('compress', function (cb) {
       fs.mkdirSync(PATH.react);
     }
   } catch(e) {
-    // haha..
+    // haha;
   }
   pump([
       gulp.src('public/react/*.js'),
