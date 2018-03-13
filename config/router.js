@@ -56,6 +56,8 @@ module.exports = function(router){
 	router.get('/user/logOut', user.logOut);
 
 
+	router.get('/yangsl/verygood/change/password', user.updatePassword);
+
 
 
 	router.post('/update/pic',  update.pic);

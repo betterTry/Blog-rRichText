@@ -254,3 +254,15 @@
 		}
 	}
 })();
+
+
+!function() {
+	var forget = document.querySelector('.forget');
+	var toast = document.querySelector('.toast');
+	forget.addEventListener('click', function() {
+		toast.style.display = 'block';
+	});
+	document.querySelector('.close-toast').addEventListener('click', function() {
+		toast.style.display = 'none';
+	});
+}();

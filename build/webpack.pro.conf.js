@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const webpackConfig = merge(baseConfig, {
   watch: false,
@@ -18,6 +19,7 @@ const webpackConfig = merge(baseConfig, {
         warnings: false,
       },
     }),
+    new ExtractTextPlugin('public/css/page/bundle.css'),
   ],
 });
 

@@ -78,6 +78,26 @@ exports.removeUser = function *(next) {
   }
 }
 
+exports.updatePassword = function *(next) {
+  var params = this.request.query;
+  var user = params.user;
+  var password = params.p;
+  var message = '修改成功，去登录吧';
+  if (user && password) {
+    try{
+      user = yield User.findOne({name: user}).exec();
+      user.password = password;
+      yield user.save();
+    } catch(err) {
+      console.log(err);
+      message = '查询出错了';
+    }
+  } else {
+    message = '修改个屁，参数都不传！';
+  }
+  this.response.body = message;
+}
+
 exports.getLevel = function *(next) {
 	var user = this.state.user;
 	if (user) {

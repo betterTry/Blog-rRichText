@@ -27,7 +27,7 @@ block content
 					span.errorInfo
 					.border-bottom
 				.tip
-					a(href="javascript:;") 忘记密码?
+					a.forget 忘记密码?
 					//- | 您已阅读#[a 《相关须知》]
 				.loginButton 
 					button #{signIn}
@@ -49,5 +49,8 @@ block content
 					.border-bottom
 				.loginButton 
 					button #{signUp}
+			.toast(style={display: 'none'})
+				.close-toast ×
+				p 谁让你忘记密码的？自己找管理员去
 	script(src="https://cdn.bootcss.com/reqwest/2.0.5/reqwest.min.js")
 	script(src="/js/login.js")

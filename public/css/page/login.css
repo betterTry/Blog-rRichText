@@ -1,5 +1,7 @@
+@charset "UTF-8";
 body {
-  background-color: #e5e6e7; }
+  background-color: #e5e6e7;
+  font-family: 'Helvetica Neue', Helvetica,Arial, 'Monaco', 'Microsoft Yahei',sans-serif; }
 
 .wrap {
   width: 400px;
@@ -13,11 +15,12 @@ body {
   border-radius: 5px;
   border: 1px solid #ccc;
   box-sizing: border-box;
-  font-size: 1.4rem; }
+  font-size: 1.4rem;
+  /* 忘记密码 */ }
   .wrap .head {
     height: 180px;
     background: #1a5694;
-    background: -webkit-gradient(linear, left bottom, right top, from(#518ba3), to(#1a9487));
+    background: -webkit-gradient(linear, left bottom, right top, from(#4a9edb), to(#177da1));
     color: #fff;
     padding-top: 20px;
     text-align: center; }
@@ -129,6 +132,33 @@ body {
       cursor: pointer; }
   .wrap input {
     border: 0; }
+  .wrap .forget {
+    cursor: pointer; }
+
+/* 提示 */
+.toast {
+  width: 300px;
+  padding: 20px;
+  color: #10858c;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -170px;
+  margin-top: -50px;
+  border: 1px solid #f5f6f7;
+  background-color: #fff;
+  text-align: center;
+  font-weight: 700;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 rgba(200, 200, 200, 0.3);
+  -webkit-animation: pop cubic-bezier(0.22, 0.58, 0.12, 0.98) 0.5s;
+          animation: pop cubic-bezier(0.22, 0.58, 0.12, 0.98) 0.5s; }
+  .toast .close-toast {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 5px;
+    cursor: pointer; }
 
 /******* keyframes *******/
 @-webkit-keyframes pop {
