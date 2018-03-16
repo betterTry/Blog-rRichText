@@ -4,4 +4,8 @@ block head
 		
 block content
 	div#app
-	script(src="react/bundle.js")
+
+block foot
+	script(src="react/manifest.js" defer)
+	script(src="react/vendor.js" defer)
+	script(src="react/bundle.js" defer)

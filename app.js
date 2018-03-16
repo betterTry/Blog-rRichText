@@ -2,7 +2,6 @@
 'use strict'
 
 var Koa = require('koa');
-var crypto = require('crypto');
 
 var mongoose = require('mongoose');
 var fs = require('fs');
@@ -20,7 +19,7 @@ var walk = function(path){
 			var newPath = path + '/' + file;
 			var stat = fs.statSync(newPath)
 			if(stat.isFile()){
-				if(/(.*)\.(js|coffee)/.test(file)){
+				if(/(.*)\.js/.test(file)){
 					require(newPath)
 				}
 			}
@@ -43,7 +42,7 @@ var views = require('koa-views');
 
 app.use(function *(next) {
 	if (/(^\/)pic|font|react|js|image|css/.test(this.request.url)) {
-		this.set('Cache-Control', 'must-revalidate');
+		this.set('Cache-Control', '86400');
 	}
 	yield next;
 });
@@ -96,4 +95,7 @@ app
 
 app.listen(port);
 
-console.log('\x1B[32m%s\x1B[0m', 'listening at PORT ' + port);
+
+var date = new Date();
+console.log('\x1B[32m%s\x1B[0m', `\n启动时间: ${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+console.log('\x1B[32m%s\x1B[0m', '端口监听: ' + port);
